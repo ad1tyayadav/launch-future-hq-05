@@ -2,6 +2,9 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
+// Replace with your logo path:
+const LOGO_SRC = '/lovable-uploads/aaf832d9-3dc1-494d-95f1-781701150655.png';
+
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -37,8 +40,13 @@ const Navigation = () => {
             whileHover={{ scale: 1.05 }}
             className="flex items-center space-x-3"
           >
-            <div className="w-10 h-10 bg-gradient-to-r from-cyber-blue to-cyber-purple rounded-lg flex items-center justify-center">
-              <span className="text-white font-orbitron font-bold text-lg">D</span>
+            <div className="w-10 h-10 bg-gradient-to-r from-cyber-blue to-cyber-purple rounded-lg flex items-center justify-center overflow-hidden">
+              <img
+                src={LOGO_SRC}
+                alt="DevLaunch Logo"
+                className="object-contain w-9 h-9"
+                draggable={false}
+              />
             </div>
             <span className="text-white font-orbitron font-bold text-xl glow-text">
               DevLaunch
