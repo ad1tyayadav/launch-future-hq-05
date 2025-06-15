@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 // Replace with your logo path:
 const LOGO_SRC = '/lovable-uploads/540b6631-0fad-4216-aa1e-c068807441ed.png';
@@ -40,17 +41,19 @@ const Navigation = () => {
             whileHover={{ scale: 1.05 }}
             className="flex items-center space-x-3"
           >
-            <div className="w-10 h-10 flex items-center justify-center overflow-hidden">
-              <img
-                src={LOGO_SRC}
-                alt="DevLaunch Logo"
-                className="object-contain w-10 h-10"
-                draggable={false}
-              />
-            </div>
-            <span className="text-white font-orbitron font-bold text-xl glow-text">
-              DevLaunch
-            </span>
+            <Link to="/" className="flex items-center space-x-3">
+              <div className="w-10 h-10 flex items-center justify-center overflow-hidden">
+                <img
+                  src={LOGO_SRC}
+                  alt="DevLaunch Logo"
+                  className="object-contain w-10 h-10"
+                  draggable={false}
+                />
+              </div>
+              <span className="text-white font-orbitron font-bold text-xl glow-text">
+                DevLaunch
+              </span>
+            </Link>
           </motion.div>
 
           {/* Desktop Navigation */}
@@ -68,13 +71,15 @@ const Navigation = () => {
                 {item.name}
               </motion.a>
             ))}
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="cyber-button"
-            >
-              <span>Let's Talk</span>
-            </motion.button>
+            <Link to="/lets-talk">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="cyber-button"
+              >
+                <span>Let's Talk</span>
+              </motion.button>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -110,9 +115,11 @@ const Navigation = () => {
                 {item.name}
               </a>
             ))}
-            <button className="cyber-button w-full mt-4">
-              <span>Let's Talk</span>
-            </button>
+            <Link to="/lets-talk">
+              <button className="cyber-button w-full mt-4" onClick={() => setIsMobileMenuOpen(false)}>
+                <span>Let's Talk</span>
+              </button>
+            </Link>
           </div>
         </motion.div>
       </div>
