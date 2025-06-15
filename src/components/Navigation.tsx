@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 // Replace with your logo path:
-const LOGO_SRC = '/lovable-uploads/aaf832d9-3dc1-494d-95f1-781701150655.png';
+const LOGO_SRC = '/lovable-uploads/1d096f38-f3f1-4826-89c4-c8055775fc92.png';
 
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
