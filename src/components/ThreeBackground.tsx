@@ -1,11 +1,12 @@
 
 import React, { useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Points, PointMaterial, Sphere } from '@react-three/drei';
+import { Points, PointMaterial } from '@react-three/drei';
 import * as random from 'maath/random/dist/maath-random.esm';
+import * as THREE from 'three';
 
 function Stars(props: any) {
-  const ref = useRef<any>();
+  const ref = useRef<THREE.Points>(null);
   const [sphere] = useMemo(() => [random.inSphere(new Float32Array(5000), { radius: 1.5 })], []);
 
   useFrame((state, delta) => {
@@ -31,7 +32,7 @@ function Stars(props: any) {
 }
 
 function FloatingGeometry() {
-  const meshRef = useRef<any>();
+  const meshRef = useRef<THREE.Mesh>(null);
 
   useFrame((state) => {
     if (meshRef.current) {
@@ -55,7 +56,7 @@ function FloatingGeometry() {
 }
 
 function FloatingTorus() {
-  const meshRef = useRef<any>();
+  const meshRef = useRef<THREE.Mesh>(null);
 
   useFrame((state) => {
     if (meshRef.current) {
