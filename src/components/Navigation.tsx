@@ -1,10 +1,9 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import LogoProcessor from './LogoProcessor';
 
 // Replace with your logo path:
-const LOGO_SRC = '/lovable-uploads/06f8542e-bc54-4459-aa62-5b5b60514c86.png';
+const LOGO_SRC = '/lovable-uploads/540b6631-0fad-4216-aa1e-c068807441ed.png';
 
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -42,10 +41,11 @@ const Navigation = () => {
             className="flex items-center space-x-3"
           >
             <div className="w-10 h-10 flex items-center justify-center overflow-hidden">
-              <LogoProcessor
-                originalSrc={LOGO_SRC}
+              <img
+                src={LOGO_SRC}
                 alt="DevLaunch Logo"
                 className="object-contain w-10 h-10"
+                draggable={false}
               />
             </div>
             <span className="text-white font-orbitron font-bold text-xl glow-text">
