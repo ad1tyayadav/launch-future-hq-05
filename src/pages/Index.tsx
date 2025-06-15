@@ -29,8 +29,13 @@ const Index = () => {
         <div className="container mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="flex items-center space-x-3 mb-4 md:mb-0">
-              <div className="w-10 h-10 bg-gradient-to-r from-cyber-blue to-cyber-purple rounded-lg flex items-center justify-center">
-                <span className="text-white font-orbitron font-bold text-lg">D</span>
+              <div className="w-10 h-10 flex items-center justify-center overflow-hidden">
+                <img
+                  src="/lovable-uploads/540b6631-0fad-4216-aa1e-c068807441ed.png"
+                  alt="DevLaunch Logo"
+                  className="object-contain w-10 h-10"
+                  draggable={false}
+                />
               </div>
               <span className="text-white font-orbitron font-bold text-xl glow-text">
                 DevLaunch
