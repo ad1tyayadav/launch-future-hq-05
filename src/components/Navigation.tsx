@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import LogoProcessor from './LogoProcessor';
 
 // Replace with your logo path:
 const LOGO_SRC = '/lovable-uploads/06f8542e-bc54-4459-aa62-5b5b60514c86.png';
@@ -41,11 +42,10 @@ const Navigation = () => {
             className="flex items-center space-x-3"
           >
             <div className="w-10 h-10 flex items-center justify-center overflow-hidden">
-              <img
-                src={LOGO_SRC}
+              <LogoProcessor
+                originalSrc={LOGO_SRC}
                 alt="DevLaunch Logo"
                 className="object-contain w-10 h-10"
-                draggable={false}
               />
             </div>
             <span className="text-white font-orbitron font-bold text-xl glow-text">
