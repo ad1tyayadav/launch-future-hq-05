@@ -1,19 +1,9 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Rocket, Users, Calendar, Clock, Trophy, Globe, Target } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Users, DollarSign, Globe, Calendar, Settings } from 'lucide-react';
 
 const HeroSection = () => {
-  const scrollToProjects = () => {
-    const projectsSection = document.getElementById('projects');
-    if (projectsSection) {
-      projectsSection.scrollIntoView({
-        behavior: 'smooth'
-      });
-    }
-  };
-
   // Animation variants for individual letters
   const letterVariants = {
     hidden: {
@@ -48,50 +38,49 @@ const HeroSection = () => {
     }
   };
 
-  // Galaxy star tags data
-  const starTags = [{
-    text: "50+ Projects",
-    icon: Target,
-    gradient: "from-blue-400 via-purple-500 to-pink-500",
-    orbitRadius: 150,
-    orbitDuration: 20,
-    glowColor: "rgba(59, 130, 246, 0.6)"
-  }, {
-    text: "3 Years Experience", 
-    icon: Calendar,
-    gradient: "from-orange-400 via-red-500 to-pink-500",
-    orbitRadius: 200,
-    orbitDuration: 25,
-    glowColor: "rgba(249, 115, 22, 0.6)"
-  }, {
-    text: "24/7 Support",
-    icon: Clock,
-    gradient: "from-yellow-400 via-orange-500 to-red-500",
-    orbitRadius: 120,
-    orbitDuration: 18,
-    glowColor: "rgba(245, 158, 11, 0.6)"
-  }, {
-    text: "100% Success Rate",
-    icon: Trophy,
-    gradient: "from-green-400 via-emerald-500 to-teal-500",
-    orbitRadius: 180,
-    orbitDuration: 22,
-    glowColor: "rgba(34, 197, 94, 0.6)"
-  }, {
-    text: "Global Reach",
-    icon: Globe,
-    gradient: "from-cyan-400 via-blue-500 to-purple-500",
-    orbitRadius: 160,
-    orbitDuration: 24,
-    glowColor: "rgba(6, 182, 212, 0.6)"
-  }, {
-    text: "Expert Team",
-    icon: Users,
-    gradient: "from-purple-400 via-pink-500 to-rose-500",
-    orbitRadius: 140,
-    orbitDuration: 19,
-    glowColor: "rgba(168, 85, 247, 0.6)"
-  }];
+  // Floating stat bubbles data
+  const statBubbles = [
+    {
+      icon: Users,
+      label: "Clients",
+      count: "+120",
+      gradient: "from-blue-400 via-purple-500 to-pink-500",
+      glowColor: "rgba(59, 130, 246, 0.6)",
+      position: { top: "20%", left: "15%" }
+    },
+    {
+      icon: DollarSign,
+      label: "Total Budget", 
+      count: "$2.3M",
+      gradient: "from-green-400 via-emerald-500 to-teal-500",
+      glowColor: "rgba(34, 197, 94, 0.6)",
+      position: { top: "25%", right: "20%" }
+    },
+    {
+      icon: Globe,
+      label: "Community",
+      count: "+8K members",
+      gradient: "from-cyan-400 via-blue-500 to-purple-500",
+      glowColor: "rgba(6, 182, 212, 0.6)",
+      position: { top: "45%", left: "10%" }
+    },
+    {
+      icon: Calendar,
+      label: "Projects",
+      count: "300+",
+      gradient: "from-orange-400 via-red-500 to-pink-500",
+      glowColor: "rgba(249, 115, 22, 0.6)",
+      position: { top: "50%", right: "15%" }
+    },
+    {
+      icon: Settings,
+      label: "Ongoing",
+      count: "25",
+      gradient: "from-purple-400 via-pink-500 to-rose-500",
+      glowColor: "rgba(168, 85, 247, 0.6)",
+      position: { bottom: "30%", left: "50%", transform: "translateX(-50%)" }
+    }
+  ];
 
   const devLaunchLetters = "DevLaunch".split("");
 
@@ -169,104 +158,95 @@ const HeroSection = () => {
             Crafting the future of digital experiences with cutting-edge technology, 
             immersive design, and innovative solutions that push boundaries.
           </p>
-
-          {/* Galaxy Star Tags - Orbital Animation */}
-          <div className="relative h-96 md:h-[500px] mb-8">
-            {starTags.map((tag, index) => {
-              const IconComponent = tag.icon;
-              return (
-                <motion.div
-                  key={index}
-                  className="absolute top-1/2 left-1/2"
-                  style={{
-                    transformOrigin: '0 0',
-                  }}
-                  animate={{
-                    rotate: 360,
-                  }}
-                  transition={{
-                    duration: tag.orbitDuration,
-                    repeat: Infinity,
-                    ease: "linear"
-                  }}
-                >
-                  <motion.div
-                    className={`relative w-24 h-24 rounded-full bg-gradient-to-br ${tag.gradient} flex items-center justify-center cursor-pointer shadow-2xl`}
-                    style={{
-                      transform: `translateX(${tag.orbitRadius}px) translateY(-50%)`,
-                      boxShadow: `0 0 30px ${tag.glowColor}, 0 0 60px ${tag.glowColor}`,
-                    }}
-                    animate={{
-                      scale: [1, 1.1, 1],
-                      boxShadow: [
-                        `0 0 20px ${tag.glowColor}, 0 0 40px ${tag.glowColor}`,
-                        `0 0 40px ${tag.glowColor}, 0 0 80px ${tag.glowColor}`,
-                        `0 0 20px ${tag.glowColor}, 0 0 40px ${tag.glowColor}`
-                      ]
-                    }}
-                    transition={{
-                      duration: 2 + Math.random(),
-                      repeat: Infinity,
-                      ease: "easeInOut"
-                    }}
-                    whileHover={{
-                      scale: 1.3,
-                      transition: { duration: 0.3 }
-                    }}
-                  >
-                    {/* Twinkling effect */}
-                    <motion.div
-                      className="absolute inset-0 rounded-full"
-                      animate={{
-                        opacity: [0, 1, 0],
-                      }}
-                      transition={{
-                        duration: 1.5,
-                        repeat: Infinity,
-                        delay: Math.random() * 2
-                      }}
-                    >
-                      <div className="absolute top-2 right-2 w-2 h-2 bg-white rounded-full opacity-80"></div>
-                      <div className="absolute bottom-3 left-3 w-1 h-1 bg-white rounded-full opacity-60"></div>
-                    </motion.div>
-
-                    {/* Icon */}
-                    <IconComponent size={24} className="text-white relative z-10" />
-                    
-                    {/* Tag text on hover */}
-                    <motion.div
-                      className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-white text-xs font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                      style={{
-                        textShadow: "0 0 10px rgba(0, 0, 0, 0.8)"
-                      }}
-                      initial={{ opacity: 0, y: 10 }}
-                      whileHover={{ opacity: 1, y: 0 }}
-                    >
-                      {tag.text}
-                    </motion.div>
-                  </motion.div>
-                </motion.div>
-              );
-            })}
-
-            {/* Central galaxy core */}
-            <motion.div
-              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-gradient-to-r from-cyan-400 to-purple-500 rounded-full"
-              animate={{
-                scale: [1, 1.5, 1],
-                rotate: 360,
-              }}
-              transition={{
-                scale: { duration: 3, repeat: Infinity },
-                rotate: { duration: 8, repeat: Infinity, ease: "linear" }
-              }}
-              style={{
-                boxShadow: "0 0 20px rgba(0, 245, 255, 0.8), 0 0 40px rgba(139, 92, 246, 0.6)"
-              }}
-            />
-          </div>
         </motion.div>
       </div>
+
+      {/* Floating Stat Bubbles */}
+      {statBubbles.map((bubble, index) => {
+        const IconComponent = bubble.icon;
+        return (
+          <motion.div
+            key={index}
+            className="absolute"
+            style={bubble.position}
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ 
+              duration: 0.8, 
+              delay: 1.5 + index * 0.2,
+              type: "spring",
+              stiffness: 100 
+            }}
+          >
+            <motion.div
+              className={`relative w-32 h-32 rounded-full bg-gradient-to-br ${bubble.gradient} flex flex-col items-center justify-center cursor-pointer shadow-2xl group`}
+              style={{
+                boxShadow: `0 0 30px ${bubble.glowColor}, 0 0 60px ${bubble.glowColor}`,
+              }}
+              animate={{
+                y: [0, -12, 0],
+                scale: [1, 1.02, 1],
+              }}
+              transition={{
+                y: {
+                  duration: 3 + Math.random() * 2,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                },
+                scale: {
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }
+              }}
+              whileHover={{
+                scale: 1.1,
+                boxShadow: `0 0 40px ${bubble.glowColor}, 0 0 80px ${bubble.glowColor}`,
+                transition: { duration: 0.3 }
+              }}
+            >
+              {/* Twinkling effect */}
+              <motion.div
+                className="absolute inset-0 rounded-full"
+                animate={{
+                  opacity: [0, 1, 0],
+                }}
+                transition={{
+                  duration: 1.5,
+                  repeat: Infinity,
+                  delay: Math.random() * 2
+                }}
+              >
+                <div className="absolute top-4 right-4 w-2 h-2 bg-white rounded-full opacity-80"></div>
+                <div className="absolute bottom-4 left-4 w-1 h-1 bg-white rounded-full opacity-60"></div>
+              </motion.div>
+
+              {/* Icon */}
+              <IconComponent size={20} className="text-white mb-1 relative z-10" />
+              
+              {/* Count */}
+              <motion.div 
+                className="text-white text-sm font-bold font-orbitron relative z-10"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 2 + index * 0.1 }}
+              >
+                {bubble.count}
+              </motion.div>
+              
+              {/* Label on hover */}
+              <motion.div
+                className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-white text-xs font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                style={{
+                  textShadow: "0 0 10px rgba(0, 0, 0, 0.8)"
+                }}
+              >
+                {bubble.label}
+              </motion.div>
+            </motion.div>
+          </motion.div>
+        );
+      })}
 
       {/* Floating elements */}
       <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-dark-space to-transparent" />
