@@ -121,7 +121,7 @@ const HeroSection = () => {
         duration: 1
       }}>
           {/* Animated DevLaunch Typography */}
-          <div className="mb-8 px-0 py-[65px]">
+          <div className="mb-8 px-0 mx-0 my-0 py-0">
             <motion.h1 className="text-6xl md:text-8xl font-bold text-white inline-flex" style={{
             fontFamily: "'Space Grotesk', 'Inter', sans-serif"
           }}>
