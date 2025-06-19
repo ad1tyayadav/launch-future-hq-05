@@ -192,19 +192,7 @@ const HeroSection = () => {
           duration: 0.8
         }} className="flex flex-col sm:flex-row gap-6 justify-center items-center">
             <Link to="/lets-talk">
-              <motion.button whileHover={{
-              scale: 1.05,
-              boxShadow: "0 0 30px rgba(0, 255, 255, 0.3)"
-            }} whileTap={{
-              scale: 0.95
-            }} className="group relative px-8 py-4 bg-gradient-to-r from-cyber-blue to-cyber-purple rounded-xl text-white font-semibold text-lg overflow-hidden">
-                
-                <div className="relative flex items-center space-x-3">
-                  <Rocket size={24} />
-                  <span>Start Your Journey</span>
-                  <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
-                </div>
-              </motion.button>
+              
             </Link>
 
             <motion.button whileHover={{
