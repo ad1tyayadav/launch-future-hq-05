@@ -195,16 +195,7 @@ const HeroSection = () => {
               
             </Link>
 
-            <motion.button whileHover={{
-            scale: 1.05
-          }} whileTap={{
-            scale: 0.95
-          }} onClick={scrollToProjects} className="group px-8 py-4 border-2 border-cyber-blue text-cyber-blue hover:bg-cyber-blue hover:text-dark-space rounded-xl font-semibold text-lg transition-all duration-300">
-              <div className="flex items-center space-x-3">
-                <span>Explore Our Galaxy</span>
-                <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
-              </div>
-            </motion.button>
+            
           </motion.div>
         </motion.div>
       </div>
