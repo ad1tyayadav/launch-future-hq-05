@@ -29,7 +29,6 @@ const HeroSection = () => {
       scale: 1,
       transition: {
         duration: 0.8,
-        ease: [0.68, -0.55, 0.265, 1.55],
         type: "spring" as const,
         stiffness: 100,
         damping: 10
@@ -116,7 +115,10 @@ const HeroSection = () => {
                   whileHover="hover"
                   transition={{
                     delay: index * 0.1,
-                    ...letterVariants.visible.transition
+                    duration: 0.8,
+                    type: "spring",
+                    stiffness: 100,
+                    damping: 10
                   }}
                   className="inline-block cursor-pointer"
                   style={{
