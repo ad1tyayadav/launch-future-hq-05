@@ -1,7 +1,7 @@
-
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink, Github, ArrowRight, X } from 'lucide-react';
+import { ExternalLink, Github, ArrowRight, X, Rocket, Terminal, Code } from 'lucide-react';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 
 const ProjectsSection = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -9,7 +9,7 @@ const ProjectsSection = () => {
 
   const categories = ['All', 'Web3', 'E-commerce', 'Enterprise', 'Mobile', 'Travel'];
 
-  const projects = [
+  const clientProjects = [
     {
       id: 1,
       title: 'Dyota AI',
@@ -129,9 +129,130 @@ const ProjectsSection = () => {
     },
   ];
 
-  const filteredProjects = selectedCategory === 'All' 
-    ? projects 
-    : projects.filter(project => project.category === selectedCategory);
+  const devLaunchProjects = [
+    {
+      id: 101,
+      title: 'DevLaunch Analytics Engine',
+      category: 'Analytics',
+      status: 'In Development',
+      description: 'Real-time analytics dashboard for tracking development metrics and performance',
+      fullDescription: 'Advanced analytics platform that provides deep insights into development workflows, code quality metrics, and team performance analytics with predictive modeling capabilities.',
+      tech: ['React', 'D3.js', 'Python', 'TensorFlow'],
+      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop',
+      color: 'from-cyan-400 to-violet-600',
+      liveUrl: '#',
+      githubUrl: '#',
+      featured: true,
+      isDevLaunch: true
+    },
+    {
+      id: 102,
+      title: 'AI Chat Tools',
+      category: 'AI/ML',
+      status: 'Open Source',
+      description: 'Intelligent chat interface with natural language processing capabilities',
+      fullDescription: 'Open-source chat tool suite featuring advanced NLP, context awareness, and multi-modal interaction capabilities for enhanced developer productivity.',
+      tech: ['TypeScript', 'OpenAI', 'React', 'Node.js'],
+      image: 'https://images.unsplash.com/photo-1677756119517-756a188d2d94?w=800&h=600&fit=crop',
+      color: 'from-violet-500 to-cyan-400',
+      liveUrl: '#',
+      githubUrl: '#',
+      featured: false,
+      isDevLaunch: true
+    },
+    {
+      id: 103,
+      title: 'Internal Dashboard UI',
+      category: 'Tools',
+      status: 'Production',
+      description: 'Comprehensive admin dashboard for internal operations management',
+      fullDescription: 'Feature-rich admin dashboard providing real-time monitoring, user management, system analytics, and operational insights for internal team efficiency.',
+      tech: ['React', 'Material-UI', 'GraphQL', 'PostgreSQL'],
+      image: 'https://images.unsplash.com/photo-1551650975-87deedd944c3?w=800&h=600&fit=crop',
+      color: 'from-emerald-400 to-cyan-600',
+      liveUrl: '#',
+      githubUrl: '#',
+      featured: true,
+      isDevLaunch: true
+    },
+    {
+      id: 104,
+      title: 'Dev CMS',
+      category: 'CMS',
+      status: 'Experimental',
+      description: 'Headless CMS designed specifically for developer workflows',
+      fullDescription: 'Developer-first content management system with API-first architecture, version control integration, and advanced content modeling for modern web applications.',
+      tech: ['Next.js', 'Strapi', 'MongoDB', 'Docker'],
+      image: 'https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=800&h=600&fit=crop',
+      color: 'from-purple-500 to-pink-500',
+      liveUrl: '#',
+      githubUrl: '#',
+      featured: false,
+      isDevLaunch: true
+    },
+    {
+      id: 105,
+      title: 'Prototype Portal',
+      category: 'Platform',
+      status: 'In Development',
+      description: 'Rapid prototyping platform for testing and iterating ideas quickly',
+      fullDescription: 'Comprehensive prototyping platform enabling rapid idea validation, user testing, and iterative development with built-in collaboration tools.',
+      tech: ['Vue.js', 'Firebase', 'WebRTC', 'Canvas API'],
+      image: 'https://images.unsplash.com/photo-1560472355-536de3962603?w=800&h=600&fit=crop',
+      color: 'from-indigo-500 to-purple-600',
+      liveUrl: '#',
+      githubUrl: '#',
+      featured: false,
+      isDevLaunch: true
+    },
+    {
+      id: 106,
+      title: 'Code Intelligence Suite',
+      category: 'Developer Tools',
+      status: 'Open Source',
+      description: 'AI-powered code analysis and optimization toolkit',
+      fullDescription: 'Advanced code intelligence platform providing automated code review, performance optimization suggestions, and smart refactoring capabilities.',
+      tech: ['Python', 'AST', 'Machine Learning', 'Docker'],
+      image: 'https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=800&h=600&fit=crop',
+      color: 'from-blue-500 to-teal-500',
+      liveUrl: '#',
+      githubUrl: '#',
+      featured: true,
+      isDevLaunch: true
+    }
+  ];
+
+  const filteredClientProjects = selectedCategory === 'All' 
+    ? clientProjects 
+    : clientProjects.filter(project => project.category === selectedCategory);
+
+  const getStatusIcon = (status) => {
+    switch (status) {
+      case 'Open Source':
+        return <Code size={16} />;
+      case 'In Development':
+        return <Rocket size={16} />;
+      case 'Experimental':
+        return <Terminal size={16} />;
+      default:
+        return <Rocket size={16} />;
+    }
+  };
+
+  const getStatusColor = (status) => {
+    switch (status) {
+      case 'Open Source':
+        return 'from-green-500 to-emerald-600';
+      case 'In Development':
+        return 'from-orange-500 to-red-500';
+      case 'Experimental':
+        return 'from-purple-500 to-pink-500';
+      case 'Production':
+        return 'from-blue-500 to-cyan-500';
+      default:
+        return 'from-gray-500 to-gray-600';
+    }
+  };
 
   const ProjectCard = ({ project, index }) => (
     <motion.div
@@ -165,21 +286,34 @@ const ProjectsSection = () => {
           />
           <div className={`absolute inset-0 bg-gradient-to-t ${project.color} opacity-60 group-hover:opacity-40 transition-opacity duration-500`} />
           
-          {/* Category badge */}
+          {/* Category/Status badge */}
           <div className="absolute top-4 left-4">
-            <span className="px-3 py-1 bg-dark-space/80 text-cyber-blue font-semibold rounded-full text-sm backdrop-blur-sm">
-              {project.category}
-            </span>
+            {project.isDevLaunch ? (
+              <div className="flex items-center space-x-2">
+                <span className={`px-3 py-1 bg-gradient-to-r ${getStatusColor(project.status)} text-white font-semibold rounded-full text-sm flex items-center space-x-1`}>
+                  {getStatusIcon(project.status)}
+                  <span>{project.status}</span>
+                </span>
+              </div>
+            ) : (
+              <span className="px-3 py-1 bg-dark-space/80 text-cyber-blue font-semibold rounded-full text-sm backdrop-blur-sm">
+                {project.category}
+              </span>
+            )}
           </div>
 
-          {/* Featured badge */}
-          {project.featured && (
-            <div className="absolute top-4 right-4">
+          {/* DevLaunch or Featured badge */}
+          <div className="absolute top-4 right-4">
+            {project.isDevLaunch ? (
+              <span className="px-3 py-1 bg-gradient-to-r from-cyan-400 to-violet-600 text-white font-semibold rounded-full text-sm">
+                DevLaunch
+              </span>
+            ) : project.featured && (
               <span className="px-3 py-1 bg-gradient-to-r from-cyber-blue to-cyber-purple text-white font-semibold rounded-full text-sm">
                 Featured
               </span>
-            </div>
-          )}
+            )}
+          </div>
 
           {/* Hover overlay */}
           <div className="absolute inset-0 bg-dark-space/60 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
@@ -209,7 +343,7 @@ const ProjectsSection = () => {
             {project.tech.slice(0, 3).map((tech, techIndex) => (
               <span
                 key={techIndex}
-                className="px-2 py-1 bg-cyber-blue/20 text-cyber-blue rounded-md text-xs font-medium"
+                className={`px-2 py-1 ${project.isDevLaunch ? 'bg-cyan-400/20 text-cyan-400' : 'bg-cyber-blue/20 text-cyber-blue'} rounded-md text-xs font-medium`}
               >
                 {tech}
               </span>
@@ -226,14 +360,14 @@ const ProjectsSection = () => {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="flex-1 py-2 px-4 bg-gradient-to-r from-cyber-blue to-cyber-purple text-white rounded-lg text-sm font-semibold"
+              className={`flex-1 py-2 px-4 ${project.isDevLaunch ? 'bg-gradient-to-r from-cyan-400 to-violet-600' : 'bg-gradient-to-r from-cyber-blue to-cyber-purple'} text-white rounded-lg text-sm font-semibold`}
             >
               View Live
             </motion.button>
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="p-2 border border-cyber-blue text-cyber-blue hover:bg-cyber-blue hover:text-dark-space transition-all duration-300 rounded-lg"
+              className={`p-2 border ${project.isDevLaunch ? 'border-cyan-400 text-cyan-400 hover:bg-cyan-400' : 'border-cyber-blue text-cyber-blue hover:bg-cyber-blue'} hover:text-dark-space transition-all duration-300 rounded-lg`}
             >
               <Github size={16} />
             </motion.button>
@@ -279,9 +413,21 @@ const ProjectsSection = () => {
             <h2 className="text-4xl font-orbitron font-bold text-white glow-text">
               {project.title}
             </h2>
-            <span className="px-4 py-2 bg-gradient-to-r from-cyber-blue to-cyber-purple text-white font-semibold rounded-full">
-              {project.category}
-            </span>
+            {project.isDevLaunch ? (
+              <div className="flex items-center space-x-2">
+                <span className="px-4 py-2 bg-gradient-to-r from-cyan-400 to-violet-600 text-white font-semibold rounded-full">
+                  DevLaunch
+                </span>
+                <span className={`px-4 py-2 bg-gradient-to-r ${getStatusColor(project.status)} text-white font-semibold rounded-full flex items-center space-x-2`}>
+                  {getStatusIcon(project.status)}
+                  <span>{project.status}</span>
+                </span>
+              </div>
+            ) : (
+              <span className="px-4 py-2 bg-gradient-to-r from-cyber-blue to-cyber-purple text-white font-semibold rounded-full">
+                {project.category}
+              </span>
+            )}
           </div>
 
           <p className="text-white/90 font-sora text-lg leading-relaxed mb-8">
@@ -289,12 +435,12 @@ const ProjectsSection = () => {
           </p>
 
           <div className="mb-8">
-            <h3 className="text-cyber-blue font-semibold mb-4 text-lg">Technology Stack:</h3>
+            <h3 className={`${project.isDevLaunch ? 'text-cyan-400' : 'text-cyber-blue'} font-semibold mb-4 text-lg`}>Technology Stack:</h3>
             <div className="flex flex-wrap gap-3">
               {project.tech.map((tech, index) => (
                 <span
                   key={index}
-                  className="px-4 py-2 bg-cyber-blue/20 text-cyber-blue rounded-lg font-medium"
+                  className={`px-4 py-2 ${project.isDevLaunch ? 'bg-cyan-400/20 text-cyan-400' : 'bg-cyber-blue/20 text-cyber-blue'} rounded-lg font-medium`}
                 >
                   {tech}
                 </span>
@@ -306,7 +452,7 @@ const ProjectsSection = () => {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="flex items-center space-x-2 px-8 py-4 bg-gradient-to-r from-cyber-blue to-cyber-purple text-white font-semibold rounded-lg"
+              className={`flex items-center space-x-2 px-8 py-4 ${project.isDevLaunch ? 'bg-gradient-to-r from-cyan-400 to-violet-600' : 'bg-gradient-to-r from-cyber-blue to-cyber-purple'} text-white font-semibold rounded-lg`}
             >
               <ExternalLink size={20} />
               <span>View Live Demo</span>
@@ -315,7 +461,7 @@ const ProjectsSection = () => {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="flex items-center space-x-2 px-8 py-4 border border-cyber-blue text-cyber-blue hover:bg-cyber-blue hover:text-dark-space transition-all duration-300 rounded-lg font-semibold"
+              className={`flex items-center space-x-2 px-8 py-4 border ${project.isDevLaunch ? 'border-cyan-400 text-cyan-400 hover:bg-cyan-400' : 'border-cyber-blue text-cyber-blue hover:bg-cyber-blue'} hover:text-dark-space transition-all duration-300 rounded-lg font-semibold`}
             >
               <Github size={20} />
               <span>View Code</span>
@@ -336,52 +482,95 @@ const ProjectsSection = () => {
           className="text-center mb-16"
         >
           <h2 className="text-5xl md:text-6xl font-orbitron font-bold text-white glow-text mb-6">
-            Client Projects
+            Our Projects
           </h2>
           <p className="text-xl text-white/80 font-sora max-w-3xl mx-auto">
-            Explore our portfolio of groundbreaking digital solutions crafted for real clients, 
-            pushing the boundaries of technology and design.
+            Explore our portfolio of groundbreaking digital solutions and internal innovations 
+            that push the boundaries of technology and design.
           </p>
         </motion.div>
 
-        {/* Category Filter */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="flex flex-wrap justify-center gap-4 mb-16"
-        >
-          {categories.map((category, index) => (
-            <motion.button
-              key={category}
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ delay: index * 0.1 }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setSelectedCategory(category)}
-              className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${
-                selectedCategory === category
-                  ? 'bg-gradient-to-r from-cyber-blue to-cyber-purple text-white'
-                  : 'bg-white/5 text-white/70 hover:bg-white/10 hover:text-white'
-              }`}
-            >
-              {category}
-            </motion.button>
-          ))}
-        </motion.div>
+        <Tabs defaultValue="client" className="w-full">
+          {/* Main Tab Selector */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="flex justify-center mb-12"
+          >
+            <TabsList className="grid w-full max-w-md grid-cols-2 bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-1">
+              <TabsTrigger 
+                value="client"
+                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-cyber-blue data-[state=active]:to-cyber-purple data-[state=active]:text-white text-white/70 font-semibold py-3 rounded-lg transition-all duration-300"
+              >
+                Client Projects
+              </TabsTrigger>
+              <TabsTrigger 
+                value="devlaunch"
+                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-cyan-400 data-[state=active]:to-violet-600 data-[state=active]:text-white text-white/70 font-semibold py-3 rounded-lg transition-all duration-300"
+              >
+                DevLaunch Projects
+              </TabsTrigger>
+            </TabsList>
+          </motion.div>
 
-        {/* Projects Grid */}
-        <motion.div 
-          layout
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-        >
-          <AnimatePresence>
-            {filteredProjects.map((project, index) => (
-              <ProjectCard key={project.id} project={project} index={index} />
-            ))}
-          </AnimatePresence>
-        </motion.div>
+          <TabsContent value="client" className="focus-visible:outline-none">
+            {/* Category Filter for Client Projects */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="flex flex-wrap justify-center gap-4 mb-16"
+            >
+              {categories.map((category, index) => (
+                <motion.button
+                  key={category}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: index * 0.1 }}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setSelectedCategory(category)}
+                  className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${
+                    selectedCategory === category
+                      ? 'bg-gradient-to-r from-cyber-blue to-cyber-purple text-white'
+                      : 'bg-white/5 text-white/70 hover:bg-white/10 hover:text-white'
+                  }`}
+                >
+                  {category}
+                </motion.button>
+              ))}
+            </motion.div>
+
+            {/* Client Projects Grid */}
+            <motion.div 
+              layout
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            >
+              <AnimatePresence>
+                {filteredClientProjects.map((project, index) => (
+                  <ProjectCard key={project.id} project={project} index={index} />
+                ))}
+              </AnimatePresence>
+            </motion.div>
+          </TabsContent>
+
+          <TabsContent value="devlaunch" className="focus-visible:outline-none">
+            {/* DevLaunch Projects Grid */}
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            >
+              <AnimatePresence>
+                {devLaunchProjects.map((project, index) => (
+                  <ProjectCard key={project.id} project={project} index={index} />
+                ))}
+              </AnimatePresence>
+            </motion.div>
+          </TabsContent>
+        </Tabs>
       </div>
 
       {/* Project Modal */}
