@@ -61,13 +61,6 @@ const Navigation = () => {
                 {item.name}
               </a>
             ))}
-            
-            {/* Investor Deck Button */}
-            <Link to="/investor-deck">
-              <button className="px-4 py-2 bg-gradient-to-r from-cyber-purple to-cyber-pink text-white font-semibold rounded-lg transform transition-all duration-300 hover:scale-105 hover:shadow-lg border border-white/20">
-                Investor Deck
-              </button>
-            </Link>
 
             <Link to="/lets-talk">
               <button className="cyber-button">
@@ -107,14 +100,6 @@ const Navigation = () => {
                 {item.name}
               </a>
             ))}
-            <Link to="/investor-deck">
-              <button 
-                className="block w-full text-left px-4 py-2 bg-gradient-to-r from-cyber-purple to-cyber-pink text-white font-semibold rounded-lg mb-2"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Investor Deck
-              </button>
-            </Link>
             <Link to="/lets-talk">
               <button className="cyber-button w-full mt-4" onClick={() => setIsMobileMenuOpen(false)}>
                 <span>Let's Talk</span>
