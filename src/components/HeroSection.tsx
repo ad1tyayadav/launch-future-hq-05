@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { motion } from 'framer-motion';
 
@@ -46,6 +47,22 @@ const HeroSection = () => {
 
   const devLaunchLetters = "DevLaunch".split("");
 
+  // Coding elements data
+  const codeSnippets = [
+    "const dev = 'awesome';",
+    "npm install success",
+    "git commit -m 'magic'",
+    "function() { return joy; }",
+    "console.log('hello world');",
+    "import React from 'react';",
+    "<Component />",
+    "{ status: 'deployed' }",
+    "404: bugs not found",
+    "while(alive) { code(); }"
+  ];
+
+  const techSymbols = ["{ }", "< />", "( )", "[ ]", "=>", "&&", "||", "++", "--", "==="];
+
   return (
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
       {/* Background effects */}
@@ -75,6 +92,93 @@ const HeroSection = () => {
               delay: Math.random() * 3
             }}
           />
+        ))}
+
+        {/* Floating code snippets */}
+        {codeSnippets.map((snippet, i) => (
+          <motion.div
+            key={`code-${i}`}
+            className="absolute text-xs font-mono text-cyber-blue/30 select-none pointer-events-none"
+            style={{
+              left: `${Math.random() * 90 + 5}%`,
+              top: `${Math.random() * 90 + 5}%`,
+            }}
+            animate={{
+              y: [-20, 20, -20],
+              opacity: [0.1, 0.4, 0.1],
+              x: [-10, 10, -10]
+            }}
+            transition={{
+              duration: 8 + Math.random() * 4,
+              repeat: Infinity,
+              delay: Math.random() * 5,
+              ease: "easeInOut" as const
+            }}
+          >
+            {snippet}
+          </motion.div>
+        ))}
+
+        {/* Floating tech symbols */}
+        {techSymbols.map((symbol, i) => (
+          <motion.div
+            key={`symbol-${i}`}
+            className="absolute text-lg font-mono text-cyber-purple/20 select-none pointer-events-none"
+            style={{
+              left: `${Math.random() * 95 + 2.5}%`,
+              top: `${Math.random() * 95 + 2.5}%`,
+            }}
+            animate={{
+              rotate: [0, 360],
+              scale: [0.8, 1.2, 0.8],
+              opacity: [0.1, 0.3, 0.1]
+            }}
+            transition={{
+              duration: 10 + Math.random() * 5,
+              repeat: Infinity,
+              delay: Math.random() * 3,
+              ease: "linear" as const
+            }}
+          >
+            {symbol}
+          </motion.div>
+        ))}
+
+        {/* Terminal cursor blink */}
+        <motion.div
+          className="absolute bottom-20 left-10 w-2 h-4 bg-neon-green/50"
+          animate={{
+            opacity: [1, 0, 1]
+          }}
+          transition={{
+            duration: 1,
+            repeat: Infinity,
+            ease: "steps(2)" as const
+          }}
+        />
+
+        {/* Small binary numbers */}
+        {[...Array(20)].map((_, i) => (
+          <motion.div
+            key={`binary-${i}`}
+            className="absolute text-xs font-mono text-cyber-pink/20 select-none pointer-events-none"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              opacity: [0.1, 0.3, 0.1],
+              y: [-50, 50]
+            }}
+            transition={{
+              duration: 15 + Math.random() * 10,
+              repeat: Infinity,
+              delay: Math.random() * 8,
+              ease: "linear" as const
+            }}
+          >
+            {Math.random() > 0.5 ? '1' : '0'}
+          </motion.div>
         ))}
 
         {/* Tech grid lines */}
