@@ -70,6 +70,15 @@
   ::-webkit-scrollbar-thumb:hover {
     background: linear-gradient(45deg, #00f5ff, #ff0080);
   }
+
+  /* Seamless section transitions */
+  section {
+    @apply relative;
+  }
+
+  section:not(:first-child) {
+    @apply -mt-1;
+  }
 }
 
 @layer components {
@@ -117,6 +126,16 @@
   
   .cyber-button span {
     @apply relative z-10;
+  }
+
+  /* Seamless section blending */
+  .section-blend {
+    @apply relative;
+  }
+
+  .section-blend::before {
+    content: '';
+    @apply absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-dark-space/80 to-transparent -mt-20 z-10;
   }
 }
 

@@ -13,12 +13,18 @@ const Index = () => {
     <div className="min-h-screen bg-dark-space relative">
       <ThreeBackground />
       <Navigation />
-      <HeroSection />
-      <InvestorSection />
-      <ServicesSection />
-      <ProjectsSection />
-      <PricingSection />
-      <ContactSection />
+      <div className="relative z-10">
+        <HeroSection />
+        <div className="relative">
+          {/* Seamless transition overlay */}
+          <div className="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-dark-space to-transparent -mt-20 z-10" />
+          <InvestorSection />
+        </div>
+        <ServicesSection />
+        <ProjectsSection />
+        <PricingSection />
+        <ContactSection />
+      </div>
     </div>
   );
 };
