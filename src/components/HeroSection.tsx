@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 
@@ -153,7 +152,7 @@ const HeroSection = () => {
           transition={{
             duration: 1,
             repeat: Infinity,
-            ease: "steps(2)" as const
+            ease: "linear" as const
           }}
         />
 
