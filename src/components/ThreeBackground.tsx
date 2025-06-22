@@ -7,12 +7,12 @@ import * as THREE from 'three';
 
 function Stars(props: any) {
   const ref = useRef<THREE.Points>(null);
-  const [sphere] = useMemo(() => [random.inSphere(new Float32Array(2000), { radius: 1.2 })], []);
+  const [sphere] = useMemo(() => [random.inSphere(new Float32Array(5000), { radius: 1.5 })], []);
 
   useFrame((state, delta) => {
     if (ref.current) {
-      ref.current.rotation.x -= delta / 15;
-      ref.current.rotation.y -= delta / 20;
+      ref.current.rotation.x -= delta / 10;
+      ref.current.rotation.y -= delta / 15;
     }
   });
 
@@ -22,7 +22,7 @@ function Stars(props: any) {
         <PointMaterial
           transparent
           color="#00f5ff"
-          size={0.003}
+          size={0.005}
           sizeAttenuation={true}
           depthWrite={false}
         />
@@ -31,16 +31,63 @@ function Stars(props: any) {
   );
 }
 
+function FloatingGeometry() {
+  const meshRef = useRef<THREE.Mesh>(null);
+
+  useFrame((state) => {
+    if (meshRef.current) {
+      meshRef.current.position.y = Math.sin(state.clock.elapsedTime) * 0.5;
+      meshRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.5) * 0.5;
+      meshRef.current.rotation.y += 0.01;
+    }
+  });
+
+  return (
+    <mesh ref={meshRef} position={[2, 0, 0]}>
+      <icosahedronGeometry args={[1, 1]} />
+      <meshStandardMaterial
+        color="#8b5cf6"
+        transparent
+        opacity={0.8}
+        wireframe
+      />
+    </mesh>
+  );
+}
+
+function FloatingTorus() {
+  const meshRef = useRef<THREE.Mesh>(null);
+
+  useFrame((state) => {
+    if (meshRef.current) {
+      meshRef.current.position.y = Math.cos(state.clock.elapsedTime * 0.8) * 0.7;
+      meshRef.current.rotation.x += 0.005;
+      meshRef.current.rotation.y += 0.01;
+    }
+  });
+
+  return (
+    <mesh ref={meshRef} position={[-2, 1, -1]}>
+      <torusGeometry args={[1, 0.4, 16, 100]} />
+      <meshStandardMaterial
+        color="#ff0080"
+        transparent
+        opacity={0.7}
+        wireframe
+      />
+    </mesh>
+  );
+}
+
 export default function ThreeBackground() {
   return (
-    <div className="fixed inset-0 z-0 opacity-60">
-      <Canvas 
-        camera={{ position: [0, 0, 1] }}
-        dpr={[1, 1.5]}
-        performance={{ min: 0.5 }}  
-      >
-        <ambientLight intensity={0.3} />
+    <div className="fixed inset-0 z-0">
+      <Canvas camera={{ position: [0, 0, 1] }}>
+        <ambientLight intensity={0.5} />
+        <pointLight position={[10, 10, 10]} intensity={1} />
         <Stars />
+        <FloatingGeometry />
+        <FloatingTorus />
       </Canvas>
     </div>
   );
