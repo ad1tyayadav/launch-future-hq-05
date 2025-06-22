@@ -1,8 +1,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Users, DollarSign, Globe, Calendar, Settings } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Cpu, Database, Code, Zap, Network } from 'lucide-react';
 
 const HeroSection = () => {
   // Animation variants for individual letters
@@ -39,58 +38,63 @@ const HeroSection = () => {
     }
   };
 
-  // Floating stat bubbles data
-  const statBubbles = [{
-    icon: Users,
-    label: "Clients",
-    count: "+120",
-    gradient: "from-blue-400 via-purple-500 to-pink-500",
-    glowColor: "rgba(59, 130, 246, 0.6)",
+  // Tech floating elements data
+  const techElements = [{
+    icon: Cpu,
+    label: "AI Core",
+    gradient: "from-cyan-400 via-blue-500 to-purple-600",
+    glowColor: "rgba(6, 182, 212, 0.8)",
+    position: {
+      top: "10%",
+      left: "8%"
+    },
+    size: "w-20 h-20",
+    pulseDelay: 0
+  }, {
+    icon: Database,
+    label: "Neural Net",
+    gradient: "from-purple-500 via-pink-500 to-red-500",
+    glowColor: "rgba(168, 85, 247, 0.8)",
     position: {
       top: "15%",
-      left: "10%"
-    }
+      right: "12%"
+    },
+    size: "w-16 h-16",
+    pulseDelay: 0.5
   }, {
-    icon: DollarSign,
-    label: "Total Budget",
-    count: "$2.3M",
-    gradient: "from-green-400 via-emerald-500 to-teal-500",
-    glowColor: "rgba(34, 197, 94, 0.6)",
+    icon: Code,
+    label: "Code Gen",
+    gradient: "from-green-400 via-emerald-500 to-teal-600",
+    glowColor: "rgba(34, 197, 94, 0.8)",
     position: {
-      top: "20%",
-      right: "15%"
-    }
+      top: "50%",
+      left: "2%"
+    },
+    size: "w-24 h-24",
+    pulseDelay: 1
   }, {
-    icon: Globe,
-    label: "Community",
-    count: "+8K members",
-    gradient: "from-cyan-400 via-blue-500 to-purple-500",
-    glowColor: "rgba(6, 182, 212, 0.6)",
+    icon: Zap,
+    label: "Lightning",
+    gradient: "from-yellow-400 via-orange-500 to-red-600",
+    glowColor: "rgba(249, 115, 22, 0.8)",
     position: {
       top: "60%",
-      left: "5%"
-    }
+      right: "8%"
+    },
+    size: "w-18 h-18",
+    pulseDelay: 1.5
   }, {
-    icon: Calendar,
-    label: "Projects",
-    count: "300+",
-    gradient: "from-orange-400 via-red-500 to-pink-500",
-    glowColor: "rgba(249, 115, 22, 0.6)",
+    icon: Network,
+    label: "Quantum",
+    gradient: "from-indigo-500 via-purple-600 to-pink-600",
+    glowColor: "rgba(99, 102, 241, 0.8)",
     position: {
-      top: "65%",
-      right: "10%"
-    }
-  }, {
-    icon: Settings,
-    label: "Ongoing",
-    count: "25",
-    gradient: "from-purple-400 via-pink-500 to-rose-500",
-    glowColor: "rgba(168, 85, 247, 0.6)",
-    position: {
-      bottom: "20%",
-      left: "50%",
+      bottom: "15%",
+      left: "45%",
       transform: "translateX(-50%)"
-    }
+    },
+    size: "w-22 h-22",
+    pulseDelay: 2
   }];
 
   const devLaunchLetters = "DevLaunch".split("");
@@ -102,26 +106,37 @@ const HeroSection = () => {
         <div className="absolute top-1/4 left-0 w-64 h-64 bg-gradient-to-r from-cyber-blue/20 to-transparent rounded-full filter blur-3xl -translate-y-1/2 -translate-x-1/4" />
         <div className="absolute bottom-1/4 right-0 w-64 h-64 bg-gradient-to-l from-cyber-purple/20 to-transparent rounded-full filter blur-3xl translate-y-1/2 translate-x-1/4" />
         
-        {/* Starfield background */}
-        {[...Array(100)].map((_, i) => (
+        {/* Enhanced starfield background */}
+        {[...Array(150)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-1 h-1 bg-white rounded-full"
+            className="absolute rounded-full"
             style={{
               left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`
+              top: `${Math.random() * 100}%`,
+              width: Math.random() > 0.7 ? '2px' : '1px',
+              height: Math.random() > 0.7 ? '2px' : '1px',
+              background: Math.random() > 0.5 ? '#00f5ff' : '#8b5cf6'
             }}
             animate={{
               opacity: [0.2, 1, 0.2],
-              scale: [0.5, 1.2, 0.5]
+              scale: [0.5, 1.5, 0.5]
             }}
             transition={{
-              duration: 2 + Math.random() * 3,
+              duration: 2 + Math.random() * 4,
               repeat: Infinity,
-              delay: Math.random() * 2
+              delay: Math.random() * 3
             }}
           />
         ))}
+
+        {/* Tech grid lines */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-cyber-blue to-transparent" />
+          <div className="absolute top-0 right-1/4 w-px h-full bg-gradient-to-b from-transparent via-cyber-purple to-transparent" />
+          <div className="absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-cyber-blue to-transparent" />
+          <div className="absolute bottom-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-cyber-purple to-transparent" />
+        </div>
       </div>
       
       <div className="container mx-auto px-6 text-center relative z-10">
@@ -162,109 +177,165 @@ const HeroSection = () => {
               ))}
             </motion.h1>
           </div>
-
-          {/* Investor Deck Button */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.2, duration: 0.8 }}
-            className="mb-12"
-          >
-            <Link to="/investor-deck">
-              <motion.button
-                className="px-8 py-4 bg-gradient-to-r from-cyber-purple to-cyber-pink text-white font-semibold rounded-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl border border-white/20 font-orbitron"
-                whileHover={{ 
-                  scale: 1.05,
-                  boxShadow: "0 0 30px rgba(139, 92, 246, 0.5)"
-                }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <span className="relative z-10">🚀 Investor Deck</span>
-              </motion.button>
-            </Link>
-          </motion.div>
         </motion.div>
       </div>
 
-      {/* Floating Stat Bubbles */}
-      {statBubbles.map((bubble, index) => {
-        const IconComponent = bubble.icon;
+      {/* Floating Tech Elements */}
+      {techElements.map((element, index) => {
+        const IconComponent = element.icon;
         return (
           <motion.div
             key={index}
             className="absolute"
-            style={bubble.position}
+            style={element.position}
             initial={{ opacity: 0, scale: 0 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{
-              duration: 0.8,
-              delay: 1.5 + index * 0.2,
+              duration: 1,
+              delay: 1 + index * 0.3,
               type: "spring",
-              stiffness: 100
+              stiffness: 120
             }}
           >
             <motion.div
-              className={`relative w-32 h-32 rounded-full bg-gradient-to-br ${bubble.gradient} flex flex-col items-center justify-center cursor-pointer shadow-2xl group`}
+              className={`relative ${element.size} rounded-xl bg-gradient-to-br ${element.gradient} flex items-center justify-center cursor-pointer group overflow-hidden`}
               style={{
-                boxShadow: `0 0 30px ${bubble.glowColor}, 0 0 60px ${bubble.glowColor}`
+                boxShadow: `0 0 40px ${element.glowColor}, inset 0 0 20px rgba(255,255,255,0.1)`,
+                border: '1px solid rgba(255,255,255,0.2)'
               }}
               animate={{
-                y: [0, -12, 0],
-                scale: [1, 1.02, 1]
+                y: [0, -15, 0],
+                rotateY: [0, 180, 360],
+                scale: [1, 1.05, 1]
               }}
               transition={{
                 y: {
-                  duration: 3 + Math.random() * 2,
+                  duration: 4 + Math.random() * 2,
                   repeat: Infinity,
-                  ease: "easeInOut"
+                  ease: "easeInOut",
+                  delay: element.pulseDelay
+                },
+                rotateY: {
+                  duration: 8 + Math.random() * 4,
+                  repeat: Infinity,
+                  ease: "linear"
                 },
                 scale: {
-                  duration: 2,
+                  duration: 3,
                   repeat: Infinity,
-                  ease: "easeInOut"
+                  ease: "easeInOut",
+                  delay: element.pulseDelay
                 }
               }}
               whileHover={{
-                scale: 1.1,
-                boxShadow: `0 0 40px ${bubble.glowColor}, 0 0 80px ${bubble.glowColor}`,
+                scale: 1.2,
+                rotateZ: 15,
+                boxShadow: `0 0 60px ${element.glowColor}, inset 0 0 30px rgba(255,255,255,0.2)`,
                 transition: { duration: 0.3 }
               }}
             >
-              {/* Twinkling effect */}
+              {/* Circuit pattern overlay */}
               <motion.div
-                className="absolute inset-0 rounded-full"
-                animate={{ opacity: [0, 1, 0] }}
-                transition={{
-                  duration: 1.5,
-                  repeat: Infinity,
-                  delay: Math.random() * 2
+                className="absolute inset-0 opacity-30"
+                style={{
+                  backgroundImage: `
+                    linear-gradient(90deg, transparent 49%, rgba(255,255,255,0.3) 50%, transparent 51%),
+                    linear-gradient(0deg, transparent 49%, rgba(255,255,255,0.3) 50%, transparent 51%)
+                  `,
+                  backgroundSize: '8px 8px'
                 }}
-              >
-                <div className="absolute top-4 right-4 w-2 h-2 bg-white rounded-full opacity-80"></div>
-                <div className="absolute bottom-4 left-4 w-1 h-1 bg-white rounded-full opacity-60"></div>
-              </motion.div>
+                animate={{ opacity: [0.2, 0.4, 0.2] }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  delay: element.pulseDelay
+                }}
+              />
+
+              {/* Glitch effect lines */}
+              <motion.div
+                className="absolute inset-0"
+                animate={{
+                  backgroundPosition: ['0% 0%', '100% 100%']
+                }}
+                transition={{
+                  duration: 0.1,
+                  repeat: Infinity,
+                  repeatType: "reverse"
+                }}
+                style={{
+                  background: `linear-gradient(45deg, transparent 48%, ${element.glowColor.replace('0.8', '0.3')} 49%, ${element.glowColor.replace('0.8', '0.3')} 51%, transparent 52%)`,
+                  backgroundSize: '20px 20px'
+                }}
+              />
 
               {/* Icon */}
-              <IconComponent size={20} className="text-white mb-1 relative z-10" />
-              
-              {/* Count */}
               <motion.div
-                className="text-white text-sm font-bold font-orbitron relative z-10"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 2 + index * 0.1 }}
+                className="relative z-10"
+                animate={{
+                  rotateX: [0, 360],
+                }}
+                transition={{
+                  duration: 6,
+                  repeat: Infinity,
+                  ease: "linear",
+                  delay: element.pulseDelay
+                }}
               >
-                {bubble.count}
+                <IconComponent size={element.size.includes('24') ? 28 : element.size.includes('22') ? 26 : element.size.includes('20') ? 24 : element.size.includes('18') ? 22 : 20} className="text-white drop-shadow-lg" />
               </motion.div>
               
-              {/* Label on hover */}
+              {/* Floating particles */}
+              {[...Array(3)].map((_, particleIndex) => (
+                <motion.div
+                  key={particleIndex}
+                  className="absolute w-1 h-1 bg-white rounded-full"
+                  style={{
+                    top: `${20 + Math.random() * 60}%`,
+                    left: `${20 + Math.random() * 60}%`,
+                  }}
+                  animate={{
+                    y: [-10, -25, -10],
+                    x: [0, Math.random() * 10 - 5, 0],
+                    opacity: [0, 1, 0],
+                    scale: [0, 1, 0]
+                  }}
+                  transition={{
+                    duration: 2 + Math.random(),
+                    repeat: Infinity,
+                    delay: Math.random() * 2 + element.pulseDelay
+                  }}
+                />
+              ))}
+
+              {/* Tech label on hover */}
               <motion.div
-                className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-white text-xs font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                style={{ textShadow: "0 0 10px rgba(0, 0, 0, 0.8)" }}
+                className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-white text-xs font-bold font-orbitron whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 px-2 py-1 bg-black/50 rounded backdrop-blur-sm"
+                style={{ 
+                  textShadow: "0 0 10px rgba(0, 0, 0, 0.8)",
+                  boxShadow: `0 0 10px ${element.glowColor}`
+                }}
               >
-                {bubble.label}
+                {element.label}
               </motion.div>
             </motion.div>
+
+            {/* Collision detection rings */}
+            <motion.div
+              className="absolute inset-0 rounded-xl border border-white/20"
+              animate={{
+                scale: [1, 1.5, 1],
+                opacity: [0.5, 0, 0.5]
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                delay: element.pulseDelay + 1
+              }}
+              style={{
+                boxShadow: `0 0 20px ${element.glowColor}`
+              }}
+            />
           </motion.div>
         );
       })}
