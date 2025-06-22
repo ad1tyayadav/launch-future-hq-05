@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { motion } from 'framer-motion';
 
@@ -142,19 +143,6 @@ const HeroSection = () => {
             {symbol}
           </motion.div>
         ))}
-
-        {/* Terminal cursor blink */}
-        <motion.div
-          className="absolute bottom-20 left-10 w-2 h-4 bg-neon-green/50"
-          animate={{
-            opacity: [1, 0, 1]
-          }}
-          transition={{
-            duration: 1,
-            repeat: Infinity,
-            ease: "linear" as const
-          }}
-        />
 
         {/* Small binary numbers */}
         {[...Array(20)].map((_, i) => (
