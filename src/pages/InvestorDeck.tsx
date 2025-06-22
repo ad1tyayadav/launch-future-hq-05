@@ -3,6 +3,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Users, TrendingUp, Globe, Zap, Target, Award, DollarSign, Rocket, CheckCircle, Calendar, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { LineChart, Line, AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 const InvestorDeck = () => {
   const stats = [
@@ -10,6 +11,53 @@ const InvestorDeck = () => {
     { icon: DollarSign, label: "Monthly Revenue", value: "$50K+", color: "from-green-400 to-teal-500" },
     { icon: Globe, label: "Countries", value: "25+", color: "from-cyan-400 to-blue-500" },
     { icon: Rocket, label: "MVPs Launched", value: "500+", color: "from-orange-400 to-red-500" }
+  ];
+
+  const revenueData = [
+    { month: 'Jan', revenue: 5000, users: 1000 },
+    { month: 'Feb', revenue: 8000, users: 2000 },
+    { month: 'Mar', revenue: 12000, users: 3500 },
+    { month: 'Apr', revenue: 18000, users: 5000 },
+    { month: 'May', revenue: 28000, users: 7000 },
+    { month: 'Jun', revenue: 35000, users: 8500 },
+    { month: 'Jul', revenue: 42000, users: 9200 },
+    { month: 'Aug', revenue: 50000, users: 10000 }
+  ];
+
+  const userGrowthData = [
+    { month: 'Jan', newUsers: 500, totalUsers: 1000 },
+    { month: 'Feb', newUsers: 1000, totalUsers: 2000 },
+    { month: 'Mar', newUsers: 1500, totalUsers: 3500 },
+    { month: 'Apr', newUsers: 1500, totalUsers: 5000 },
+    { month: 'May', newUsers: 2000, totalUsers: 7000 },
+    { month: 'Jun', newUsers: 1500, totalUsers: 8500 },
+    { month: 'Jul', newUsers: 700, totalUsers: 9200 },
+    { month: 'Aug', newUsers: 800, totalUsers: 10000 }
+  ];
+
+  const marketShareData = [
+    { name: 'DevLaunch', value: 15, color: '#00f5ff' },
+    { name: 'Competitor A', value: 25, color: '#8b5cf6' },
+    { name: 'Competitor B', value: 20, color: '#ff0080' },
+    { name: 'Others', value: 40, color: '#64748b' }
+  ];
+
+  const cohortData = [
+    { cohort: 'Jan 2024', month1: 100, month2: 85, month3: 78, month4: 72, month5: 68, month6: 65 },
+    { cohort: 'Feb 2024', month1: 100, month2: 88, month3: 82, month4: 77, month5: 74, month6: 71 },
+    { cohort: 'Mar 2024', month1: 100, month2: 92, month3: 87, month4: 83, month5: 80, month6: 77 },
+    { cohort: 'Apr 2024', month1: 100, month2: 89, month3: 84, month4: 80, month5: 77, month6: 74 },
+    { cohort: 'May 2024', month1: 100, month2: 91, month3: 86, month4: 82, month5: 79, month6: 76 },
+    { cohort: 'Jun 2024', month1: 100, month2: 94, month3: 89, month4: 85, month5: 82, month6: 79 }
+  ];
+
+  const projectionData = [
+    { quarter: 'Q3 2024', users: 12000, revenue: 60000, projection: false },
+    { quarter: 'Q4 2024', users: 15000, revenue: 75000, projection: false },
+    { quarter: 'Q1 2025', users: 25000, revenue: 125000, projection: true },
+    { quarter: 'Q2 2025', users: 40000, revenue: 200000, projection: true },
+    { quarter: 'Q3 2025', users: 65000, revenue: 325000, projection: true },
+    { quarter: 'Q4 2025', users: 100000, revenue: 500000, projection: true }
   ];
 
   const problemPoints = [
@@ -43,16 +91,14 @@ const InvestorDeck = () => {
 
   return (
     <div className="min-h-screen bg-dark-space relative overflow-hidden">
-      {/* SEO Meta Tags would be handled by Helmet or similar */}
-      
       {/* Background effects */}
       <div className="absolute inset-0">
         <div className="absolute top-1/4 left-0 w-96 h-96 bg-gradient-to-r from-cyber-blue/20 to-transparent rounded-full filter blur-3xl" />
         <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-gradient-to-l from-cyber-purple/20 to-transparent rounded-full filter blur-3xl" />
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-cyber-pink/10 to-transparent rounded-full filter blur-3xl" />
         
-        {/* Starfield */}
-        {[...Array(200)].map((_, i) => (
+        {/* Enhanced Starfield */}
+        {[...Array(300)].map((_, i) => (
           <motion.div
             key={i}
             className="absolute w-1 h-1 bg-white rounded-full"
@@ -62,12 +108,12 @@ const InvestorDeck = () => {
             }}
             animate={{
               opacity: [0.2, 1, 0.2],
-              scale: [0.5, 1.2, 0.5]
+              scale: [0.5, 1.5, 0.5]
             }}
             transition={{
-              duration: 2 + Math.random() * 3,
+              duration: 2 + Math.random() * 4,
               repeat: Infinity,
-              delay: Math.random() * 2
+              delay: Math.random() * 3
             }}
           />
         ))}
@@ -166,30 +212,65 @@ const InvestorDeck = () => {
           </div>
         </motion.section>
 
-        {/* 4. Market Opportunity */}
+        {/* 4. Market Opportunity with Enhanced Visuals */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           className="text-center"
         >
           <h2 className="text-4xl md:text-6xl font-bold text-white mb-12 font-orbitron">Market Opportunity</h2>
-          <div className="glass-morphism p-8 rounded-2xl max-w-4xl mx-auto">
-            <div className="grid md:grid-cols-3 gap-8 text-center mb-8">
-              <div>
-                <h3 className="text-3xl font-bold text-cyber-blue font-orbitron">$880B</h3>
-                <p className="text-white/80 font-sora">Total Market (TAM)</p>
-                <p className="text-sm text-white/60 font-sora">Global digital transformation</p>
+          <div className="grid md:grid-cols-2 gap-12 max-w-7xl mx-auto">
+            <div className="glass-morphism p-8 rounded-2xl">
+              <div className="grid md:grid-cols-3 gap-8 text-center mb-8">
+                <motion.div
+                  initial={{ scale: 0 }}
+                  whileInView={{ scale: 1 }}
+                  transition={{ delay: 0.2 }}
+                >
+                  <h3 className="text-3xl font-bold text-cyber-blue font-orbitron">$880B</h3>
+                  <p className="text-white/80 font-sora">Total Market (TAM)</p>
+                  <p className="text-sm text-white/60 font-sora">Global digital transformation</p>
+                </motion.div>
+                <motion.div
+                  initial={{ scale: 0 }}
+                  whileInView={{ scale: 1 }}
+                  transition={{ delay: 0.4 }}
+                >
+                  <h3 className="text-3xl font-bold text-cyber-purple font-orbitron">$146B</h3>
+                  <p className="text-white/80 font-sora">Serviceable Market (SAM)</p>
+                  <p className="text-sm text-white/60 font-sora">Custom software development</p>
+                </motion.div>
+                <motion.div
+                  initial={{ scale: 0 }}
+                  whileInView={{ scale: 1 }}
+                  transition={{ delay: 0.6 }}
+                >
+                  <h3 className="text-3xl font-bold text-cyber-pink font-orbitron">$12B</h3>
+                  <p className="text-white/80 font-sora">Obtainable Market (SOM)</p>
+                  <p className="text-sm text-white/60 font-sora">No-code platforms</p>
+                </motion.div>
               </div>
-              <div>
-                <h3 className="text-3xl font-bold text-cyber-purple font-orbitron">$146B</h3>
-                <p className="text-white/80 font-sora">Serviceable Market (SAM)</p>
-                <p className="text-sm text-white/60 font-sora">Custom software development</p>
-              </div>
-              <div>
-                <h3 className="text-3xl font-bold text-cyber-pink font-orbitron">$12B</h3>
-                <p className="text-white/80 font-sora">Obtainable Market (SOM)</p>
-                <p className="text-sm text-white/60 font-sora">No-code platforms</p>
-              </div>
+            </div>
+            
+            <div className="glass-morphism p-6 rounded-2xl">
+              <h3 className="text-2xl font-bold text-white mb-6 font-orbitron">Market Share Analysis</h3>
+              <ResponsiveContainer width="100%" height={300}>
+                <PieChart>
+                  <Pie
+                    data={marketShareData}
+                    cx="50%"
+                    cy="50%"
+                    outerRadius={80}
+                    dataKey="value"
+                    label={({ name, value }) => `${name}: ${value}%`}
+                  >
+                    {marketShareData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                </PieChart>
+              </ResponsiveContainer>
             </div>
           </div>
         </motion.section>
@@ -232,14 +313,16 @@ const InvestorDeck = () => {
           </div>
         </motion.section>
 
-        {/* 6. Traction */}
+        {/* 6. Enhanced Traction with Interactive Charts */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           className="text-center"
         >
-          <h2 className="text-4xl md:text-6xl font-bold text-white mb-12 font-orbitron">Traction</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-6xl mx-auto">
+          <h2 className="text-4xl md:text-6xl font-bold text-white mb-12 font-orbitron">Traction & Growth</h2>
+          
+          {/* Key Metrics */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-6xl mx-auto mb-16">
             {stats.map((stat, index) => {
               const IconComponent = stat.icon;
               return (
@@ -248,16 +331,93 @@ const InvestorDeck = () => {
                   initial={{ opacity: 0, scale: 0.8 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   transition={{ delay: index * 0.1 }}
-                  className="glass-morphism p-6 text-center rounded-xl"
+                  className="glass-morphism p-6 text-center rounded-xl hover:scale-105 transition-transform duration-300"
                 >
                   <div className={`w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r ${stat.color} flex items-center justify-center`}>
                     <IconComponent size={24} className="text-white" />
                   </div>
-                  <h3 className="text-2xl font-bold text-white font-orbitron mb-2">{stat.value}</h3>
+                  <motion.h3 
+                    className="text-2xl font-bold text-white font-orbitron mb-2"
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    transition={{ delay: index * 0.1 + 0.3 }}
+                  >
+                    {stat.value}
+                  </motion.h3>
                   <p className="text-white/70 font-sora text-sm">{stat.label}</p>
                 </motion.div>
               );
             })}
+          </div>
+
+          {/* Revenue & User Growth Charts */}
+          <div className="grid md:grid-cols-2 gap-8 max-w-7xl mx-auto mb-16">
+            <div className="glass-morphism p-6 rounded-2xl">
+              <h3 className="text-2xl font-bold text-white mb-6 font-orbitron">Revenue Growth</h3>
+              <ResponsiveContainer width="100%" height={300}>
+                <AreaChart data={revenueData}>
+                  <defs>
+                    <linearGradient id="revenueGradient" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#00f5ff" stopOpacity={0.8}/>
+                      <stop offset="95%" stopColor="#00f5ff" stopOpacity={0}/>
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#ffffff20" />
+                  <XAxis dataKey="month" stroke="#ffffff80" />
+                  <YAxis stroke="#ffffff80" />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: 'rgba(0, 0, 0, 0.8)', 
+                      border: '1px solid #00f5ff',
+                      borderRadius: '8px'
+                    }} 
+                  />
+                  <Area type="monotone" dataKey="revenue" stroke="#00f5ff" fillOpacity={1} fill="url(#revenueGradient)" strokeWidth={3} />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
+
+            <div className="glass-morphism p-6 rounded-2xl">
+              <h3 className="text-2xl font-bold text-white mb-6 font-orbitron">User Acquisition</h3>
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={userGrowthData}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#ffffff20" />
+                  <XAxis dataKey="month" stroke="#ffffff80" />
+                  <YAxis stroke="#ffffff80" />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: 'rgba(0, 0, 0, 0.8)', 
+                      border: '1px solid #8b5cf6',
+                      borderRadius: '8px'
+                    }} 
+                  />
+                  <Bar dataKey="newUsers" fill="#8b5cf6" radius={[4, 4, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+
+          {/* Cohort Retention Chart */}
+          <div className="glass-morphism p-6 rounded-2xl max-w-5xl mx-auto">
+            <h3 className="text-2xl font-bold text-white mb-6 font-orbitron">User Retention Cohorts</h3>
+            <ResponsiveContainer width="100%" height={400}>
+              <LineChart data={cohortData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#ffffff20" />
+                <XAxis dataKey="cohort" stroke="#ffffff80" />
+                <YAxis stroke="#ffffff80" />
+                <Tooltip 
+                  contentStyle={{ 
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)', 
+                    border: '1px solid #ff0080',
+                    borderRadius: '8px'
+                  }} 
+                />
+                <Legend />
+                <Line type="monotone" dataKey="month1" stroke="#00f5ff" strokeWidth={2} />
+                <Line type="monotone" dataKey="month3" stroke="#8b5cf6" strokeWidth={2} />
+                <Line type="monotone" dataKey="month6" stroke="#ff0080" strokeWidth={2} />
+              </LineChart>
+            </ResponsiveContainer>
           </div>
         </motion.section>
 
@@ -275,7 +435,7 @@ const InvestorDeck = () => {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.2 }}
-                className="glass-morphism p-8 rounded-xl text-center"
+                className="glass-morphism p-8 rounded-xl text-center hover:scale-105 transition-transform duration-300"
               >
                 <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-gradient-to-r from-cyber-blue to-cyber-purple flex items-center justify-center">
                   <Users size={32} className="text-white" />
@@ -288,81 +448,163 @@ const InvestorDeck = () => {
           </div>
         </motion.section>
 
-        {/* 8. Vision / Roadmap */}
+        {/* 8. Vision / Roadmap with Projections */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           className="text-center"
         >
-          <h2 className="text-4xl md:text-6xl font-bold text-white mb-12 font-orbitron">Roadmap</h2>
-          <div className="max-w-4xl mx-auto">
-            {milestones.map((milestone, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ delay: index * 0.2 }}
-                className="flex items-center mb-8 glass-morphism p-6 rounded-xl"
-              >
-                <div className={`w-12 h-12 rounded-full flex items-center justify-center mr-6 ${
-                  milestone.completed ? 'bg-green-500' : 'bg-gray-500'
-                }`}>
-                  {milestone.completed ? <CheckCircle size={24} className="text-white" /> : <Calendar size={24} className="text-white" />}
-                </div>
-                <div className="text-left">
-                  <h3 className="text-xl font-bold text-white font-orbitron">{milestone.quarter}</h3>
-                  <p className="text-white/80 font-sora">{milestone.achievement}</p>
-                </div>
-              </motion.div>
-            ))}
+          <h2 className="text-4xl md:text-6xl font-bold text-white mb-12 font-orbitron">Roadmap & Projections</h2>
+          
+          <div className="grid md:grid-cols-2 gap-12 max-w-7xl mx-auto mb-16">
+            {/* Roadmap */}
+            <div className="max-w-4xl mx-auto">
+              <h3 className="text-2xl font-bold text-white mb-8 font-orbitron">Milestones</h3>
+              {milestones.map((milestone, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.2 }}
+                  className="flex items-center mb-8 glass-morphism p-6 rounded-xl"
+                >
+                  <div className={`w-12 h-12 rounded-full flex items-center justify-center mr-6 ${
+                    milestone.completed ? 'bg-green-500' : 'bg-gray-500'
+                  }`}>
+                    {milestone.completed ? <CheckCircle size={24} className="text-white" /> : <Calendar size={24} className="text-white" />}
+                  </div>
+                  <div className="text-left">
+                    <h3 className="text-xl font-bold text-white font-orbitron">{milestone.quarter}</h3>
+                    <p className="text-white/80 font-sora">{milestone.achievement}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Growth Projections */}
+            <div className="glass-morphism p-6 rounded-2xl">
+              <h3 className="text-2xl font-bold text-white mb-6 font-orbitron">Growth Projections</h3>
+              <ResponsiveContainer width="100%" height={400}>
+                <LineChart data={projectionData}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#ffffff20" />
+                  <XAxis dataKey="quarter" stroke="#ffffff80" />
+                  <YAxis stroke="#ffffff80" />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: 'rgba(0, 0, 0, 0.8)', 
+                      border: '1px solid #00f5ff',
+                      borderRadius: '8px'
+                    }} 
+                  />
+                  <Legend />
+                  <Line 
+                    type="monotone" 
+                    dataKey="users" 
+                    stroke="#00f5ff" 
+                    strokeWidth={3}
+                    strokeDasharray={({ payload }) => payload?.projection ? "5 5" : "0"}
+                  />
+                  <Line 
+                    type="monotone" 
+                    dataKey="revenue" 
+                    stroke="#8b5cf6" 
+                    strokeWidth={3}
+                    strokeDasharray={({ payload }) => payload?.projection ? "5 5" : "0"}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
           </div>
         </motion.section>
 
-        {/* 9. Ask / CTA Slide */}
+        {/* 9. Enhanced Ask / CTA Slide */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           className="text-center min-h-screen flex flex-col justify-center"
         >
-          <h2 className="text-4xl md:text-6xl font-bold text-white mb-8 font-orbitron">We're Raising $500K</h2>
-          <p className="text-2xl text-cyber-blue mb-12 font-sora max-w-4xl mx-auto">
-            Let's build the future of startup creation together
-          </p>
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            whileInView={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.8 }}
+          >
+            <h2 className="text-4xl md:text-6xl font-bold text-white mb-8 font-orbitron glow-text">We're Raising $500K</h2>
+            <p className="text-2xl text-cyber-blue mb-12 font-sora max-w-4xl mx-auto">
+              Let's build the future of startup creation together
+            </p>
+          </motion.div>
           
           <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
             <Link to="/lets-talk">
-              <button className="cyber-button text-lg px-12 py-6">
+              <motion.button 
+                className="cyber-button text-lg px-12 py-6"
+                whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(0, 245, 255, 0.8)" }}
+                whileTap={{ scale: 0.95 }}
+              >
                 <span>Schedule Meeting</span>
-              </button>
+              </motion.button>
             </Link>
-            <button className="px-12 py-6 border-2 border-cyber-blue text-cyber-blue font-semibold rounded-lg hover:bg-cyber-blue hover:text-white transition-all duration-300 font-sora text-lg">
+            <motion.button 
+              className="px-12 py-6 border-2 border-cyber-blue text-cyber-blue font-semibold rounded-lg hover:bg-cyber-blue hover:text-white transition-all duration-300 font-sora text-lg"
+              whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(139, 92, 246, 0.5)" }}
+              whileTap={{ scale: 0.95 }}
+            >
               Download Deck (PDF)
-            </button>
+            </motion.button>
           </div>
 
-          <div className="glass-morphism p-8 rounded-2xl max-w-4xl mx-auto">
+          <motion.div 
+            className="glass-morphism p-8 rounded-2xl max-w-6xl mx-auto"
+            initial={{ y: 20, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.3 }}
+          >
             <h3 className="text-2xl font-bold text-white mb-6 font-orbitron">Investment Highlights</h3>
             <div className="grid md:grid-cols-2 gap-8 text-left">
               <div>
                 <h4 className="text-xl font-semibold text-cyber-blue mb-4 font-orbitron">Use of Funds</h4>
-                <ul className="space-y-2 text-white/80 font-sora">
-                  <li>• 40% Product development & AI features</li>
-                  <li>• 30% Marketing & user acquisition</li>
-                  <li>• 20% Team expansion</li>
-                  <li>• 10% Operations & infrastructure</li>
+                <ul className="space-y-3 text-white/80 font-sora">
+                  <li className="flex items-center">
+                    <div className="w-3 h-3 bg-cyber-blue rounded-full mr-3"></div>
+                    40% Product development & AI features
+                  </li>
+                  <li className="flex items-center">
+                    <div className="w-3 h-3 bg-cyber-purple rounded-full mr-3"></div>
+                    30% Marketing & user acquisition
+                  </li>
+                  <li className="flex items-center">
+                    <div className="w-3 h-3 bg-cyber-pink rounded-full mr-3"></div>
+                    20% Team expansion
+                  </li>
+                  <li className="flex items-center">
+                    <div className="w-3 h-3 bg-green-400 rounded-full mr-3"></div>
+                    10% Operations & infrastructure
+                  </li>
                 </ul>
               </div>
               <div>
                 <h4 className="text-xl font-semibold text-cyber-blue mb-4 font-orbitron">Projected Returns</h4>
-                <ul className="space-y-2 text-white/80 font-sora">
-                  <li>• 100K users by end of 2025</li>
-                  <li>• $500K ARR by Q4 2025</li>
-                  <li>• Break-even by Q2 2026</li>
-                  <li>• Exit opportunity in 3-5 years</li>
+                <ul className="space-y-3 text-white/80 font-sora">
+                  <li className="flex items-center">
+                    <Rocket size={16} className="text-cyber-blue mr-3" />
+                    100K users by end of 2025
+                  </li>
+                  <li className="flex items-center">
+                    <DollarSign size={16} className="text-green-400 mr-3" />
+                    $500K ARR by Q4 2025
+                  </li>
+                  <li className="flex items-center">
+                    <TrendingUp size={16} className="text-cyber-purple mr-3" />
+                    Break-even by Q2 2026
+                  </li>
+                  <li className="flex items-center">
+                    <Target size={16} className="text-cyber-pink mr-3" />
+                    Exit opportunity in 3-5 years
+                  </li>
                 </ul>
               </div>
             </div>
-          </div>
+          </motion.div>
         </motion.section>
       </div>
     </div>
