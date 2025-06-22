@@ -8,37 +8,43 @@ const ServicesSection = () => {
       title: 'AI-Powered Web Apps',
       description: 'Intelligent applications that learn and adapt to user behavior, powered by cutting-edge machine learning algorithms.',
       icon: '🤖',
-      color: 'from-cyber-blue to-cyber-purple'
+      color: 'from-cyber-blue to-cyber-purple',
+      accentColor: 'cyber-blue'
     },
     {
       title: '3D Interactive Experiences',
       description: 'Immersive 3D interfaces and visualizations that captivate users and deliver unforgettable digital experiences.',
       icon: '🎮',
-      color: 'from-cyber-purple to-cyber-pink'
+      color: 'from-cyber-purple to-cyber-pink',
+      accentColor: 'cyber-purple'
     },
     {
       title: 'Blockchain Solutions',
       description: 'Secure, decentralized applications and smart contracts that redefine trust in digital transactions.',
       icon: '⛓️',
-      color: 'from-cyber-pink to-neon-green'
+      color: 'from-cyber-pink to-neon-green',
+      accentColor: 'cyber-pink'
     },
     {
       title: 'AR/VR Development',
       description: 'Next-generation augmented and virtual reality experiences that blur the line between digital and physical.',
       icon: '🥽',
-      color: 'from-neon-green to-cyber-blue'
+      color: 'from-neon-green to-cyber-blue',
+      accentColor: 'neon-green'
     },
     {
       title: 'Cloud Architecture',
       description: 'Scalable, resilient cloud infrastructure designed to handle tomorrow\'s digital demands today.',
       icon: '☁️',
-      color: 'from-cyber-blue to-electric-blue'
+      color: 'from-cyber-blue to-electric-blue',
+      accentColor: 'electric-blue'
     },
     {
       title: 'IoT Integration',
       description: 'Smart device ecosystems that connect the physical world to your digital infrastructure seamlessly.',
       icon: '📡',
-      color: 'from-electric-blue to-cyber-purple'
+      color: 'from-electric-blue to-cyber-purple',
+      accentColor: 'cyber-blue'
     }
   ];
 
@@ -47,29 +53,39 @@ const ServicesSection = () => {
 
   return (
     <section id="services" className="py-20 relative overflow-hidden">
-      {/* Galaxy background */}
+      {/* Enhanced Galaxy background */}
       <div className="absolute inset-0 bg-gradient-to-br from-dark-space via-space-gray to-dark-space">
-        {/* Animated particles */}
+        {/* Animated particles with different sizes */}
         <div className="absolute inset-0">
-          {[...Array(50)].map((_, i) => (
+          {[...Array(60)].map((_, i) => (
             <motion.div
               key={i}
-              className="absolute w-1 h-1 bg-cyber-blue rounded-full opacity-60"
+              className={`absolute rounded-full ${i % 3 === 0 ? 'w-2 h-2 bg-cyber-blue' : i % 3 === 1 ? 'w-1 h-1 bg-cyber-purple' : 'w-1.5 h-1.5 bg-neon-green'} opacity-70`}
               style={{
                 left: `${Math.random() * 100}%`,
                 top: `${Math.random() * 100}%`,
               }}
               animate={{
-                opacity: [0.2, 1, 0.2],
-                scale: [0.5, 1.5, 0.5],
+                opacity: [0.3, 1, 0.3],
+                scale: [0.5, 1.2, 0.5],
+                rotate: [0, 180, 360],
               }}
               transition={{
-                duration: 2 + Math.random() * 3,
+                duration: 3 + Math.random() * 4,
                 repeat: Infinity,
                 delay: Math.random() * 2,
               }}
             />
           ))}
+        </div>
+        
+        {/* Grid pattern overlay */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="grid grid-cols-20 grid-rows-20 h-full w-full">
+            {[...Array(400)].map((_, i) => (
+              <div key={i} className="border border-cyber-blue/20" />
+            ))}
+          </div>
         </div>
       </div>
 
@@ -80,104 +96,218 @@ const ServicesSection = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h2 className="text-5xl md:text-6xl font-orbitron font-bold text-white glow-text mb-6">
+          <motion.h2 
+            className="text-5xl md:text-6xl font-orbitron font-bold text-white glow-text mb-6"
+            animate={{
+              textShadow: [
+                '0 0 10px rgba(0, 245, 255, 0.5)',
+                '0 0 20px rgba(0, 245, 255, 0.8)',
+                '0 0 10px rgba(0, 245, 255, 0.5)'
+              ]
+            }}
+            transition={{ duration: 2, repeat: Infinity }}
+          >
             Services
-          </h2>
+          </motion.h2>
           <p className="text-xl text-white/80 font-sora max-w-3xl mx-auto">
             We harness tomorrow's technologies today to build digital experiences 
             that push the boundaries of what's possible.
           </p>
         </motion.div>
 
-        {/* Horizontal scrolling cards container */}
-        <div className="relative h-80 overflow-hidden">
+        {/* Enhanced horizontal scrolling cards container */}
+        <div className="relative h-96 overflow-hidden">
           <motion.div
             className="flex gap-8 absolute"
             animate={{
               x: [-100, -50 * duplicatedServices.length + 'vw']
             }}
             transition={{
-              duration: 60,
+              duration: 80,
               repeat: Infinity,
               ease: "linear"
             }}
             style={{
-              width: `${duplicatedServices.length * 400}px`
+              width: `${duplicatedServices.length * 420}px`
             }}
           >
             {duplicatedServices.map((service, index) => (
               <motion.div
                 key={`${service.title}-${index}`}
-                className="flex-shrink-0 w-80 h-64 glass-morphism p-6 group cursor-pointer relative"
+                className="flex-shrink-0 w-96 h-80 relative group cursor-pointer overflow-hidden rounded-2xl"
                 animate={{
-                  y: [0, -10, 0]
+                  y: [0, -15, 0]
                 }}
                 transition={{
-                  duration: 3 + (index % 3),
+                  duration: 4 + (index % 3),
                   repeat: Infinity,
                   ease: "easeInOut",
-                  delay: index * 0.2
+                  delay: index * 0.3
                 }}
                 whileHover={{
                   scale: 1.05,
-                  rotateY: 5,
-                }}
-                style={{
-                  background: 'rgba(255, 255, 255, 0.05)',
-                  backdropFilter: 'blur(20px)',
-                  border: '1px solid rgba(255, 255, 255, 0.1)',
-                  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
+                  rotateY: 8,
+                  z: 50
                 }}
               >
-                {/* Glowing border effect */}
-                <div 
-                  className={`absolute inset-0 bg-gradient-to-r ${service.color} opacity-0 group-hover:opacity-20 rounded-xl transition-opacity duration-300`}
+                {/* Main card background with enhanced glass effect */}
+                <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-xl border border-white/20 rounded-2xl" />
+                
+                {/* Animated border glow */}
+                <motion.div 
+                  className={`absolute inset-0 bg-gradient-to-r ${service.color} opacity-0 group-hover:opacity-30 rounded-2xl blur-sm`}
+                  animate={{
+                    opacity: [0, 0.1, 0]
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    delay: index * 0.5
+                  }}
                 />
                 
-                {/* Neon glow on hover */}
-                <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-[0_0_30px_rgba(0,245,255,0.5)]" />
+                {/* Holographic effect overlay */}
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-cyber-blue/5 to-cyber-purple/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
+                
+                {/* Circuit pattern background */}
+                <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity duration-500">
+                  <svg className="w-full h-full" viewBox="0 0 100 100">
+                    <defs>
+                      <pattern id={`circuit-${index}`} x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                        <path d="M0 10h20M10 0v20M5 5h10v10h-10z" stroke="currentColor" strokeWidth="0.5" fill="none" className="text-cyber-blue/30"/>
+                      </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill={`url(#circuit-${index})`}/>
+                  </svg>
+                </div>
 
-                {/* Service icon with glow */}
-                <div className="relative z-10">
-                  <div className="text-4xl mb-4 transform group-hover:scale-110 transition-transform duration-300 relative">
-                    <div className="absolute inset-0 blur-md bg-cyber-blue/30 rounded-full scale-150 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <span className="relative z-10">{service.icon}</span>
+                {/* Content */}
+                <div className="relative z-10 p-8 h-full flex flex-col">
+                  {/* Enhanced service icon */}
+                  <div className="relative mb-6">
+                    <motion.div 
+                      className="text-5xl mb-4 relative"
+                      whileHover={{ 
+                        scale: 1.2, 
+                        rotate: [0, -10, 10, 0] 
+                      }}
+                      transition={{ duration: 0.5 }}
+                    >
+                      {/* Icon glow effect */}
+                      <div className={`absolute inset-0 blur-xl bg-${service.accentColor}/50 rounded-full scale-150 opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+                      
+                      {/* Floating particles around icon */}
+                      {[...Array(6)].map((_, i) => (
+                        <motion.div
+                          key={i}
+                          className={`absolute w-1 h-1 bg-${service.accentColor} rounded-full`}
+                          style={{
+                            left: `${20 + Math.cos(i * 60 * Math.PI / 180) * 30}px`,
+                            top: `${20 + Math.sin(i * 60 * Math.PI / 180) * 30}px`,
+                          }}
+                          animate={{
+                            scale: [0, 1, 0],
+                            opacity: [0, 1, 0],
+                          }}
+                          transition={{
+                            duration: 2,
+                            repeat: Infinity,
+                            delay: i * 0.2,
+                          }}
+                        />
+                      ))}
+                      
+                      <span className="relative z-10">{service.icon}</span>
+                    </motion.div>
                   </div>
 
-                  {/* Service title */}
-                  <h3 className="text-xl font-orbitron font-semibold text-white mb-3 group-hover:text-cyber-blue transition-colors duration-300">
+                  {/* Enhanced service title */}
+                  <motion.h3 
+                    className="text-2xl font-orbitron font-bold text-white mb-4 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-cyber-blue group-hover:to-cyber-purple transition-all duration-500"
+                    whileHover={{
+                      scale: 1.05,
+                    }}
+                  >
                     {service.title}
-                  </h3>
+                  </motion.h3>
 
-                  {/* Service description */}
-                  <p className="text-white/70 font-sora text-sm leading-relaxed mb-4 line-clamp-4">
+                  {/* Enhanced service description */}
+                  <p className="text-white/70 font-sora text-sm leading-relaxed mb-6 flex-grow group-hover:text-white/90 transition-colors duration-300">
                     {service.description}
                   </p>
 
-                  {/* Learn more indicator */}
+                  {/* Enhanced CTA with tech elements */}
                   <motion.div
-                    className="text-cyber-blue font-semibold text-sm flex items-center space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    className="relative"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
                   >
-                    <span>Explore</span>
-                    <motion.span
-                      animate={{ x: [0, 5, 0] }}
-                      transition={{
-                        duration: 1.5,
-                        repeat: Infinity
-                      }}
-                    >
-                      →
-                    </motion.span>
+                    <div className={`absolute inset-0 bg-gradient-to-r ${service.color} opacity-0 group-hover:opacity-20 rounded-lg blur-sm transition-opacity duration-300`} />
+                    <div className="relative flex items-center justify-between p-3 border border-white/20 rounded-lg group-hover:border-white/40 transition-all duration-300">
+                      <span className="text-cyber-blue font-semibold text-sm">Explore Solution</span>
+                      <motion.div
+                        animate={{ 
+                          x: [0, 5, 0],
+                          rotate: [0, 90, 0]
+                        }}
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          repeatType: "reverse"
+                        }}
+                        className="text-cyber-blue"
+                      >
+                        →
+                      </motion.div>
+                    </div>
                   </motion.div>
                 </div>
+
+                {/* Scanning line effect */}
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-cyber-blue/30 to-transparent opacity-0 group-hover:opacity-100"
+                  animate={{
+                    x: [-100, 400],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    repeatDelay: 3,
+                  }}
+                  style={{
+                    width: '2px',
+                    height: '100%',
+                  }}
+                />
               </motion.div>
             ))}
           </motion.div>
         </div>
 
-        {/* Background decoration */}
-        <div className="absolute top-1/2 left-0 w-32 h-32 bg-gradient-to-r from-cyber-blue to-transparent opacity-10 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-0 w-48 h-48 bg-gradient-to-l from-cyber-purple to-transparent opacity-10 rounded-full blur-3xl" />
+        {/* Enhanced background decorations */}
+        <motion.div 
+          className="absolute top-1/4 left-0 w-40 h-40 bg-gradient-to-r from-cyber-blue/20 to-transparent opacity-30 rounded-full blur-3xl"
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.2, 0.4, 0.2]
+          }}
+          transition={{
+            duration: 4,
+            repeat: Infinity
+          }}
+        />
+        <motion.div 
+          className="absolute bottom-1/4 right-0 w-56 h-56 bg-gradient-to-l from-cyber-purple/20 to-transparent opacity-30 rounded-full blur-3xl"
+          animate={{
+            scale: [1.2, 1, 1.2],
+            opacity: [0.3, 0.1, 0.3]
+          }}
+          transition={{
+            duration: 5,
+            repeat: Infinity
+          }}
+        />
       </div>
     </section>
   );
