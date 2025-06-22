@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, Github, ArrowRight, X, Rocket, Terminal, Code, Zap, Eye } from 'lucide-react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 
 const ProjectsSection = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -246,11 +247,11 @@ const ProjectsSection = () => {
         scale: 1.03,
         z: 100
       }}
-      className="group relative cursor-pointer"
+      className="group relative cursor-pointer h-full"
       style={{ perspective: '1000px' }}
       onClick={() => setSelectedProject(project)}
     >
-      <div className="relative bg-gradient-to-br from-dark-space/90 via-space-gray/50 to-dark-space/90 backdrop-blur-xl rounded-3xl overflow-hidden border border-white/10 group-hover:border-white/30 transition-all duration-500">
+      <div className="relative bg-gradient-to-br from-dark-space/90 via-space-gray/50 to-dark-space/90 backdrop-blur-xl rounded-3xl overflow-hidden border border-white/10 group-hover:border-white/30 transition-all duration-500 h-full flex flex-col">
         
         {/* Enhanced holographic border effect */}
         <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500">
@@ -272,7 +273,7 @@ const ProjectsSection = () => {
         </div>
 
         {/* Enhanced Project Image */}
-        <div className="relative h-56 overflow-hidden rounded-t-3xl">
+        <div className="relative h-56 overflow-hidden rounded-t-3xl flex-shrink-0">
           <motion.img 
             src={project.image} 
             alt={project.title} 
@@ -379,7 +380,7 @@ const ProjectsSection = () => {
         </div>
 
         {/* Enhanced Project Content */}
-        <div className="relative p-6 bg-gradient-to-br from-dark-space/80 to-space-gray/40 backdrop-blur-sm">
+        <div className="relative p-6 bg-gradient-to-br from-dark-space/80 to-space-gray/40 backdrop-blur-sm flex-1 flex flex-col">
           {/* Tech indicators floating */}
           <div className="absolute -top-3 left-6 flex space-x-2">
             {project.tech.slice(0, 2).map((tech, techIndex) => (
@@ -407,7 +408,7 @@ const ProjectsSection = () => {
             {project.title}
           </motion.h3>
           
-          <p className="text-white/70 font-sora text-sm leading-relaxed mb-6 group-hover:text-white/90 transition-colors duration-300">
+          <p className="text-white/70 font-sora text-sm leading-relaxed mb-6 group-hover:text-white/90 transition-colors duration-300 flex-1">
             {project.description}
           </p>
 
@@ -430,7 +431,7 @@ const ProjectsSection = () => {
           </div>
 
           {/* Enhanced action buttons */}
-          <div className="flex space-x-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+          <div className="flex space-x-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 mt-auto">
             <motion.button
               whileHover={{ scale: 1.05, boxShadow: '0 10px 25px rgba(0, 245, 255, 0.3)' }}
               whileTap={{ scale: 0.95 }}
@@ -643,29 +644,57 @@ const ProjectsSection = () => {
               ))}
             </motion.div>
 
-            {/* Client Projects Grid */}
-            <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              <AnimatePresence>
-                {filteredClientProjects.map((project, index) => (
-                  <ProjectCard key={project.id} project={project} index={index} />
-                ))}
-              </AnimatePresence>
+            {/* Client Projects Carousel */}
+            <motion.div layout className="relative">
+              <Carousel
+                opts={{
+                  align: "start",
+                  loop: true,
+                }}
+                className="w-full"
+              >
+                <CarouselContent className="-ml-2 md:-ml-4">
+                  <AnimatePresence>
+                    {filteredClientProjects.map((project, index) => (
+                      <CarouselItem key={project.id} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
+                        <ProjectCard project={project} index={index} />
+                      </CarouselItem>
+                    ))}
+                  </AnimatePresence>
+                </CarouselContent>
+                <CarouselPrevious className="text-white border-white/20 hover:bg-white/10 hover:text-white -left-4 lg:-left-12" />
+                <CarouselNext className="text-white border-white/20 hover:bg-white/10 hover:text-white -right-4 lg:-right-12" />
+              </Carousel>
             </motion.div>
           </TabsContent>
 
           <TabsContent value="devlaunch" className="focus-visible:outline-none">
-            {/* DevLaunch Projects Grid */}
+            {/* DevLaunch Projects Carousel */}
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+              className="relative"
             >
-              <AnimatePresence>
-                {devLaunchProjects.map((project, index) => (
-                  <ProjectCard key={project.id} project={project} index={index} />
-                ))}
-              </AnimatePresence>
+              <Carousel
+                opts={{
+                  align: "start",
+                  loop: true,
+                }}
+                className="w-full"
+              >
+                <CarouselContent className="-ml-2 md:-ml-4">
+                  <AnimatePresence>
+                    {devLaunchProjects.map((project, index) => (
+                      <CarouselItem key={project.id} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
+                        <ProjectCard project={project} index={index} />
+                      </CarouselItem>
+                    ))}
+                  </AnimatePresence>
+                </CarouselContent>
+                <CarouselPrevious className="text-white border-white/20 hover:bg-white/10 hover:text-white -left-4 lg:-left-12" />
+                <CarouselNext className="text-white border-white/20 hover:bg-white/10 hover:text-white -right-4 lg:-right-12" />
+              </Carousel>
             </motion.div>
           </TabsContent>
         </Tabs>
