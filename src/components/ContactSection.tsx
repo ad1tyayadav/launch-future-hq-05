@@ -1,6 +1,6 @@
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import BookingCalendar from './BookingCalendar';
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -35,10 +35,23 @@ const ContactSection = () => {
           <h2 className="text-5xl md:text-6xl font-orbitron font-bold text-white glow-text mb-6">
             Let's Build the Future
           </h2>
-          <p className="text-xl text-white/80 font-sora max-w-3xl mx-auto">
+          <p className="text-xl text-white/80 font-sora max-w-3xl mx-auto mb-8">
             Ready to transform your vision into a cutting-edge digital reality? 
             Let's start the conversation that will launch your next breakthrough.
           </p>
+          
+          {/* Quick Meeting Booking */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="mb-12"
+          >
+            <p className="text-cyber-blue font-semibold mb-4">
+              🚀 Want to discuss your project directly?
+            </p>
+            <BookingCalendar />
+          </motion.div>
         </motion.div>
 
         <div className="max-w-4xl mx-auto">
