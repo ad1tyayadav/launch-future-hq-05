@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Users, TrendingUp, Globe, Zap, Target, Award, DollarSign, Rocket, CheckCircle, Calendar, ArrowRight } from 'lucide-react';
@@ -59,6 +58,12 @@ const InvestorDeck = () => {
     { quarter: 'Q3 2025', users: 65000, revenue: 325000, projection: true },
     { quarter: 'Q4 2025', users: 100000, revenue: 500000, projection: true }
   ];
+
+  // Split data into actual and projected for different styling
+  const actualData = projectionData.filter(item => !item.projection);
+  const projectedData = projectionData.filter(item => item.projection);
+  // Add the last actual data point to projected data for continuity
+  const bridgeData = [actualData[actualData.length - 1], ...projectedData];
 
   const problemPoints = [
     "80% of startups fail due to poor execution",
@@ -497,19 +502,41 @@ const InvestorDeck = () => {
                     }} 
                   />
                   <Legend />
+                  {/* Actual data - solid lines */}
                   <Line 
                     type="monotone" 
                     dataKey="users" 
                     stroke="#00f5ff" 
                     strokeWidth={3}
-                    strokeDasharray={({ payload }) => payload?.projection ? "5 5" : "0"}
+                    data={actualData}
+                    connectNulls={false}
                   />
                   <Line 
                     type="monotone" 
                     dataKey="revenue" 
                     stroke="#8b5cf6" 
                     strokeWidth={3}
-                    strokeDasharray={({ payload }) => payload?.projection ? "5 5" : "0"}
+                    data={actualData}
+                    connectNulls={false}
+                  />
+                  {/* Projected data - dashed lines */}
+                  <Line 
+                    type="monotone" 
+                    dataKey="users" 
+                    stroke="#00f5ff" 
+                    strokeWidth={3}
+                    strokeDasharray="5 5"
+                    data={bridgeData}
+                    connectNulls={true}
+                  />
+                  <Line 
+                    type="monotone" 
+                    dataKey="revenue" 
+                    stroke="#8b5cf6" 
+                    strokeWidth={3}
+                    strokeDasharray="5 5"
+                    data={bridgeData}
+                    connectNulls={true}
                   />
                 </LineChart>
               </ResponsiveContainer>
