@@ -1,165 +1,72 @@
+
 import React, { useRef, useState, useEffect } from 'react';
-import { motion, useAnimation } from 'framer-motion';
-import { Check, ChevronLeft, ChevronRight } from 'lucide-react';
+import { motion, useScroll, useTransform, useMotionValue } from 'framer-motion';
+import { Check, ChevronDown } from 'lucide-react';
 
 const ServicesSection = () => {
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [isHovered, setIsHovered] = useState(false);
-  const [isManualScrolling, setIsManualScrolling] = useState(false);
-  const controls = useAnimation();
-  const animationRef = useRef<{ currentX: number; isPaused: boolean }>({ currentX: 200, isPaused: false });
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
+  });
 
   const services = [
     {
       title: 'AI-Powered Web Apps',
       description: 'Intelligent applications that learn and adapt to user behavior, powered by cutting-edge machine learning algorithms.',
       icon: '🤖',
-      features: ['Machine Learning Integration', 'Adaptive User Interfaces', 'Predictive Analytics', 'Natural Language Processing']
+      features: ['Machine Learning Integration', 'Adaptive User Interfaces', 'Predictive Analytics', 'Natural Language Processing'],
+      gradient: 'from-cyan-500/20 via-blue-500/20 to-purple-500/20'
     },
     {
       title: '3D Interactive Experiences',
       description: 'Immersive 3D interfaces and visualizations that captivate users and deliver unforgettable digital experiences.',
       icon: '🎮',
-      features: ['WebGL Integration', 'Real-time Rendering', 'Interactive Animations', 'Cross-platform Support']
+      features: ['WebGL Integration', 'Real-time Rendering', 'Interactive Animations', 'Cross-platform Support'],
+      gradient: 'from-purple-500/20 via-pink-500/20 to-red-500/20'
     },
     {
       title: 'Blockchain Solutions',
       description: 'Secure, decentralized applications and smart contracts that redefine trust in digital transactions.',
       icon: '⛓️',
-      features: ['Smart Contract Development', 'DeFi Protocols', 'NFT Marketplaces', 'Wallet Integration']
+      features: ['Smart Contract Development', 'DeFi Protocols', 'NFT Marketplaces', 'Wallet Integration'],
+      gradient: 'from-green-500/20 via-emerald-500/20 to-teal-500/20'
     },
     {
       title: 'AR/VR Development',
       description: 'Next-generation augmented and virtual reality experiences that blur the line between digital and physical.',
       icon: '🥽',
-      features: ['Immersive Experiences', 'Cross-platform VR', 'AR Mobile Apps', 'WebXR Development']
+      features: ['Immersive Experiences', 'Cross-platform VR', 'AR Mobile Apps', 'WebXR Development'],
+      gradient: 'from-orange-500/20 via-yellow-500/20 to-red-500/20'
     },
     {
       title: 'Cloud Architecture',
       description: 'Scalable, resilient cloud infrastructure designed to handle tomorrow\'s digital demands today.',
       icon: '☁️',
-      features: ['Auto-scaling Solutions', 'Microservices Architecture', 'DevOps Integration', 'Security by Design']
+      features: ['Auto-scaling Solutions', 'Microservices Architecture', 'DevOps Integration', 'Security by Design'],
+      gradient: 'from-indigo-500/20 via-purple-500/20 to-pink-500/20'
     },
     {
       title: 'IoT Integration',
       description: 'Smart device ecosystems that connect the physical world to your digital infrastructure seamlessly.',
       icon: '📡',
-      features: ['Device Management', 'Real-time Data Processing', 'Edge Computing', 'Secure Connectivity']
+      features: ['Device Management', 'Real-time Data Processing', 'Edge Computing', 'Secure Connectivity'],
+      gradient: 'from-teal-500/20 via-cyan-500/20 to-blue-500/20'
     }
   ];
 
-  // Create seamless loop by duplicating services multiple times
-  const duplicatedServices = [...services, ...services, ...services];
-
-  useEffect(() => {
-    const startAnimation = () => {
-      if (animationRef.current.isPaused || isManualScrolling || duplicatedServices.length === 0) return;
-      
-      const cardWidth = 360;
-      const gap = 24; // 6 * 4 = 24px gap
-      const totalCardWidth = cardWidth + gap;
-      const singleSetWidth = services.length * totalCardWidth;
-      
-      // Start from current position and animate to one full set width to the left
-      const startX = animationRef.current.currentX;
-      const endX = startX - singleSetWidth;
-      
-      // Calculate duration based on remaining distance
-      const distance = Math.abs(startX - endX);
-      const duration = (distance / singleSetWidth) * 40; // 40 seconds for one full cycle
-      
-      controls.start({
-        x: endX,
-        transition: {
-          duration,
-          ease: "linear"
-        }
-      }).then(() => {
-        // Reset position seamlessly when animation completes
-        if (!animationRef.current.isPaused && !isManualScrolling) {
-          animationRef.current.currentX = startX;
-          controls.set({ x: startX });
-          // Restart animation
-          setTimeout(() => {
-            if (!animationRef.current.isPaused && !isManualScrolling) {
-              startAnimation();
-            }
-          }, 0);
-        }
-      });
-    };
-
-    if (!isHovered && !isManualScrolling && duplicatedServices.length > 0) {
-      animationRef.current.isPaused = false;
-      startAnimation();
-    } else {
-      animationRef.current.isPaused = true;
-      controls.stop();
-    }
-  }, [isHovered, isManualScrolling, controls, duplicatedServices.length]);
-
-  const handleMouseEnter = () => {
-    // Get current position from the actual transform
-    const element = scrollContainerRef.current;
-    if (element) {
-      const transform = window.getComputedStyle(element).transform;
-      if (transform && transform !== 'none') {
-        const matrix = transform.match(/matrix\(([^)]+)\)/);
-        if (matrix) {
-          const values = matrix[1].split(',').map(parseFloat);
-          animationRef.current.currentX = values[4] || animationRef.current.currentX;
-        }
-      }
-    }
-    setIsHovered(true);
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-  };
-
-  const scrollLeft = () => {
-    setIsManualScrolling(true);
-    const newX = Math.min(animationRef.current.currentX + 400, 200);
-    animationRef.current.currentX = newX;
-    
-    controls.start({
-      x: newX,
-      transition: { duration: 0.5, ease: "easeOut" }
-    }).then(() => {
-      setTimeout(() => setIsManualScrolling(false), 1000);
-    });
-  };
-
-  const scrollRight = () => {
-    setIsManualScrolling(true);
-    const cardWidth = 360;
-    const gap = 24;
-    const totalCardWidth = cardWidth + gap;
-    const singleSetWidth = services.length * totalCardWidth;
-    const minX = -(singleSetWidth * 2); // Allow scrolling through two sets
-    const newX = Math.max(animationRef.current.currentX - 400, minX);
-    animationRef.current.currentX = newX;
-    
-    controls.start({
-      x: newX,
-      transition: { duration: 0.5, ease: "easeOut" }
-    }).then(() => {
-      setTimeout(() => setIsManualScrolling(false), 1000);
-    });
-  };
-
   return (
-    <section id="services" className="py-12 relative overflow-hidden">
-      {/* Minimal background overlay to show main site background */}
-      <div className="absolute inset-0 bg-black/5 backdrop-blur-sm" />
-
-      <div className="container mx-auto px-6 relative z-10">
+    <section id="services" className="relative min-h-[600vh] overflow-hidden">
+      {/* Background */}
+      <div className="fixed inset-0 bg-black/10 backdrop-blur-sm z-0" />
+      
+      {/* Header - Fixed at top */}
+      <div className="sticky top-0 z-20 py-16">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          className="text-center"
         >
           <motion.h2 
             className="text-5xl md:text-6xl font-orbitron font-bold text-white glow-text mb-6"
@@ -174,131 +81,124 @@ const ServicesSection = () => {
           >
             Services
           </motion.h2>
-          <p className="text-xl text-white/80 font-sora max-w-3xl mx-auto">
+          <p className="text-xl text-white/80 font-sora max-w-3xl mx-auto px-6">
             We harness tomorrow's technologies today to build digital experiences 
             that push the boundaries of what's possible.
           </p>
+          
+          {/* Scroll indicator */}
+          <motion.div 
+            className="mt-8 flex justify-center"
+            animate={{ y: [0, 10, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          >
+            <ChevronDown className="w-6 h-6 text-cyan-400/70" />
+          </motion.div>
         </motion.div>
+      </div>
 
-        <div className="relative px-4 sm:px-8">
-          {/* Section-relative Navigation Buttons */}
-          <motion.button
-            className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-12 sm:h-12 bg-white/10 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/20 hover:border-cyan-400/50 transition-all duration-300 group shadow-lg"
-            onClick={scrollLeft}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <ChevronLeft size={16} className="sm:w-5 sm:h-5 group-hover:text-cyan-400 transition-colors duration-300" />
-          </motion.button>
+      {/* Cards Container */}
+      <div ref={containerRef} className="relative">
+        {services.map((service, index) => {
+          const cardProgress = useTransform(
+            scrollYProgress,
+            [index / services.length, (index + 1) / services.length],
+            [0, 1]
+          );
+          
+          const scale = useTransform(cardProgress, [0, 0.5, 1], [0.8, 1, 0.8]);
+          const rotateX = useTransform(cardProgress, [0, 0.5, 1], [15, 0, -15]);
+          const opacity = useTransform(cardProgress, [0, 0.3, 0.7, 1], [0.3, 1, 1, 0.3]);
+          const y = useTransform(cardProgress, [0, 0.5, 1], [100, 0, -100]);
 
-          <motion.button
-            className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-12 sm:h-12 bg-white/10 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/20 hover:border-cyan-400/50 transition-all duration-300 group shadow-lg"
-            onClick={scrollRight}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <ChevronRight size={16} className="sm:w-5 sm:h-5 group-hover:text-cyan-400 transition-colors duration-300" />
-          </motion.button>
-
-          <div className="relative h-[500px] w-full overflow-hidden">
-            <motion.div
-              ref={scrollContainerRef}
-              className="flex gap-6 absolute left-0"
-              animate={controls}
-              style={{
-                width: `${(duplicatedServices.length * 360) + (duplicatedServices.length * 24) + 400}px`
-              }}
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
+          return (
+            <div
+              key={service.title}
+              className="sticky top-1/2 -translate-y-1/2 h-screen flex items-center justify-center px-6"
+              style={{ zIndex: services.length - index }}
             >
-              {duplicatedServices.map((service, index) => (
-                <motion.div
-                  key={`${service.title}-${index}`}
-                  className="flex-shrink-0 w-80 h-[480px] relative group cursor-pointer"
-                  animate={{
-                    y: [0, -10, 0]
-                  }}
-                  transition={{
-                    duration: 6 + (index % 3),
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: index * 0.5
-                  }}
-                  whileHover={{
-                    scale: 1.05,
-                    y: -20
-                  }}
-                >
-                  <div className="absolute inset-0 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl group-hover:bg-white/10 group-hover:border-cyan-400/30 transition-all duration-500">
-                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-400/20 via-purple-400/20 to-pink-400/20 opacity-0 group-hover:opacity-100 blur-sm transition-opacity duration-500" />
-                    
-                    <div className="relative z-10 p-6 h-full flex flex-col">
+              <motion.div
+                style={{
+                  scale,
+                  rotateX,
+                  opacity,
+                  y,
+                  transformPerspective: 1000
+                }}
+                className="w-full max-w-4xl mx-auto"
+              >
+                <div className={`relative group cursor-pointer bg-gradient-to-br ${service.gradient} backdrop-blur-xl border border-white/10 rounded-3xl p-8 md:p-12 shadow-2xl hover:shadow-cyan-500/20 transition-all duration-700`}>
+                  
+                  {/* Background overlay with parallax effect */}
+                  <motion.div 
+                    className="absolute inset-0 rounded-3xl bg-gradient-to-r from-cyan-400/10 via-purple-400/10 to-pink-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                    style={{
+                      y: useTransform(cardProgress, [0, 1], [-20, 20])
+                    }}
+                  />
+                  
+                  <div className="relative z-10 grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+                    {/* Content Side */}
+                    <div className="space-y-6">
                       <motion.div 
-                        className="mb-6 relative flex justify-center"
-                        whileHover={{ 
-                          scale: 1.2,
-                          rotate: [0, -5, 5, 0]
-                        }}
-                        transition={{ duration: 0.6 }}
+                        className="flex items-center space-x-4"
+                        whileHover={{ scale: 1.05 }}
+                        transition={{ duration: 0.3 }}
                       >
-                        <div className="w-16 h-16 bg-white/10 backdrop-blur-md rounded-xl flex items-center justify-center border border-white/20 group-hover:border-cyan-400/50 transition-all duration-300">
+                        <div className="w-16 h-16 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/20 group-hover:border-cyan-400/50 transition-all duration-300">
                           <span className="text-3xl">{service.icon}</span>
                         </div>
-                        
-                        <div className="absolute inset-0 bg-cyan-400/20 rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10" />
+                        <div className="absolute w-16 h-16 bg-cyan-400/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                       </motion.div>
 
-                      <h3 className="text-xl font-orbitron font-bold text-white mb-4 text-center group-hover:text-cyan-300 transition-colors duration-300">
-                        {service.title}
-                      </h3>
-
-                      <p className="text-white/70 font-sora text-sm leading-relaxed mb-6 flex-grow text-center group-hover:text-white/90 transition-colors duration-300">
-                        {service.description}
-                      </p>
-
-                      <div className="space-y-3 mb-8">
-                        {service.features.slice(0, 3).map((feature, featureIndex) => (
-                          <motion.div
-                            key={featureIndex}
-                            className="flex items-center space-x-3"
-                            initial={{ opacity: 0, x: -20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.3, delay: featureIndex * 0.1 }}
-                          >
-                            <div className="w-5 h-5 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20 group-hover:border-cyan-400/50 group-hover:bg-cyan-400/20 transition-all duration-300 flex-shrink-0">
-                              <Check size={12} className="text-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                            </div>
-                            <span className="text-white/80 text-sm font-sora group-hover:text-white transition-colors duration-300">
-                              {feature}
-                            </span>
-                          </motion.div>
-                        ))}
+                      <div>
+                        <h3 className="text-3xl md:text-4xl font-orbitron font-bold text-white mb-4 group-hover:text-cyan-300 transition-colors duration-300">
+                          {service.title}
+                        </h3>
+                        <p className="text-white/80 font-sora text-lg leading-relaxed group-hover:text-white/90 transition-colors duration-300">
+                          {service.description}
+                        </p>
                       </div>
 
-                      <div className="mt-auto">
-                        <motion.button
-                          className="relative w-full py-3 px-6 bg-white/5 backdrop-blur-md border border-white/20 rounded-xl text-white font-sora text-sm font-medium overflow-hidden group-hover:border-cyan-400/50 transition-all duration-300"
-                          whileHover={{
-                            scale: 1.02,
-                          }}
-                          whileTap={{ scale: 0.98 }}
-                        >
-                          <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/0 via-cyan-400/20 to-purple-400/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                          
-                          <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-400/30 via-purple-400/30 to-pink-400/30 opacity-0 group-hover:opacity-100 blur-sm transition-opacity duration-500 -z-10" />
-                          
-                          <span className="relative z-10 group-hover:text-cyan-300 transition-colors duration-300">
-                            Explore Solution →
-                          </span>
-                        </motion.button>
-                      </div>
+                      <motion.button
+                        className="relative px-8 py-4 bg-white/5 backdrop-blur-md border border-white/20 rounded-xl text-white font-sora font-medium overflow-hidden group-hover:border-cyan-400/50 transition-all duration-300"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/0 via-cyan-400/20 to-purple-400/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                        <span className="relative z-10 group-hover:text-cyan-300 transition-colors duration-300">
+                          Explore Solution →
+                        </span>
+                      </motion.button>
                     </div>
 
-                    <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-cyan-400/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
-                    <div className="absolute bottom-1/4 right-1/4 w-24 h-24 bg-purple-400/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000 delay-200" />
+                    {/* Features Side */}
+                    <div className="space-y-4">
+                      {service.features.map((feature, featureIndex) => (
+                        <motion.div
+                          key={featureIndex}
+                          className="flex items-center space-x-4 p-4 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 group-hover:border-white/20 transition-all duration-300"
+                          initial={{ opacity: 0, x: 50 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          transition={{ duration: 0.5, delay: featureIndex * 0.1 }}
+                          whileHover={{ 
+                            scale: 1.02,
+                            backgroundColor: 'rgba(255, 255, 255, 0.1)'
+                          }}
+                        >
+                          <div className="w-8 h-8 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20 group-hover:border-cyan-400/50 group-hover:bg-cyan-400/20 transition-all duration-300 flex-shrink-0">
+                            <Check size={14} className="text-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                          </div>
+                          <span className="text-white/80 font-sora group-hover:text-white transition-colors duration-300">
+                            {feature}
+                          </span>
+                        </motion.div>
+                      ))}
+                    </div>
                   </div>
 
-                  {[...Array(5)].map((_, i) => (
+                  {/* Floating particles effect */}
+                  {[...Array(8)].map((_, i) => (
                     <motion.div
                       key={i}
                       className="absolute w-1 h-1 bg-cyan-400/60 rounded-full opacity-0 group-hover:opacity-100"
@@ -309,21 +209,51 @@ const ServicesSection = () => {
                       animate={{
                         scale: [0, 1, 0],
                         opacity: [0, 1, 0],
-                        y: [0, -20, -40],
+                        y: [0, -30, -60],
                       }}
                       transition={{
-                        duration: 3,
+                        duration: 4,
                         repeat: Infinity,
                         delay: i * 0.5,
                       }}
                     />
                   ))}
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
-        </div>
+
+                  {/* Ambient lighting effects */}
+                  <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-cyan-400/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+                  <div className="absolute bottom-1/4 right-1/4 w-24 h-24 bg-purple-400/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000 delay-200" />
+                </div>
+              </motion.div>
+            </div>
+          );
+        })}
       </div>
+
+      {/* Progress indicator */}
+      <motion.div 
+        className="fixed right-8 top-1/2 -translate-y-1/2 z-30 space-y-2"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1 }}
+      >
+        {services.map((_, index) => (
+          <motion.div
+            key={index}
+            className="w-1 h-8 bg-white/20 rounded-full overflow-hidden"
+          >
+            <motion.div
+              className="w-full bg-gradient-to-b from-cyan-400 to-purple-500 rounded-full origin-top"
+              style={{
+                scaleY: useTransform(
+                  scrollYProgress,
+                  [index / services.length, (index + 1) / services.length],
+                  [0, 1]
+                )
+              }}
+            />
+          </motion.div>
+        ))}
+      </motion.div>
     </section>
   );
 };
