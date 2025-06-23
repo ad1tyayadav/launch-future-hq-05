@@ -1,9 +1,11 @@
+
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, Github, ArrowRight, X, Rocket, Terminal, Code, Zap, Eye } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
+import { Switch } from "@/components/ui/switch";
 import {
   Carousel,
   CarouselContent,
@@ -20,6 +22,7 @@ interface Project {
   image: string;
   tags: string[];
   featured: boolean;
+  type: 'client' | 'devlaunch';
   liveLink?: string;
   githubLink?: string;
 }
@@ -32,6 +35,7 @@ const projectsData: Project[] = [
     image: "/lovable-uploads/06f8542e-bc54-4459-aa62-5b5b60514c86.png",
     tags: ["AI", "React", "Node.js", "Machine Learning"],
     featured: true,
+    type: 'client',
     liveLink: "https://example.com/jobsearch",
     githubLink: "https://github.com/example/jobsearch",
   },
@@ -42,6 +46,7 @@ const projectsData: Project[] = [
     image: "/lovable-uploads/1d096f38-f3f1-4826-89c4-c8055775fc92.png",
     tags: ["Blockchain", "DeFi", "Solidity", "Web3"],
     featured: true,
+    type: 'devlaunch',
     liveLink: "https://example.com/defi",
     githubLink: "https://github.com/example/defi",
   },
@@ -52,6 +57,7 @@ const projectsData: Project[] = [
     image: "/lovable-uploads/540b6631-0fad-4216-aa1e-c068807441ed.png",
     tags: ["IoT", "Data Analytics", "Python", "Sustainability"],
     featured: false,
+    type: 'client',
     liveLink: "https://example.com/energy",
     githubLink: "https://github.com/example/energy",
   },
@@ -62,6 +68,7 @@ const projectsData: Project[] = [
     image: "/lovable-uploads/06f8542e-bc54-4459-aa62-5b5b60514c86.png",
     tags: ["AI", "Healthcare", "Machine Learning", "Python"],
     featured: false,
+    type: 'devlaunch',
     liveLink: "https://example.com/healthcare",
     githubLink: "https://github.com/example/healthcare",
   },
@@ -72,6 +79,7 @@ const projectsData: Project[] = [
     image: "/lovable-uploads/1d096f38-f3f1-4826-89c4-c8055775fc92.png",
     tags: ["Smart City", "IoT", "Data Analytics", "C++"],
     featured: false,
+    type: 'client',
     liveLink: "https://example.com/traffic",
     githubLink: "https://github.com/example/traffic",
   },
@@ -82,6 +90,7 @@ const projectsData: Project[] = [
     image: "/lovable-uploads/540b6631-0fad-4216-aa1e-c068807441ed.png",
     tags: ["Education", "AI", "React", "Node.js"],
     featured: false,
+    type: 'devlaunch',
     liveLink: "https://example.com/education",
     githubLink: "https://github.com/example/education",
   },
@@ -89,12 +98,21 @@ const projectsData: Project[] = [
 
 const ProjectsSection: React.FC = () => {
   const [activeView, setActiveView] = useState<'featured' | 'all'>('featured');
-  const featuredProjects = projectsData.filter(project => project.featured);
-  const allProjects = projectsData;
+  const [projectType, setProjectType] = useState<'client' | 'devlaunch'>('client');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [featuredApi, setFeaturedApi] = useState<CarouselApi>();
   const [allApi, setAllApi] = useState<CarouselApi>();
+
+  // Filter projects based on current settings
+  const getFilteredProjects = () => {
+    const typeFiltered = projectsData.filter(project => project.type === projectType);
+    return activeView === 'featured' 
+      ? typeFiltered.filter(project => project.featured)
+      : typeFiltered;
+  };
+
+  const filteredProjects = getFilteredProjects();
 
   // Autoplay functionality
   useEffect(() => {
@@ -181,7 +199,7 @@ const ProjectsSection: React.FC = () => {
 
   const renderSpacePodCard = (project: Project, index: number) => (
     <motion.div
-      key={index}
+      key={`${project.id}-${project.type}`}
       className="relative group cursor-pointer"
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
@@ -408,19 +426,33 @@ const ProjectsSection: React.FC = () => {
           Navigate through our space-age portfolio of innovative digital solutions
         </motion.p>
       </div>
+
+      {/* Project Type Switch */}
+      <div className="container mx-auto px-4 relative z-10 mb-12">
+        <motion.div 
+          className="flex justify-center items-center gap-6 bg-gray-900/50 backdrop-blur-md border border-cyan-500/30 rounded-full px-8 py-4 w-fit mx-auto"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <span className={`font-orbitron text-lg transition-colors ${projectType === 'client' ? 'text-cyan-400 glow-text' : 'text-gray-400'}`}>
+            Client Projects
+          </span>
+          <Switch
+            checked={projectType === 'devlaunch'}
+            onCheckedChange={(checked) => setProjectType(checked ? 'devlaunch' : 'client')}
+            className="data-[state=checked]:bg-purple-600 data-[state=unchecked]:bg-cyan-600"
+          />
+          <span className={`font-orbitron text-lg transition-colors ${projectType === 'devlaunch' ? 'text-purple-400 glow-text' : 'text-gray-400'}`}>
+            DevLaunch Projects
+          </span>
+        </motion.div>
+      </div>
       
-      {/* Space Pod Project Cards */}
+      {/* Space Pod Project Carousel */}
       <div className="container mx-auto px-4 relative z-10">
         <div className="mb-16">
-          <div className="flex justify-between items-center mb-12">
-            <motion.h3 
-              className="text-2xl font-bold text-white font-orbitron"
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              Featured Pods
-            </motion.h3>
+          <div className="flex justify-center items-center mb-12">
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -437,35 +469,32 @@ const ProjectsSection: React.FC = () => {
           </div>
           
           <AnimatePresence mode="wait">
-            {activeView === 'featured' && (
-              <motion.div
-                key="featured"
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -50 }}
-                transition={{ duration: 0.6 }}
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center"
+            <motion.div
+              key={`${activeView}-${projectType}`}
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -50 }}
+              transition={{ duration: 0.6 }}
+            >
+              <Carousel
+                setApi={activeView === 'featured' ? setFeaturedApi : setAllApi}
+                className="w-full max-w-7xl mx-auto"
+                opts={{
+                  align: "start",
+                  loop: true,
+                }}
               >
-                {featuredProjects.map((project, index) => 
-                  renderSpacePodCard(project, index)
-                )}
-              </motion.div>
-            )}
-            
-            {activeView === 'all' && (
-              <motion.div
-                key="all"
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -50 }}
-                transition={{ duration: 0.6 }}
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center"
-              >
-                {allProjects.map((project, index) => 
-                  renderSpacePodCard(project, index)
-                )}
-              </motion.div>
-            )}
+                <CarouselContent>
+                  {filteredProjects.map((project, index) => (
+                    <CarouselItem key={`${project.id}-${project.type}`} className="md:basis-1/2 lg:basis-1/3">
+                      {renderSpacePodCard(project, index)}
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious className="border-cyan-400/50 text-cyan-400 hover:bg-cyan-400/20" />
+                <CarouselNext className="border-cyan-400/50 text-cyan-400 hover:bg-cyan-400/20" />
+              </Carousel>
+            </motion.div>
           </AnimatePresence>
         </div>
       </div>
