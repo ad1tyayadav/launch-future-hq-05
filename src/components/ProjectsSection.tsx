@@ -359,15 +359,15 @@ const ProjectsSection: React.FC = () => {
       </motion.div>
     </motion.div>;
   return <section id="projects" className="py-20 relative overflow-hidden">
-      {/* Blended Background - matching main site */}
+      {/* Reduced Background opacity - matching main site */}
       <div className="absolute inset-0">
-        {/* Seamless background blend */}
-        <div className="absolute inset-0" style={{
+        {/* Minimal background blend */}
+        <div className="absolute inset-0 opacity-5" style={{
         background: `radial-gradient(ellipse at center, #1a1a2e 0%, #0a0a0f 100%)`
       }} />
         
-        {/* Subtle accent gradients */}
-        <div className="absolute inset-0 opacity-30" style={{
+        {/* Very subtle accent gradients */}
+        <div className="absolute inset-0 opacity-10" style={{
         background: `
               radial-gradient(ellipse at 20% 30%, rgba(0,245,255,0.05) 0%, transparent 50%),
               radial-gradient(ellipse at 80% 70%, rgba(139,92,246,0.05) 0%, transparent 50%)
@@ -460,15 +460,21 @@ const ProjectsSection: React.FC = () => {
             }} transition={{
               duration: 0.6
             }}>
-                {/* Fixed Navigation Buttons */}
-                
-
-                <motion.button className="fixed right-4 sm:right-8 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-12 sm:h-12 bg-gray-900/80 backdrop-blur-md border border-cyan-500/30 rounded-full flex items-center justify-center text-white hover:bg-gray-800/90 hover:border-cyan-400/50 transition-all duration-300 group shadow-lg" onClick={scrollRight} whileHover={{
+                {/* Navigation Buttons - positioned relative to section */}
+                <motion.button className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-12 sm:h-12 bg-gray-900/80 backdrop-blur-md border border-cyan-500/30 rounded-full flex items-center justify-center text-white hover:bg-gray-800/90 hover:border-cyan-400/50 transition-all duration-300 group shadow-lg" onClick={scrollLeft} whileHover={{
                 scale: 1.1
               }} whileTap={{
                 scale: 0.95
               }}>
-                  
+                  <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
+                </motion.button>
+
+                <motion.button className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-12 sm:h-12 bg-gray-900/80 backdrop-blur-md border border-cyan-500/30 rounded-full flex items-center justify-center text-white hover:bg-gray-800/90 hover:border-cyan-400/50 transition-all duration-300 group shadow-lg" onClick={scrollRight} whileHover={{
+                scale: 1.1
+              }} whileTap={{
+                scale: 0.95
+              }}>
+                  <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
                 </motion.button>
 
                 {/* Horizontal scrolling container */}
