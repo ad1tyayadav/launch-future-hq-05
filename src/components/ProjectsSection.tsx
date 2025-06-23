@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, Github, ArrowRight, X, Rocket, Terminal, Code, Zap, Eye } from 'lucide-react';
 import { Button } from "@/components/ui/button";
@@ -10,6 +11,7 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
+  type CarouselApi,
 } from "@/components/ui/carousel";
 
 interface Project {
@@ -92,6 +94,81 @@ const ProjectsSection: React.FC = () => {
   const allProjects = projectsData;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [featuredApi, setFeaturedApi] = useState<CarouselApi>();
+  const [allApi, setAllApi] = useState<CarouselApi>();
+
+  // Autoplay functionality
+  useEffect(() => {
+    if (!featuredApi) return;
+
+    const interval = setInterval(() => {
+      if (featuredApi.canScrollNext()) {
+        featuredApi.scrollNext();
+      } else {
+        featuredApi.scrollTo(0);
+      }
+    }, 3000);
+
+    const handlePointerDown = () => clearInterval(interval);
+    const handlePointerUp = () => {
+      clearInterval(interval);
+      setTimeout(() => {
+        const newInterval = setInterval(() => {
+          if (featuredApi.canScrollNext()) {
+            featuredApi.scrollNext();
+          } else {
+            featuredApi.scrollTo(0);
+          }
+        }, 3000);
+        return () => clearInterval(newInterval);
+      }, 1000);
+    };
+
+    featuredApi.on('pointerDown', handlePointerDown);
+    featuredApi.on('pointerUp', handlePointerUp);
+
+    return () => {
+      clearInterval(interval);
+      featuredApi.off('pointerDown', handlePointerDown);
+      featuredApi.off('pointerUp', handlePointerUp);
+    };
+  }, [featuredApi]);
+
+  useEffect(() => {
+    if (!allApi) return;
+
+    const interval = setInterval(() => {
+      if (allApi.canScrollNext()) {
+        allApi.scrollNext();
+      } else {
+        allApi.scrollTo(0);
+      }
+    }, 3000);
+
+    const handlePointerDown = () => clearInterval(interval);
+    const handlePointerUp = () => {
+      clearInterval(interval);
+      setTimeout(() => {
+        const newInterval = setInterval(() => {
+          if (allApi.canScrollNext()) {
+            allApi.scrollNext();
+          } else {
+            allApi.scrollTo(0);
+          }
+        }, 3000);
+        return () => clearInterval(newInterval);
+      }, 1000);
+    };
+
+    allApi.on('pointerDown', handlePointerDown);
+    allApi.on('pointerUp', handlePointerUp);
+
+    return () => {
+      clearInterval(interval);
+      allApi.off('pointerDown', handlePointerDown);
+      allApi.off('pointerUp', handlePointerUp);
+    };
+  }, [allApi]);
 
   const openModal = (project: Project) => {
     setSelectedProject(project);
@@ -114,7 +191,7 @@ const ProjectsSection: React.FC = () => {
           <img
             src={project.image}
             alt={project.title}
-            className="rounded-md mb-4 w-full h-48 object-cover"
+            className="rounded-md mb-4 w-full h-64 object-cover"
           />
           <div className="absolute top-2 left-2">
             {project.tags.map((tag, tagIndex) => (
@@ -129,55 +206,6 @@ const ProjectsSection: React.FC = () => {
       </CardContent>
     </Card>
   );
-
-  // Create a proper autoplay plugin
-  const createAutoplayPlugin = () => {
-    return {
-      name: 'autoplay',
-      options: { delay: 3000 },
-      init: (embla, optionsHandler) => {
-        let autoplayTimer = null;
-        
-        const play = () => {
-          if (!embla) return;
-          
-          autoplayTimer = setTimeout(() => {
-            if (embla.canScrollNext()) {
-              embla.scrollNext();
-            } else {
-              embla.scrollTo(0);
-            }
-            play(); // Continue the loop
-          }, 3000);
-        };
-        
-        const stop = () => {
-          if (autoplayTimer) {
-            clearTimeout(autoplayTimer);
-            autoplayTimer = null;
-          }
-        };
-        
-        const reset = () => {
-          stop();
-          play();
-        };
-        
-        // Start autoplay
-        play();
-        
-        // Stop on user interaction
-        embla.on('pointerDown', stop);
-        embla.on('pointerUp', reset);
-        embla.on('reInit', reset);
-        
-        return { stop, reset, play };
-      },
-      destroy: () => {
-        // Cleanup handled in init
-      }
-    };
-  };
 
   return (
     <section id="projects" className="py-20 relative overflow-hidden">
@@ -225,7 +253,7 @@ const ProjectsSection: React.FC = () => {
                     align: "start",
                     loop: true,
                   }}
-                  plugins={[createAutoplayPlugin()]}
+                  setApi={setFeaturedApi}
                   className="w-full"
                 >
                   <CarouselContent className="-ml-2 md:-ml-4">
@@ -254,7 +282,7 @@ const ProjectsSection: React.FC = () => {
                     align: "start",
                     loop: true,
                   }}
-                  plugins={[createAutoplayPlugin()]}
+                  setApi={setAllApi}
                   className="w-full"
                 >
                   <CarouselContent className="-ml-2 md:-ml-4">
