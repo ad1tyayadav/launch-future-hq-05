@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
@@ -143,7 +144,7 @@ const HeroSection = () => {
               scale: isNear ? 1 : 0.8,
             }}
             transition={{
-              duration: 0.3,
+              duration: 0.6,
               ease: "easeOut"
             }}
           >
@@ -270,14 +271,6 @@ const HeroSection = () => {
             {Math.random() > 0.5 ? '1' : '0'}
           </motion.div>
         ))}
-
-        {/* Tech grid lines */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-cyber-blue to-transparent" />
-          <div className="absolute top-0 right-1/4 w-px h-full bg-gradient-to-b from-transparent via-cyber-purple to-transparent" />
-          <div className="absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-cyber-blue to-transparent" />
-          <div className="absolute bottom-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-cyber-purple to-transparent" />
-        </div>
       </div>
       
       <div className="container mx-auto px-6 text-center relative z-10">
