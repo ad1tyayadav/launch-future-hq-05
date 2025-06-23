@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, Github, ArrowRight, X, Rocket, Terminal, Code, Zap, Eye } from 'lucide-react';
@@ -30,7 +29,7 @@ const projectsData: Project[] = [
     id: 1,
     title: "AI-Powered Job Search Platform",
     description: "Revolutionizing job searching with AI to match candidates with ideal opportunities.",
-    image: "/project1.png",
+    image: "/lovable-uploads/06f8542e-bc54-4459-aa62-5b5b60514c86.png",
     tags: ["AI", "React", "Node.js", "Machine Learning"],
     featured: true,
     liveLink: "https://example.com/jobsearch",
@@ -40,7 +39,7 @@ const projectsData: Project[] = [
     id: 2,
     title: "Decentralized Finance (DeFi) App",
     description: "A secure and transparent DeFi application built on blockchain technology.",
-    image: "/project2.png",
+    image: "/lovable-uploads/1d096f38-f3f1-4826-89c4-c8055775fc92.png",
     tags: ["Blockchain", "DeFi", "Solidity", "Web3"],
     featured: true,
     liveLink: "https://example.com/defi",
@@ -50,7 +49,7 @@ const projectsData: Project[] = [
     id: 3,
     title: "Sustainable Energy Management System",
     description: "Optimizing energy consumption using IoT and data analytics for a sustainable future.",
-    image: "/project3.png",
+    image: "/lovable-uploads/540b6631-0fad-4216-aa1e-c068807441ed.png",
     tags: ["IoT", "Data Analytics", "Python", "Sustainability"],
     featured: false,
     liveLink: "https://example.com/energy",
@@ -60,7 +59,7 @@ const projectsData: Project[] = [
     id: 4,
     title: "AI-Driven Healthcare Diagnostics",
     description: "Improving healthcare outcomes with AI-powered diagnostic tools.",
-    image: "/project4.png",
+    image: "/lovable-uploads/06f8542e-bc54-4459-aa62-5b5b60514c86.png",
     tags: ["AI", "Healthcare", "Machine Learning", "Python"],
     featured: false,
     liveLink: "https://example.com/healthcare",
@@ -70,7 +69,7 @@ const projectsData: Project[] = [
     id: 5,
     title: "Smart City Traffic Management",
     description: "Reducing traffic congestion and improving urban mobility with intelligent systems.",
-    image: "/project5.png",
+    image: "/lovable-uploads/1d096f38-f3f1-4826-89c4-c8055775fc92.png",
     tags: ["Smart City", "IoT", "Data Analytics", "C++"],
     featured: false,
     liveLink: "https://example.com/traffic",
@@ -80,7 +79,7 @@ const projectsData: Project[] = [
     id: 6,
     title: "Personalized Education Platform",
     description: "Enhancing learning experiences with personalized education paths.",
-    image: "/project6.png",
+    image: "/lovable-uploads/540b6631-0fad-4216-aa1e-c068807441ed.png",
     tags: ["Education", "AI", "React", "Node.js"],
     featured: false,
     liveLink: "https://example.com/education",
@@ -180,121 +179,291 @@ const ProjectsSection: React.FC = () => {
     setSelectedProject(null);
   };
 
-  const renderProjectCard = (project: Project, index: number) => (
-    <Card
+  const renderSpacePodCard = (project: Project, index: number) => (
+    <motion.div
       key={index}
-      className="bg-dark-space border-none shadow-xl transition-transform duration-300 hover:scale-105 cursor-pointer"
+      className="relative group cursor-pointer"
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay: index * 0.1 }}
+      whileHover={{ 
+        scale: 1.05,
+        rotateY: 15,
+        rotateX: 5,
+      }}
+      style={{ perspective: 1000 }}
       onClick={() => openModal(project)}
     >
-      <CardContent className="p-6">
-        <div className="relative">
-          <img
-            src={project.image}
-            alt={project.title}
-            className="rounded-md mb-4 w-full h-64 object-cover"
+      {/* Floating Animation Container */}
+      <motion.div
+        animate={{ 
+          y: [0, -10, 0],
+          rotateZ: [0, 2, -2, 0]
+        }}
+        transition={{ 
+          duration: 6,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: index * 0.5
+        }}
+        className="relative"
+      >
+        {/* Space Pod Frame */}
+        <div className="relative w-80 h-96 mx-auto">
+          {/* Outer Glow Ring */}
+          <motion.div
+            className="absolute inset-0 rounded-full border-2 border-cyan-500/30 shadow-[0_0_50px_rgba(6,182,212,0.3)]"
+            animate={{
+              boxShadow: [
+                "0 0 50px rgba(6,182,212,0.3)",
+                "0 0 80px rgba(139,92,246,0.4)",
+                "0 0 50px rgba(6,182,212,0.3)"
+              ]
+            }}
+            transition={{ duration: 3, repeat: Infinity }}
           />
-          <div className="absolute top-2 left-2">
-            {project.tags.map((tag, tagIndex) => (
-              <Badge key={tagIndex} className="mr-1 bg-electric-blue text-dark-space border-none">
-                {tag}
-              </Badge>
+          
+          {/* Pod Viewport - Circular Image Container */}
+          <div className="absolute top-4 left-1/2 transform -translate-x-1/2 w-64 h-64 rounded-full overflow-hidden border-4 border-gray-800 shadow-inner">
+            {/* Inner Glow */}
+            <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/20 via-transparent to-purple-400/20 rounded-full" />
+            
+            {/* Project Image */}
+            <motion.img
+              src={project.image}
+              alt={project.title}
+              className="w-full h-full object-cover"
+              whileHover={{ scale: 1.1 }}
+              transition={{ duration: 0.3 }}
+            />
+            
+            {/* Holographic Overlay */}
+            <motion.div
+              className="absolute inset-0 bg-gradient-to-tr from-cyan-400/10 via-transparent to-purple-400/10 rounded-full"
+              animate={{
+                background: [
+                  "linear-gradient(45deg, rgba(6,182,212,0.1) 0%, transparent 50%, rgba(139,92,246,0.1) 100%)",
+                  "linear-gradient(135deg, rgba(139,92,246,0.1) 0%, transparent 50%, rgba(6,182,212,0.1) 100%)",
+                  "linear-gradient(45deg, rgba(6,182,212,0.1) 0%, transparent 50%, rgba(139,92,246,0.1) 100%)"
+                ]
+              }}
+              transition={{ duration: 4, repeat: Infinity }}
+            />
+          </div>
+
+          {/* Orbiting Tech Stack Icons */}
+          {project.tags.slice(0, 4).map((tag, tagIndex) => {
+            const angle = (tagIndex * 90) + (index * 45);
+            return (
+              <motion.div
+                key={tagIndex}
+                className="absolute w-8 h-8 bg-gradient-to-r from-cyan-400 to-purple-500 rounded-full flex items-center justify-center text-xs font-bold text-white shadow-lg"
+                style={{
+                  top: '50%',
+                  left: '50%',
+                  transformOrigin: '0 0',
+                }}
+                animate={{
+                  rotate: 360,
+                  x: Math.cos((angle * Math.PI) / 180) * 140 - 16,
+                  y: Math.sin((angle * Math.PI) / 180) * 140 - 16,
+                }}
+                transition={{
+                  rotate: { duration: 20, repeat: Infinity, ease: "linear" },
+                  x: { duration: 0 },
+                  y: { duration: 0 }
+                }}
+              >
+                {tag.slice(0, 2)}
+              </motion.div>
+            );
+          })}
+
+          {/* Project Title */}
+          <motion.div
+            className="absolute bottom-16 left-1/2 transform -translate-x-1/2 text-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+          >
+            <h3 className="text-xl font-bold text-white mb-2 font-orbitron glow-text">
+              {project.title}
+            </h3>
+            
+            {/* Action Buttons */}
+            <div className="flex gap-3 justify-center">
+              {project.liveLink && (
+                <motion.button
+                  className="px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-sm font-semibold rounded-full border border-cyan-400/50 hover:border-cyan-300 transition-all duration-300 flex items-center gap-2"
+                  whileHover={{ 
+                    scale: 1.05,
+                    boxShadow: "0 0 20px rgba(6,182,212,0.5)"
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    window.open(project.liveLink, '_blank');
+                  }}
+                >
+                  <Eye size={16} />
+                  Live Demo
+                </motion.button>
+              )}
+              
+              {project.githubLink && (
+                <motion.button
+                  className="px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-600 text-white text-sm font-semibold rounded-full border border-purple-400/50 hover:border-purple-300 transition-all duration-300 flex items-center gap-2"
+                  whileHover={{ 
+                    scale: 1.05,
+                    boxShadow: "0 0 20px rgba(139,92,246,0.5)"
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    window.open(project.githubLink, '_blank');
+                  }}
+                >
+                  <Github size={16} />
+                  GitHub
+                </motion.button>
+              )}
+            </div>
+          </motion.div>
+
+          {/* Particle Effects */}
+          <div className="absolute inset-0 pointer-events-none">
+            {[...Array(8)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute w-1 h-1 bg-cyan-400 rounded-full"
+                style={{
+                  left: `${20 + Math.random() * 60}%`,
+                  top: `${20 + Math.random() * 60}%`,
+                }}
+                animate={{
+                  opacity: [0, 1, 0],
+                  scale: [0, 1, 0],
+                }}
+                transition={{
+                  duration: 2 + Math.random() * 2,
+                  delay: Math.random() * 2,
+                  repeat: Infinity,
+                }}
+              />
             ))}
           </div>
         </div>
-        <h4 className="text-xl font-semibold text-white mb-2">{project.title}</h4>
-        <p className="text-gray-300">{project.description}</p>
-      </CardContent>
-    </Card>
+      </motion.div>
+    </motion.div>
   );
 
   return (
-    <section id="projects" className="py-20 relative overflow-hidden">
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-900 to-blue-700 opacity-50 z-0"></div>
-      {/* Decorative shapes */}
-      <div className="absolute top-0 left-0 w-48 h-48 bg-electric-blue rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
-      <div className="absolute bottom-0 right-0 w-48 h-48 bg-red-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
+    <section id="projects" className="py-20 relative overflow-hidden bg-gradient-to-b from-dark-space via-space-gray to-dark-space">
+      {/* Animated Space Background */}
+      <div className="absolute inset-0">
+        {/* Starfield */}
+        {[...Array(100)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-1 h-1 bg-white rounded-full"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              opacity: [0.2, 1, 0.2],
+              scale: [0.5, 1, 0.5],
+            }}
+            transition={{
+              duration: 3 + Math.random() * 4,
+              repeat: Infinity,
+              delay: Math.random() * 3,
+            }}
+          />
+        ))}
+        
+        {/* Nebula Effects */}
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 rounded-full filter blur-3xl animate-pulse" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gradient-to-l from-purple-500/10 to-pink-500/10 rounded-full filter blur-3xl animate-pulse" />
+      </div>
 
       {/* Title and description */}
       <div className="container mx-auto text-center mb-16 relative z-10">
-        <h2 className="text-4xl font-bold text-white mb-4">
-          Our Projects
-        </h2>
-        <p className="text-gray-300 text-lg">
-          Explore our innovative projects that drive technological advancement and create positive impact.
-        </p>
+        <motion.h2 
+          className="text-4xl md:text-6xl font-bold text-white mb-6 font-orbitron glow-text"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+        >
+          Mission Control: Projects
+        </motion.h2>
+        <motion.p 
+          className="text-gray-300 text-lg font-sora"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          viewport={{ once: true }}
+        >
+          Navigate through our space-age portfolio of innovative digital solutions
+        </motion.p>
       </div>
       
-      {/* Featured Projects Carousel */}
+      {/* Space Pod Project Cards */}
       <div className="container mx-auto px-4 relative z-10">
         <div className="mb-16">
-          <div className="flex justify-between items-center mb-8">
-            <h3 className="text-2xl font-bold text-white">Featured Projects</h3>
-            <Button 
-              variant="outline" 
-              className="bg-transparent border-electric-blue text-electric-blue hover:bg-electric-blue hover:text-dark-space"
-              onClick={() => setActiveView(activeView === 'featured' ? 'all' : 'featured')}
+          <div className="flex justify-between items-center mb-12">
+            <motion.h3 
+              className="text-2xl font-bold text-white font-orbitron"
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
             >
-              {activeView === 'featured' ? 'View All' : 'View Featured'}
-            </Button>
+              Featured Pods
+            </motion.h3>
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              <Button 
+                variant="outline" 
+                className="bg-transparent border-cyan-400/50 text-cyan-400 hover:bg-cyan-400/20 hover:border-cyan-300 font-orbitron"
+                onClick={() => setActiveView(activeView === 'featured' ? 'all' : 'featured')}
+              >
+                {activeView === 'featured' ? 'View All Pods' : 'View Featured'}
+              </Button>
+            </motion.div>
           </div>
           
           <AnimatePresence mode="wait">
             {activeView === 'featured' && (
               <motion.div
                 key="featured"
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.5 }}
+                exit={{ opacity: 0, y: -50 }}
+                transition={{ duration: 0.6 }}
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center"
               >
-                <Carousel
-                  opts={{
-                    align: "start",
-                    loop: true,
-                  }}
-                  setApi={setFeaturedApi}
-                  className="w-full"
-                >
-                  <CarouselContent className="-ml-2 md:-ml-4">
-                    {featuredProjects.map((project, index) => (
-                      <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
-                        {renderProjectCard(project, index)}
-                      </CarouselItem>
-                    ))}
-                  </CarouselContent>
-                  <CarouselPrevious className="left-4" />
-                  <CarouselNext className="right-4" />
-                </Carousel>
+                {featuredProjects.map((project, index) => 
+                  renderSpacePodCard(project, index)
+                )}
               </motion.div>
             )}
             
             {activeView === 'all' && (
               <motion.div
                 key="all"
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.5 }}
+                exit={{ opacity: 0, y: -50 }}
+                transition={{ duration: 0.6 }}
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center"
               >
-                <Carousel
-                  opts={{
-                    align: "start",
-                    loop: true,
-                  }}
-                  setApi={setAllApi}
-                  className="w-full"
-                >
-                  <CarouselContent className="-ml-2 md:-ml-4">
-                    {allProjects.map((project, index) => (
-                      <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
-                        {renderProjectCard(project, index)}
-                      </CarouselItem>
-                    ))}
-                  </CarouselContent>
-                  <CarouselPrevious className="left-4" />
-                  <CarouselNext className="right-4" />
-                </Carousel>
+                {allProjects.map((project, index) => 
+                  renderSpacePodCard(project, index)
+                )}
               </motion.div>
             )}
           </AnimatePresence>
