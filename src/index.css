@@ -165,16 +165,20 @@
   }
 
   .enhanced-calendar .rdp-day_today {
-    @apply text-white border-2 font-bold;
-    background: linear-gradient(135deg, #ff0080, #8b5cf6, #00f5ff);
-    background-size: 200% 200%;
-    animation: today-pulse 3s ease-in-out infinite, gradient-shift 4s ease-in-out infinite;
-    border-color: #ff0080;
+    background: linear-gradient(135deg, #ff0080, #8b5cf6, #00f5ff) !important;
+    background-size: 200% 200% !important;
+    color: white !important;
+    font-weight: bold !important;
+    border: 2px solid #ff0080 !important;
+    border-radius: 8px !important;
     box-shadow: 
       0 0 20px rgba(255, 0, 128, 0.8), 
       0 0 35px rgba(139, 92, 246, 0.6),
       0 0 50px rgba(0, 245, 255, 0.4),
-      inset 0 0 15px rgba(255, 255, 255, 0.2);
+      inset 0 0 15px rgba(255, 255, 255, 0.2) !important;
+    animation: today-pulse 3s ease-in-out infinite, gradient-shift 4s ease-in-out infinite !important;
+    z-index: 10 !important;
+    position: relative !important;
   }
 
   .enhanced-calendar .rdp-caption_label {
