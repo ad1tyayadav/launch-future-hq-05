@@ -1,4 +1,3 @@
-
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence, useAnimation } from 'framer-motion';
 import { ExternalLink, Github, X, Eye, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -313,12 +312,7 @@ const ProjectsSection: React.FC = () => {
 
                 {/* Gloss Effect */}
                 <div 
-                  className="absolute inset-0 opacity-20"
-                  style={{
-                    background: 'linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%)',
-                    transform: 'translateX(-100%)',
-                    animation: 'shine 3s ease-in-out infinite'
-                  }}
+                  className="absolute inset-0 opacity-20 shine-effect"
                 />
               </div>
 

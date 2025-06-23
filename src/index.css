@@ -137,6 +137,18 @@
     content: '';
     @apply absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-dark-space/80 to-transparent -mt-20 z-10;
   }
+
+  /* Shine effect for space pod cards */
+  .shine-effect {
+    background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%);
+    transform: translateX(-100%);
+    animation: shine 3s ease-in-out infinite;
+  }
+
+  @keyframes shine {
+    0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+    100% { transform: translateX(400%) translateY(400%) rotate(45deg); }
+  }
 }
 
 /* Particle background */
