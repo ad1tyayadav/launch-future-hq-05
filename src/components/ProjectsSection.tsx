@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, Github, X, Eye } from 'lucide-react';
@@ -295,113 +296,127 @@ const ProjectsSection: React.FC = () => {
   );
 
   return (
-    <section id="projects" className="py-20 relative overflow-hidden bg-gradient-to-b from-dark-space via-space-gray to-dark-space">
-      {/* Animated Space Background */}
-      <div className="absolute inset-0">
-        {/* Starfield */}
-        {[...Array(100)].map((_, i) => (
+    <section id="projects" className="py-20 relative overflow-hidden">
+      {/* Seamless Space Background - matching site theme */}
+      <div className="absolute inset-0 bg-gradient-to-b from-dark-space via-space-gray/50 to-dark-space">
+        {/* Enhanced Starfield to match site */}
+        {[...Array(150)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-1 h-1 bg-white rounded-full"
+            className="absolute w-0.5 h-0.5 bg-white rounded-full"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
             }}
             animate={{
-              opacity: [0.2, 1, 0.2],
-              scale: [0.5, 1, 0.5],
+              opacity: [0.1, 0.8, 0.1],
+              scale: [0.3, 1, 0.3],
             }}
             transition={{
-              duration: 3 + Math.random() * 4,
+              duration: 4 + Math.random() * 6,
               repeat: Infinity,
-              delay: Math.random() * 3,
+              delay: Math.random() * 5,
+              ease: "easeInOut",
             }}
           />
         ))}
         
-        {/* Nebula Effects */}
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 rounded-full filter blur-3xl animate-pulse" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gradient-to-l from-purple-500/10 to-pink-500/10 rounded-full filter blur-3xl animate-pulse" />
+        {/* Cosmic Gradient Overlays */}
+        <div className="absolute top-0 left-1/3 w-96 h-96 bg-gradient-radial from-cyan-500/5 via-cyan-500/2 to-transparent rounded-full filter blur-3xl" />
+        <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-gradient-radial from-purple-500/5 via-purple-500/2 to-transparent rounded-full filter blur-3xl" />
+        <div className="absolute top-1/2 left-1/4 w-64 h-64 bg-gradient-radial from-pink-500/3 via-pink-500/1 to-transparent rounded-full filter blur-3xl" />
+        
+        {/* Subtle Grid Pattern */}
+        <div className="absolute inset-0 opacity-[0.02]" style={{
+          backgroundImage: `
+            linear-gradient(rgba(0, 245, 255, 0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 245, 255, 0.1) 1px, transparent 1px)
+          `,
+          backgroundSize: '50px 50px'
+        }} />
       </div>
 
-      {/* Title and description */}
-      <div className="container mx-auto text-center mb-16 relative z-10">
-        <motion.h2 
-          className="text-4xl md:text-6xl font-bold text-white mb-6 font-orbitron glow-text"
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-        >
-          Mission Control: Projects
-        </motion.h2>
-        <motion.p 
-          className="text-gray-300 text-lg font-sora"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          viewport={{ once: true }}
-        >
-          Navigate through our space-age portfolio of innovative digital solutions
-        </motion.p>
-      </div>
+      {/* Content with proper z-index */}
+      <div className="relative z-10">
+        {/* Title and description */}
+        <div className="container mx-auto text-center mb-16">
+          <motion.h2 
+            className="text-4xl md:text-6xl font-bold text-white mb-6 font-orbitron glow-text"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            Mission Control: Projects
+          </motion.h2>
+          <motion.p 
+            className="text-gray-300 text-lg font-sora"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            viewport={{ once: true }}
+          >
+            Navigate through our space-age portfolio of innovative digital solutions
+          </motion.p>
+        </div>
 
-      {/* Project Type Switch */}
-      <div className="container mx-auto px-4 relative z-10 mb-12">
-        <motion.div 
-          className="flex justify-center items-center gap-6 bg-gray-900/50 backdrop-blur-md border border-cyan-500/30 rounded-full px-8 py-4 w-fit mx-auto"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <span className={`font-orbitron text-lg transition-colors ${projectType === 'client' ? 'text-cyan-400 glow-text' : 'text-gray-400'}`}>
-            Client Projects
-          </span>
-          <Switch
-            checked={projectType === 'devlaunch'}
-            onCheckedChange={(checked) => setProjectType(checked ? 'devlaunch' : 'client')}
-            className="data-[state=checked]:bg-purple-600 data-[state=unchecked]:bg-cyan-600"
-          />
-          <span className={`font-orbitron text-lg transition-colors ${projectType === 'devlaunch' ? 'text-purple-400 glow-text' : 'text-gray-400'}`}>
-            DevLaunch Projects
-          </span>
-        </motion.div>
-      </div>
-      
-      {/* Horizontally Scrolling Space Pods */}
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="mb-16">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={projectType}
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -50 }}
-              transition={{ duration: 0.6 }}
-            >
-              {/* Horizontal scrolling container */}
-              <div className="relative h-[480px] overflow-hidden">
-                <motion.div
-                  className="flex gap-8 absolute"
-                  animate={{
-                    x: [-100, -50 * duplicatedProjects.length + 'vw']
-                  }}
-                  transition={{
-                    duration: 60,
-                    repeat: Infinity,
-                    ease: "linear"
-                  }}
-                  style={{
-                    width: `${duplicatedProjects.length * 420}px`
-                  }}
-                >
-                  {duplicatedProjects.map((project, index) => 
-                    renderSpacePodCard(project, index)
-                  )}
-                </motion.div>
-              </div>
-            </motion.div>
-          </AnimatePresence>
+        {/* Project Type Switch */}
+        <div className="container mx-auto px-4 mb-12">
+          <motion.div 
+            className="flex justify-center items-center gap-6 bg-gray-900/30 backdrop-blur-md border border-cyan-500/20 rounded-full px-8 py-4 w-fit mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <span className={`font-orbitron text-lg transition-colors ${projectType === 'client' ? 'text-cyan-400 glow-text' : 'text-gray-400'}`}>
+              Client Projects
+            </span>
+            <Switch
+              checked={projectType === 'devlaunch'}
+              onCheckedChange={(checked) => setProjectType(checked ? 'devlaunch' : 'client')}
+              className="data-[state=checked]:bg-purple-600 data-[state=unchecked]:bg-cyan-600"
+            />
+            <span className={`font-orbitron text-lg transition-colors ${projectType === 'devlaunch' ? 'text-purple-400 glow-text' : 'text-gray-400'}`}>
+              DevLaunch Projects
+            </span>
+          </motion.div>
+        </div>
+        
+        {/* Horizontally Scrolling Space Pods */}
+        <div className="container mx-auto px-4">
+          <div className="mb-16">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={projectType}
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -50 }}
+                transition={{ duration: 0.6 }}
+              >
+                {/* Horizontal scrolling container */}
+                <div className="relative h-[480px] overflow-hidden">
+                  <motion.div
+                    className="flex gap-8 absolute"
+                    animate={{
+                      x: [-100, -50 * duplicatedProjects.length + 'vw']
+                    }}
+                    transition={{
+                      duration: 60,
+                      repeat: Infinity,
+                      ease: "linear"
+                    }}
+                    style={{
+                      width: `${duplicatedProjects.length * 420}px`
+                    }}
+                  >
+                    {duplicatedProjects.map((project, index) => 
+                      renderSpacePodCard(project, index)
+                    )}
+                  </motion.div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
         </div>
       </div>
       
