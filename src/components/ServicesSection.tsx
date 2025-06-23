@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Check } from 'lucide-react';
@@ -74,9 +73,13 @@ const ServicesSection = () => {
 
   React.useEffect(() => {
     if (!api1) return;
+    
     onSelect(api1);
     api1.on("select", onSelect);
-    return () => api1?.off("select", onSelect);
+    
+    return () => {
+      api1.off("select", onSelect);
+    };
   }, [api1, onSelect]);
 
   return (
