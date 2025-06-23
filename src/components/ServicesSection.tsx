@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Check } from 'lucide-react';
 
 const ServicesSection = () => {
   const services = [
@@ -8,43 +9,37 @@ const ServicesSection = () => {
       title: 'AI-Powered Web Apps',
       description: 'Intelligent applications that learn and adapt to user behavior, powered by cutting-edge machine learning algorithms.',
       icon: '🤖',
-      color: 'from-cyber-blue to-cyber-purple',
-      accentColor: 'cyber-blue'
+      features: ['Machine Learning Integration', 'Adaptive User Interfaces', 'Predictive Analytics', 'Natural Language Processing']
     },
     {
       title: '3D Interactive Experiences',
       description: 'Immersive 3D interfaces and visualizations that captivate users and deliver unforgettable digital experiences.',
       icon: '🎮',
-      color: 'from-cyber-purple to-cyber-pink',
-      accentColor: 'cyber-purple'
+      features: ['WebGL Integration', 'Real-time Rendering', 'Interactive Animations', 'Cross-platform Support']
     },
     {
       title: 'Blockchain Solutions',
       description: 'Secure, decentralized applications and smart contracts that redefine trust in digital transactions.',
       icon: '⛓️',
-      color: 'from-cyber-pink to-neon-green',
-      accentColor: 'cyber-pink'
+      features: ['Smart Contract Development', 'DeFi Protocols', 'NFT Marketplaces', 'Wallet Integration']
     },
     {
       title: 'AR/VR Development',
       description: 'Next-generation augmented and virtual reality experiences that blur the line between digital and physical.',
       icon: '🥽',
-      color: 'from-neon-green to-cyber-blue',
-      accentColor: 'neon-green'
+      features: ['Immersive Experiences', 'Cross-platform VR', 'AR Mobile Apps', 'WebXR Development']
     },
     {
       title: 'Cloud Architecture',
       description: 'Scalable, resilient cloud infrastructure designed to handle tomorrow\'s digital demands today.',
       icon: '☁️',
-      color: 'from-cyber-blue to-electric-blue',
-      accentColor: 'electric-blue'
+      features: ['Auto-scaling Solutions', 'Microservices Architecture', 'DevOps Integration', 'Security by Design']
     },
     {
       title: 'IoT Integration',
       description: 'Smart device ecosystems that connect the physical world to your digital infrastructure seamlessly.',
       icon: '📡',
-      color: 'from-electric-blue to-cyber-purple',
-      accentColor: 'cyber-blue'
+      features: ['Device Management', 'Real-time Data Processing', 'Edge Computing', 'Secure Connectivity']
     }
   ];
 
@@ -79,13 +74,13 @@ const ServicesSection = () => {
           </p>
         </motion.div>
 
-        {/* Enhanced horizontal scrolling cards container with proper spacing */}
+        {/* Enhanced horizontal scrolling cards container with frosted glass design */}
         <div className="w-full px-8">
-          <div className="relative h-[480px] w-full">
+          <div className="relative h-[500px] w-full">
             <motion.div
-              className="flex gap-12 absolute left-0"
+              className="flex gap-8 absolute left-0"
               animate={{
-                x: [200, -((duplicatedServices.length * 440) - 200)]
+                x: [200, -((duplicatedServices.length * 380) - 200)]
               }}
               transition={{
                 duration: 80,
@@ -93,194 +88,127 @@ const ServicesSection = () => {
                 ease: "linear"
               }}
               style={{
-                width: `${(duplicatedServices.length * 440) + 400}px`
+                width: `${(duplicatedServices.length * 380) + 400}px`
               }}
             >
               {duplicatedServices.map((service, index) => (
                 <motion.div
                   key={`${service.title}-${index}`}
-                  className="flex-shrink-0 w-96 h-80 relative group cursor-pointer overflow-hidden rounded-2xl"
+                  className="flex-shrink-0 w-80 h-96 relative group cursor-pointer"
                   animate={{
-                    y: [0, -15, 0]
+                    y: [0, -10, 0]
                   }}
                   transition={{
-                    duration: 4 + (index % 3),
+                    duration: 6 + (index % 3),
                     repeat: Infinity,
                     ease: "easeInOut",
-                    delay: index * 0.3
+                    delay: index * 0.5
                   }}
                   whileHover={{
                     scale: 1.05,
-                    rotateY: 8,
-                    z: 50
+                    y: -20
                   }}
                 >
-                  {/* Enhanced neon glow outline - always visible */}
-                  <motion.div 
-                    className="absolute inset-0 rounded-2xl border-2 border-cyber-blue/40"
-                    style={{
-                      boxShadow: '0 0 20px rgba(0, 245, 255, 0.4), 0 0 40px rgba(0, 245, 255, 0.2), inset 0 0 20px rgba(0, 245, 255, 0.1)'
-                    }}
-                    animate={{
-                      boxShadow: [
-                        '0 0 20px rgba(0, 245, 255, 0.4), 0 0 40px rgba(0, 245, 255, 0.2)',
-                        '0 0 30px rgba(139, 92, 246, 0.5), 0 0 60px rgba(139, 92, 246, 0.3)',
-                        '0 0 20px rgba(0, 245, 255, 0.4), 0 0 40px rgba(0, 245, 255, 0.2)'
-                      ],
-                      borderColor: [
-                        'rgba(0, 245, 255, 0.4)',
-                        'rgba(139, 92, 246, 0.5)',
-                        'rgba(0, 245, 255, 0.4)'
-                      ]
-                    }}
-                    transition={{
-                      duration: 3,
-                      repeat: Infinity,
-                      ease: "easeInOut"
-                    }}
-                  />
-
-                  {/* Enhanced neon glow on hover */}
-                  <motion.div 
-                    className="absolute inset-0 opacity-0 group-hover:opacity-100 rounded-2xl transition-opacity duration-500 border-2 border-cyber-purple/60"
-                    style={{
-                      boxShadow: '0 0 40px rgba(139, 92, 246, 0.6), 0 0 80px rgba(139, 92, 246, 0.4), inset 0 0 30px rgba(139, 92, 246, 0.2)'
-                    }}
-                  />
-
-                  {/* Glassmorphism background */}
-                  <div className="absolute inset-0 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl" />
-                  
-                  {/* Holographic glow effect on hover */}
-                  <motion.div 
-                    className="absolute inset-0 opacity-0 group-hover:opacity-100 rounded-2xl transition-opacity duration-500"
-                    style={{
-                      background: 'linear-gradient(45deg, rgba(0, 245, 255, 0.2), rgba(139, 92, 246, 0.2))',
-                      boxShadow: '0 0 50px rgba(0, 245, 255, 0.4), inset 0 0 50px rgba(139, 92, 246, 0.2)'
-                    }}
-                  />
-                  
-                  {/* Subtle grid pattern overlay */}
-                  <div className="absolute inset-0 opacity-5 group-hover:opacity-10 transition-opacity duration-500">
-                    <div 
-                      className="w-full h-full rounded-2xl"
-                      style={{
-                        backgroundImage: `radial-gradient(circle at 20px 20px, rgba(0, 245, 255, 0.3) 1px, transparent 1px)`,
-                        backgroundSize: '40px 40px'
-                      }}
-                    />
-                  </div>
-
-                  {/* Content */}
-                  <div className="relative z-10 p-8 h-full flex flex-col">
-                    {/* Enhanced service icon */}
-                    <div className="relative mb-6">
+                  {/* Frosted Glass Card */}
+                  <div className="absolute inset-0 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl group-hover:bg-white/10 group-hover:border-cyan-400/30 transition-all duration-500">
+                    {/* Soft frosted border glow */}
+                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-400/20 via-purple-400/20 to-pink-400/20 opacity-0 group-hover:opacity-100 blur-sm transition-opacity duration-500" />
+                    
+                    {/* Inner content container */}
+                    <div className="relative z-10 p-8 h-full flex flex-col">
+                      {/* Service Icon/Logo at top */}
                       <motion.div 
-                        className="text-5xl mb-4 relative"
+                        className="mb-6 relative"
                         whileHover={{ 
-                          scale: 1.2, 
-                          rotate: [0, -10, 10, 0] 
+                          scale: 1.2,
+                          rotate: [0, -5, 5, 0]
                         }}
-                        transition={{ duration: 0.5 }}
+                        transition={{ duration: 0.6 }}
                       >
-                        {/* Icon holographic glow */}
-                        <div className="absolute inset-0 blur-xl bg-cyber-blue/30 rounded-full scale-150 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                        <div className="w-16 h-16 bg-white/10 backdrop-blur-md rounded-xl flex items-center justify-center border border-white/20 group-hover:border-cyan-400/50 transition-all duration-300">
+                          <span className="text-3xl">{service.icon}</span>
+                        </div>
                         
-                        {/* Floating particles around icon */}
-                        {[...Array(6)].map((_, i) => (
-                          <motion.div
-                            key={i}
-                            className="absolute w-1 h-1 bg-cyber-blue rounded-full opacity-0 group-hover:opacity-100"
-                            style={{
-                              left: `${20 + Math.cos(i * 60 * Math.PI / 180) * 30}px`,
-                              top: `${20 + Math.sin(i * 60 * Math.PI / 180) * 30}px`,
-                            }}
-                            animate={{
-                              scale: [0, 1, 0],
-                              opacity: [0, 1, 0],
-                            }}
-                            transition={{
-                              duration: 2,
-                              repeat: Infinity,
-                              delay: i * 0.2,
-                            }}
-                          />
-                        ))}
-                        
-                        <span className="relative z-10">{service.icon}</span>
+                        {/* Floating glow effect around icon */}
+                        <div className="absolute inset-0 bg-cyan-400/20 rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10" />
                       </motion.div>
+
+                      {/* Service Title */}
+                      <h3 className="text-xl font-orbitron font-bold text-white mb-3 group-hover:text-cyan-300 transition-colors duration-300">
+                        {service.title}
+                      </h3>
+
+                      {/* Service Description */}
+                      <p className="text-white/70 font-sora text-sm leading-relaxed mb-6 flex-grow group-hover:text-white/90 transition-colors duration-300">
+                        {service.description}
+                      </p>
+
+                      {/* Features with checkmarks */}
+                      <div className="space-y-2 mb-6">
+                        {service.features.slice(0, 3).map((feature, featureIndex) => (
+                          <motion.div
+                            key={featureIndex}
+                            className="flex items-center space-x-3"
+                            initial={{ opacity: 0, x: -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.3, delay: featureIndex * 0.1 }}
+                          >
+                            <div className="w-5 h-5 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20 group-hover:border-cyan-400/50 group-hover:bg-cyan-400/20 transition-all duration-300">
+                              <Check size={12} className="text-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                            </div>
+                            <span className="text-white/80 text-sm font-sora group-hover:text-white transition-colors duration-300">
+                              {feature}
+                            </span>
+                          </motion.div>
+                        ))}
+                      </div>
+
+                      {/* CTA Button with glass blur and glow */}
+                      <motion.button
+                        className="relative w-full py-3 px-6 bg-white/5 backdrop-blur-md border border-white/20 rounded-xl text-white font-sora text-sm font-medium overflow-hidden group-hover:border-cyan-400/50 transition-all duration-300"
+                        whileHover={{
+                          scale: 1.02,
+                        }}
+                        whileTap={{ scale: 0.98 }}
+                      >
+                        {/* Button background glow */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/0 via-cyan-400/20 to-purple-400/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                        
+                        {/* Button border glow */}
+                        <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-400/30 via-purple-400/30 to-pink-400/30 opacity-0 group-hover:opacity-100 blur-sm transition-opacity duration-500 -z-10" />
+                        
+                        <span className="relative z-10 group-hover:text-cyan-300 transition-colors duration-300">
+                          Explore Solution →
+                        </span>
+                      </motion.button>
                     </div>
 
-                    {/* Enhanced service title */}
-                    <motion.h3 
-                      className="text-2xl font-orbitron font-bold text-white mb-4 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-cyber-blue group-hover:to-cyber-purple transition-all duration-500"
-                      whileHover={{
-                        scale: 1.05,
-                      }}
-                    >
-                      {service.title}
-                    </motion.h3>
-
-                    {/* Enhanced service description */}
-                    <p className="text-white/70 font-sora text-sm leading-relaxed mb-6 flex-grow group-hover:text-white/90 transition-colors duration-300">
-                      {service.description}
-                    </p>
-
-                    {/* Enhanced CTA with holographic elements */}
-                    <motion.div
-                      className="relative"
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.2 }}
-                    >
-                      <div className="absolute inset-0 bg-gradient-to-r from-cyber-blue/20 to-cyber-purple/20 opacity-0 group-hover:opacity-100 rounded-lg blur-sm transition-opacity duration-300" />
-                      <div className="relative flex items-center justify-between p-3 border border-white/10 rounded-lg group-hover:border-cyber-blue/50 transition-all duration-300 backdrop-blur-sm">
-                        <span className="text-cyber-blue font-semibold text-sm group-hover:text-white transition-colors duration-300">Explore Solution</span>
-                        <motion.div
-                          animate={{ 
-                            x: [0, 5, 0],
-                            rotate: [0, 90, 0]
-                          }}
-                          transition={{
-                            duration: 2,
-                            repeat: Infinity,
-                            repeatType: "reverse"
-                          }}
-                          className="text-cyber-blue group-hover:text-white transition-colors duration-300"
-                        >
-                          →
-                        </motion.div>
-                      </div>
-                    </motion.div>
+                    {/* Ambient light effects */}
+                    <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-cyan-400/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+                    <div className="absolute bottom-1/4 right-1/4 w-24 h-24 bg-purple-400/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000 delay-200" />
                   </div>
 
-                  {/* Holographic scanning line effect */}
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-transparent via-cyber-blue/40 to-transparent opacity-0 group-hover:opacity-100"
-                    animate={{
-                      x: [-100, 400],
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      repeatDelay: 3,
-                    }}
-                    style={{
-                      width: '2px',
-                      height: '100%',
-                    }}
-                  />
-
-                  {/* Additional holographic effects */}
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-30 transition-opacity duration-500 rounded-2xl">
-                    <div 
-                      className="absolute inset-0 rounded-2xl"
+                  {/* Floating particles effect */}
+                  {[...Array(5)].map((_, i) => (
+                    <motion.div
+                      key={i}
+                      className="absolute w-1 h-1 bg-cyan-400/60 rounded-full opacity-0 group-hover:opacity-100"
                       style={{
-                        background: 'conic-gradient(from 0deg, transparent, rgba(0, 245, 255, 0.2), transparent, rgba(139, 92, 246, 0.2), transparent)',
-                        filter: 'blur(20px)'
+                        left: `${20 + Math.random() * 60}%`,
+                        top: `${20 + Math.random() * 60}%`,
+                      }}
+                      animate={{
+                        scale: [0, 1, 0],
+                        opacity: [0, 1, 0],
+                        y: [0, -20, -40],
+                      }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        delay: i * 0.5,
                       }}
                     />
-                  </div>
+                  ))}
                 </motion.div>
               ))}
             </motion.div>
