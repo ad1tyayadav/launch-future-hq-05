@@ -24,8 +24,7 @@ const PricingSection = () => {
       ],
       price: "Starting from $999",
       tag: "NEURAL",
-      cardNumber: "4127 8394 5621 7890",
-      validThru: "12/27"
+      cardNumber: "4127 8394 5621 7890"
     },
     {
       title: "Blockchain Development",
@@ -46,8 +45,7 @@ const PricingSection = () => {
       ],
       price: "Starting from $1,499",
       tag: "CRYPTO",
-      cardNumber: "5532 1047 8293 4567",
-      validThru: "10/28"
+      cardNumber: "5532 1047 8293 4567"
     },
     {
       title: "App & Website Development",
@@ -68,8 +66,7 @@ const PricingSection = () => {
       ],
       price: "Starting from $799",
       tag: "MOBILE",
-      cardNumber: "3784 5629 1037 842",
-      validThru: "05/29"
+      cardNumber: "3784 5629 1037 842"
     },
     {
       title: "UI/UX Designing",
@@ -90,8 +87,7 @@ const PricingSection = () => {
       ],
       price: "Starting from $599",
       tag: "DESIGN",
-      cardNumber: "6011 4578 9321 0456",
-      validThru: "08/26"
+      cardNumber: "6011 4578 9321 0456"
     }
   ];
 
@@ -197,7 +193,7 @@ const PricingSection = () => {
                     </div>
 
                     {/* Card Content */}
-                    <div className="absolute bottom-20 left-6 right-6">
+                    <div className="absolute bottom-16 left-6 right-6">
                       <h3 className="text-white font-orbitron font-bold text-lg mb-3 leading-tight">
                         {service.title}
                       </h3>
@@ -223,12 +219,7 @@ const PricingSection = () => {
                     </div>
 
                     {/* Card Footer */}
-                    <div className="absolute bottom-6 left-6 right-6 flex justify-between items-end">
-                      <div>
-                        <div className="text-xs text-cyan-300 font-mono">VALID THRU</div>
-                        <div className="text-sm text-white font-mono">{service.validThru}</div>
-                      </div>
-                      
+                    <div className="absolute bottom-6 right-6">
                       <div className="text-xs text-cyan-300 font-mono">HOVER TO FLIP →</div>
                     </div>
 
