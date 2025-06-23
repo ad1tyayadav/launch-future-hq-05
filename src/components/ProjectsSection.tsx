@@ -102,8 +102,8 @@ const ProjectsSection: React.FC = () => {
   React.useEffect(() => {
     const startAnimation = () => {
       if (animationRef.current.isPaused || isManualScrolling || duplicatedProjects.length === 0) return;
-      const cardWidth = 520; // Increased from 480
-      const gap = 32; // Reduced from 48px gap
+      const cardWidth = 450; // Reduced from 520
+      const gap = 32;
       const totalCardWidth = cardWidth + gap;
       const singleSetWidth = filteredProjects.length * totalCardWidth;
 
@@ -187,8 +187,8 @@ const ProjectsSection: React.FC = () => {
   };
   const scrollRight = () => {
     setIsManualScrolling(true);
-    const cardWidth = 520; // Updated to match new card width
-    const gap = 32; // Updated to match new gap
+    const cardWidth = 450; // Updated to match new card width
+    const gap = 32;
     const totalCardWidth = cardWidth + gap;
     const singleSetWidth = filteredProjects.length * totalCardWidth;
     const minX = -(singleSetWidth * 2); // Allow scrolling through two sets
@@ -207,7 +207,7 @@ const ProjectsSection: React.FC = () => {
   const renderSpacePodCard = (project: Project, index: number) => (
     <motion.div
       key={`${project.id}-${project.type}-${index}`}
-      className="flex-shrink-0 w-[500px] relative group cursor-pointer perspective-1000" // Increased from w-96 (384px) to w-[500px]
+      className="flex-shrink-0 w-[430px] relative group cursor-pointer perspective-1000" // Reduced from w-[500px] to w-[430px]
       animate={{
         y: [0, -15, 0]
       }}
@@ -234,7 +234,7 @@ const ProjectsSection: React.FC = () => {
         className="relative"
       >
         {/* Space Pod Frame */}
-        <div className="relative w-[480px] h-96 mx-auto"> {/* Increased from w-80 to w-[480px] */}
+        <div className="relative w-[420px] h-96 mx-auto"> {/* Reduced from w-[480px] to w-[420px] */}
           {/* Holographic Card Container */}
           <motion.div
             className="relative w-full h-full rounded-3xl overflow-hidden"
@@ -267,7 +267,7 @@ const ProjectsSection: React.FC = () => {
             {/* Diagonal Light Rays */}
             <div className="absolute inset-0 opacity-30">
               <div className="absolute top-0 left-0 w-full h-full" style={{
-              background: `
+                background: `
                     linear-gradient(
                       -45deg,
                       transparent 0%,
@@ -278,26 +278,26 @@ const ProjectsSection: React.FC = () => {
                       transparent 100%
                     )
                   `
-            }} />
+              }} />
             </div>
 
             {/* Card Content - Front Side */}
-            <motion.div className="relative w-full h-full p-6 flex flex-col" initial={{
-            rotateY: 0
-          }} whileHover={{
-            rotateY: 0
-          }}>
+            <motion.div className="relative w-full h-full p-5 flex flex-col" initial={{ // Reduced padding from p-6 to p-5
+              rotateY: 0
+            }} whileHover={{
+              rotateY: 0
+            }}>
               {/* Project Image with Holographic Overlay */}
-              <div className="relative w-full h-48 rounded-2xl overflow-hidden mb-4">
+              <div className="relative w-full h-44 rounded-2xl overflow-hidden mb-4"> {/* Reduced from h-48 to h-44 */}
                 <motion.img src={project.image} alt={project.title} className="w-full h-full object-cover" whileHover={{
-                scale: 1.1
-              }} transition={{
-                duration: 0.6
-              }} />
+                  scale: 1.1
+                }} transition={{
+                  duration: 0.6
+                }} />
                 
                 {/* Holographic Glass Overlay */}
                 <motion.div className="absolute inset-0" style={{
-                background: `
+                  background: `
                       linear-gradient(
                         135deg,
                         rgba(0,245,255,0.1) 0%,
@@ -306,13 +306,17 @@ const ProjectsSection: React.FC = () => {
                         transparent 100%
                       )
                     `
-              }} animate={{
-                background: ["linear-gradient(135deg, rgba(0,245,255,0.1) 0%, transparent 30%, rgba(139,92,246,0.1) 70%, transparent 100%)", "linear-gradient(225deg, rgba(139,92,246,0.1) 0%, transparent 30%, rgba(0,245,255,0.1) 70%, transparent 100%)", "linear-gradient(135deg, rgba(0,245,255,0.1) 0%, transparent 30%, rgba(139,92,246,0.1) 70%, transparent 100%)"]
-              }} transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }} />
+                }} animate={{
+                  background: [
+                    "linear-gradient(135deg, rgba(0,245,255,0.1) 0%, transparent 30%, rgba(139,92,246,0.1) 70%, transparent 100%)", 
+                    "linear-gradient(225deg, rgba(139,92,246,0.1) 0%, transparent 30%, rgba(0,245,255,0.1) 70%, transparent 100%)", 
+                    "linear-gradient(135deg, rgba(0,245,255,0.1) 0%, transparent 30%, rgba(139,92,246,0.1) 70%, transparent 100%)"
+                  ]
+                }} transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }} />
 
                 {/* Gloss Effect */}
                 <div className="absolute inset-0 opacity-20 shine-effect" />
@@ -321,7 +325,7 @@ const ProjectsSection: React.FC = () => {
               {/* Project Info */}
               <div className="flex-1 flex flex-col justify-between">
                 <div>
-                  <h3 className="text-xl font-bold text-white mb-2 font-orbitron glow-text">
+                  <h3 className="text-lg font-bold text-white mb-2 font-orbitron glow-text"> {/* Reduced from text-xl to text-lg */}
                     {project.title}
                   </h3>
                   <p className="text-gray-300 text-sm font-sora line-clamp-3">
@@ -330,22 +334,26 @@ const ProjectsSection: React.FC = () => {
                 </div>
 
                 {/* Tech Stack Tags */}
-                <div className="flex flex-wrap gap-2 mt-4">
-                  {project.tags.slice(0, 3).map((tag, tagIndex) => <Badge key={tagIndex} className="bg-gradient-to-r from-cyan-500/20 to-purple-500/20 border border-cyan-400/30 text-cyan-300 text-xs px-2 py-1">
+                <div className="flex flex-wrap gap-2 mt-3"> {/* Reduced from mt-4 to mt-3 */}
+                  {project.tags.slice(0, 3).map((tag, tagIndex) => (
+                    <Badge key={tagIndex} className="bg-gradient-to-r from-cyan-500/20 to-purple-500/20 border border-cyan-400/30 text-cyan-300 text-xs px-2 py-1">
                       {tag}
-                    </Badge>)}
-                  {project.tags.length > 3 && <Badge className="bg-gray-700/50 border border-gray-600 text-gray-300 text-xs px-2 py-1">
+                    </Badge>
+                  ))}
+                  {project.tags.length > 3 && (
+                    <Badge className="bg-gray-700/50 border border-gray-600 text-gray-300 text-xs px-2 py-1">
                       +{project.tags.length - 3}
-                    </Badge>}
+                    </Badge>
+                  )}
                 </div>
 
                 {/* Hover Indicator */}
-                <motion.div className="text-center mt-4" animate={{
-                opacity: [0.5, 1, 0.5]
-              }} transition={{
-                duration: 2,
-                repeat: Infinity
-              }}>
+                <motion.div className="text-center mt-3" animate={{ // Reduced from mt-4 to mt-3
+                  opacity: [0.5, 1, 0.5]
+                }} transition={{
+                  duration: 2,
+                  repeat: Infinity
+                }}>
                   <span className="text-cyan-400 text-sm font-sora">
                     Click to explore details
                   </span>
@@ -355,20 +363,28 @@ const ProjectsSection: React.FC = () => {
 
             {/* Ambient Particles */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden">
-              {[...Array(12)].map((_, i) => <motion.div key={i} className="absolute w-1 h-1 bg-cyan-400/60 rounded-full" style={{
-              left: `${20 + Math.random() * 60}%`,
-              top: `${20 + Math.random() * 60}%`
-            }} animate={{
-              opacity: [0, 1, 0],
-              scale: [0, 1.5, 0],
-              x: [0, Math.random() * 40 - 20],
-              y: [0, Math.random() * 40 - 20]
-            }} transition={{
-              duration: 3 + Math.random() * 2,
-              delay: Math.random() * 3,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }} />)}
+              {[...Array(12)].map((_, i) => (
+                <motion.div 
+                  key={i} 
+                  className="absolute w-1 h-1 bg-cyan-400/60 rounded-full" 
+                  style={{
+                    left: `${20 + Math.random() * 60}%`,
+                    top: `${20 + Math.random() * 60}%`
+                  }} 
+                  animate={{
+                    opacity: [0, 1, 0],
+                    scale: [0, 1.5, 0],
+                    x: [0, Math.random() * 40 - 20],
+                    y: [0, Math.random() * 40 - 20]
+                  }} 
+                  transition={{
+                    duration: 3 + Math.random() * 2,
+                    delay: Math.random() * 3,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }} 
+                />
+              ))}
             </div>
           </motion.div>
         </div>
@@ -455,7 +471,11 @@ const ProjectsSection: React.FC = () => {
             <span className={`font-orbitron text-lg transition-colors ${projectType === 'client' ? 'text-cyan-400 glow-text' : 'text-gray-400'}`}>
               Client Projects
             </span>
-            <Switch checked={projectType === 'devlaunch'} onCheckedChange={checked => setProjectType(checked ? 'devlaunch' : 'client')} className="data-[state=checked]:bg-purple-600 data-[state=unchecked]:bg-cyan-600" />
+            <Switch 
+              checked={projectType === 'devlaunch'} 
+              onCheckedChange={checked => setProjectType(checked ? 'devlaunch' : 'client')} 
+              className="data-[state=checked]:bg-purple-600 data-[state=unchecked]:bg-cyan-600" 
+            />
             <span className={`font-orbitron text-lg transition-colors ${projectType === 'devlaunch' ? 'text-purple-400 glow-text' : 'text-gray-400'}`}>
               DevLaunch Projects
             </span>
@@ -463,21 +483,21 @@ const ProjectsSection: React.FC = () => {
         </div>
         
         {/* Horizontally Scrolling Space Pods with Navigation */}
-        <div className="relative px-4 sm:px-8">
-          <div className="mb-8"> {/* Reduced from mb-16 to mb-8 */}
+        <div className="relative px-8 sm:px-12 md:px-16 lg:px-20"> {/* Increased padding for better alignment */}
+          <div className="mb-8">
             <AnimatePresence mode="wait">
               <motion.div key={projectType} initial={{
-              opacity: 0,
-              y: 50
-            }} animate={{
-              opacity: 1,
-              y: 0
-            }} exit={{
-              opacity: 0,
-              y: -50
-            }} transition={{
-              duration: 0.6
-            }}>
+                opacity: 0,
+                y: 50
+              }} animate={{
+                opacity: 1,
+                y: 0
+              }} exit={{
+                opacity: 0,
+                y: -50
+              }} transition={{
+                duration: 0.6
+              }}>
                 {/* Navigation Buttons - improved positioning and responsiveness */}
                 <motion.button 
                   className="absolute left-2 sm:left-4 md:left-6 lg:left-8 top-1/2 -translate-y-1/2 z-30 w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-gray-900/80 backdrop-blur-md border border-cyan-500/30 rounded-full flex items-center justify-center text-white hover:bg-gray-800/90 hover:border-cyan-400/50 transition-all duration-300 group shadow-lg" 
@@ -507,9 +527,16 @@ const ProjectsSection: React.FC = () => {
 
                 {/* Horizontal scrolling container */}
                 <div className="relative h-[520px] w-full overflow-hidden">
-                  <motion.div ref={scrollContainerRef} className="flex gap-8 absolute left-0" animate={controls} style={{
-                  width: `${duplicatedProjects.length * 520 + duplicatedProjects.length * 32 + 400}px`
-                }} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+                  <motion.div 
+                    ref={scrollContainerRef} 
+                    className="flex gap-8 absolute left-0" 
+                    animate={controls} 
+                    style={{
+                      width: `${duplicatedProjects.length * 450 + duplicatedProjects.length * 32 + 400}px` // Updated width calculation
+                    }} 
+                    onMouseEnter={handleMouseEnter} 
+                    onMouseLeave={handleMouseLeave}
+                  >
                     {duplicatedProjects.map((project, index) => renderSpacePodCard(project, index))}
                   </motion.div>
                 </div>
@@ -538,46 +565,60 @@ const ProjectsSection: React.FC = () => {
       
       {/* Enhanced Project Modal */}
       <AnimatePresence>
-        {isModalOpen && selectedProject && <motion.div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex justify-center items-center z-50 p-4" initial={{
-        opacity: 0
-      }} animate={{
-        opacity: 1
-      }} exit={{
-        opacity: 0
-      }} transition={{
-        duration: 0.3
-      }}>
-            <motion.div className="relative max-w-4xl w-full rounded-3xl overflow-hidden" style={{
-          background: `
+        {isModalOpen && selectedProject && (
+          <motion.div 
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm flex justify-center items-center z-50 p-4" 
+            initial={{
+              opacity: 0
+            }} 
+            animate={{
+              opacity: 1
+            }} 
+            exit={{
+              opacity: 0
+            }} 
+            transition={{
+              duration: 0.3
+            }}
+          >
+            <motion.div 
+              className="relative max-w-4xl w-full rounded-3xl overflow-hidden" 
+              style={{
+                background: `
                   linear-gradient(135deg, 
                     rgba(6,182,212,0.1) 0%, 
                     rgba(139,92,246,0.05) 50%, 
                     rgba(255,0,128,0.1) 100%
                   )
                 `,
-          backdropFilter: 'blur(20px)',
-          border: '1px solid rgba(255,255,255,0.1)',
-          boxShadow: `
+                backdropFilter: 'blur(20px)',
+                border: '1px solid rgba(255,255,255,0.1)',
+                boxShadow: `
                   0 20px 60px rgba(0,0,0,0.4),
                   inset 0 1px 0 rgba(255,255,255,0.1),
                   0 0 60px rgba(6,182,212,0.2)
                 `
-        }} initial={{
-          y: 100,
-          opacity: 0,
-          scale: 0.9
-        }} animate={{
-          y: 0,
-          opacity: 1,
-          scale: 1
-        }} exit={{
-          y: 100,
-          opacity: 0,
-          scale: 0.9
-        }} transition={{
-          duration: 0.5,
-          ease: "easeOut"
-        }}>
+              }} 
+              initial={{
+                y: 100,
+                opacity: 0,
+                scale: 0.9
+              }} 
+              animate={{
+                y: 0,
+                opacity: 1,
+                scale: 1
+              }} 
+              exit={{
+                y: 100,
+                opacity: 0,
+                scale: 0.9
+              }} 
+              transition={{
+                duration: 0.5,
+                ease: "easeOut"
+              }}
+            >
               {/* Close Button */}
               <Button variant="ghost" size="icon" className="absolute top-6 right-6 z-30 text-gray-400 hover:text-white hover:bg-white/10 rounded-full" onClick={closeModal}>
                 <X className="h-6 w-6" />
@@ -635,7 +676,8 @@ const ProjectsSection: React.FC = () => {
                 </div>
               </div>
             </motion.div>
-          </motion.div>}
+          </motion.div>
+        )}
       </AnimatePresence>
     </section>
   );
