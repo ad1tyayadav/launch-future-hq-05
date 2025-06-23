@@ -22,7 +22,7 @@ const projectsData: Project[] = [
     id: 1,
     title: "AI-Powered Job Search Platform",
     description: "Revolutionizing job searching with AI to match candidates with ideal opportunities.",
-    image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=600&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=600&h=400&fit=crop",
     tags: ["AI", "React", "Node.js", "Machine Learning"],
     featured: true,
     type: 'client',
@@ -33,7 +33,7 @@ const projectsData: Project[] = [
     id: 2,
     title: "Decentralized Finance (DeFi) App",
     description: "A secure and transparent DeFi application built on blockchain technology.",
-    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=600&h=400&fit=crop",
     tags: ["Blockchain", "DeFi", "Solidity", "Web3"],
     featured: true,
     type: 'devlaunch',
@@ -44,7 +44,7 @@ const projectsData: Project[] = [
     id: 3,
     title: "Sustainable Energy Management System",
     description: "Optimizing energy consumption using IoT and data analytics for a sustainable future.",
-    image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=600&h=400&fit=crop",
     tags: ["IoT", "Data Analytics", "Python", "Sustainability"],
     featured: false,
     type: 'client',
@@ -55,7 +55,7 @@ const projectsData: Project[] = [
     id: 4,
     title: "AI-Driven Healthcare Diagnostics",
     description: "Improving healthcare outcomes with AI-powered diagnostic tools.",
-    image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=600&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=600&h=400&fit=crop",
     tags: ["AI", "Healthcare", "Machine Learning", "Python"],
     featured: false,
     type: 'devlaunch',
@@ -66,7 +66,7 @@ const projectsData: Project[] = [
     id: 5,
     title: "Smart City Traffic Management",
     description: "Reducing traffic congestion and improving urban mobility with intelligent systems.",
-    image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1573804633927-bfcbcd909acd?w=600&h=400&fit=crop",
     tags: ["Smart City", "IoT", "Data Analytics", "C++"],
     featured: false,
     type: 'client',
@@ -77,7 +77,7 @@ const projectsData: Project[] = [
     id: 6,
     title: "Personalized Education Platform",
     description: "Enhancing learning experiences with personalized education paths.",
-    image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=600&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&h=400&fit=crop",
     tags: ["Education", "AI", "React", "Node.js"],
     featured: false,
     type: 'devlaunch',
@@ -91,6 +91,7 @@ const ProjectsSection: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isHovered, setIsHovered] = useState(false);
+  const [isManualScrolling, setIsManualScrolling] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const controls = useAnimation();
   const animationRef = useRef<{ currentX: number; isPaused: boolean }>({ currentX: 200, isPaused: false });
@@ -106,7 +107,7 @@ const ProjectsSection: React.FC = () => {
 
   React.useEffect(() => {
     const startAnimation = () => {
-      if (animationRef.current.isPaused) return;
+      if (animationRef.current.isPaused || isManualScrolling) return;
       
       const totalWidth = duplicatedProjects.length * 480;
       const endX = -(totalWidth - 200);
@@ -125,21 +126,26 @@ const ProjectsSection: React.FC = () => {
       });
     };
 
-    if (!isHovered && duplicatedProjects.length > 0) {
+    if (!isHovered && !isManualScrolling && duplicatedProjects.length > 0) {
       animationRef.current.isPaused = false;
       startAnimation();
     } else {
       animationRef.current.isPaused = true;
       controls.stop();
     }
-  }, [isHovered, controls, duplicatedProjects.length]);
+  }, [isHovered, isManualScrolling, controls, duplicatedProjects.length]);
 
   const handleMouseEnter = () => {
-    const currentTransform = scrollContainerRef.current?.style.transform;
-    if (currentTransform) {
-      const match = currentTransform.match(/translateX\(([^)]+)px\)/);
-      if (match) {
-        animationRef.current.currentX = parseFloat(match[1]);
+    // Get current position from the actual transform
+    const element = scrollContainerRef.current;
+    if (element) {
+      const transform = window.getComputedStyle(element).transform;
+      if (transform && transform !== 'none') {
+        const matrix = transform.match(/matrix\(([^)]+)\)/);
+        if (matrix) {
+          const values = matrix[1].split(',').map(parseFloat);
+          animationRef.current.currentX = values[4] || animationRef.current.currentX;
+        }
       }
     }
     setIsHovered(true);
@@ -160,15 +166,31 @@ const ProjectsSection: React.FC = () => {
   };
 
   const scrollLeft = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: -500, behavior: 'smooth' });
-    }
+    setIsManualScrolling(true);
+    const newX = Math.min(animationRef.current.currentX + 500, 200);
+    animationRef.current.currentX = newX;
+    
+    controls.start({
+      x: newX,
+      transition: { duration: 0.5, ease: "easeOut" }
+    }).then(() => {
+      setTimeout(() => setIsManualScrolling(false), 1000);
+    });
   };
 
   const scrollRight = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: 500, behavior: 'smooth' });
-    }
+    setIsManualScrolling(true);
+    const totalWidth = duplicatedProjects.length * 480;
+    const minX = -(totalWidth - 200);
+    const newX = Math.max(animationRef.current.currentX - 500, minX);
+    animationRef.current.currentX = newX;
+    
+    controls.start({
+      x: newX,
+      transition: { duration: 0.5, ease: "easeOut" }
+    }).then(() => {
+      setTimeout(() => setIsManualScrolling(false), 1000);
+    });
   };
 
   const renderSpacePodCard = (project: Project, index: number) => (
@@ -446,12 +468,10 @@ const ProjectsSection: React.FC = () => {
                 <div className="relative h-[520px] w-full">
                   <motion.div
                     ref={scrollContainerRef}
-                    className="flex gap-12 absolute left-0 overflow-x-auto scrollbar-hide"
+                    className="flex gap-12 absolute left-0"
                     animate={controls}
                     style={{
-                      width: `${(duplicatedProjects.length * 480) + 400}px`,
-                      scrollbarWidth: 'none',
-                      msOverflowStyle: 'none'
+                      width: `${(duplicatedProjects.length * 480) + 400}px`
                     }}
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}

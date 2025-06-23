@@ -5,8 +5,9 @@ import { Check, ChevronLeft, ChevronRight } from 'lucide-react';
 const ServicesSection = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
+  const [isManualScrolling, setIsManualScrolling] = useState(false);
   const controls = useAnimation();
-  const animationRef = useRef<{ startTime: number; currentX: number }>({ startTime: Date.now(), currentX: 200 });
+  const animationRef = useRef<{ currentX: number; isPaused: boolean }>({ currentX: 200, isPaused: false });
 
   const services = [
     {
@@ -51,13 +52,18 @@ const ServicesSection = () => {
 
   useEffect(() => {
     const startAnimation = () => {
-      const totalWidth = (duplicatedServices.length * 360);
+      if (animationRef.current.isPaused || isManualScrolling) return;
+      
+      const totalWidth = duplicatedServices.length * 360;
       const endX = -(totalWidth - 200);
+      const remainingDistance = animationRef.current.currentX - endX;
+      const totalDistance = 200 - endX;
+      const duration = 80 * (remainingDistance / totalDistance);
       
       controls.start({
         x: [animationRef.current.currentX, endX],
         transition: {
-          duration: 80 * ((animationRef.current.currentX - endX) / (200 - endX)),
+          duration,
           ease: "linear",
           repeat: Infinity,
           repeatType: "loop"
@@ -65,19 +71,26 @@ const ServicesSection = () => {
       });
     };
 
-    if (!isHovered) {
+    if (!isHovered && !isManualScrolling && duplicatedServices.length > 0) {
+      animationRef.current.isPaused = false;
       startAnimation();
     } else {
+      animationRef.current.isPaused = true;
       controls.stop();
     }
-  }, [isHovered, controls, duplicatedServices.length]);
+  }, [isHovered, isManualScrolling, controls, duplicatedServices.length]);
 
   const handleMouseEnter = () => {
-    const currentTransform = scrollContainerRef.current?.style.transform;
-    if (currentTransform) {
-      const match = currentTransform.match(/translateX\(([^)]+)px\)/);
-      if (match) {
-        animationRef.current.currentX = parseFloat(match[1]);
+    // Get current position from the actual transform
+    const element = scrollContainerRef.current;
+    if (element) {
+      const transform = window.getComputedStyle(element).transform;
+      if (transform && transform !== 'none') {
+        const matrix = transform.match(/matrix\(([^)]+)\)/);
+        if (matrix) {
+          const values = matrix[1].split(',').map(parseFloat);
+          animationRef.current.currentX = values[4] || animationRef.current.currentX;
+        }
       }
     }
     setIsHovered(true);
@@ -88,15 +101,31 @@ const ServicesSection = () => {
   };
 
   const scrollLeft = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: -400, behavior: 'smooth' });
-    }
+    setIsManualScrolling(true);
+    const newX = Math.min(animationRef.current.currentX + 400, 200);
+    animationRef.current.currentX = newX;
+    
+    controls.start({
+      x: newX,
+      transition: { duration: 0.5, ease: "easeOut" }
+    }).then(() => {
+      setTimeout(() => setIsManualScrolling(false), 1000);
+    });
   };
 
   const scrollRight = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: 400, behavior: 'smooth' });
-    }
+    setIsManualScrolling(true);
+    const totalWidth = duplicatedServices.length * 360;
+    const minX = -(totalWidth - 200);
+    const newX = Math.max(animationRef.current.currentX - 400, minX);
+    animationRef.current.currentX = newX;
+    
+    controls.start({
+      x: newX,
+      transition: { duration: 0.5, ease: "easeOut" }
+    }).then(() => {
+      setTimeout(() => setIsManualScrolling(false), 1000);
+    });
   };
 
   return (
@@ -149,12 +178,10 @@ const ServicesSection = () => {
           <div className="relative h-[500px] w-full">
             <motion.div
               ref={scrollContainerRef}
-              className="flex gap-6 absolute left-0 overflow-x-auto scrollbar-hide"
+              className="flex gap-6 absolute left-0"
               animate={controls}
               style={{
-                width: `${(duplicatedServices.length * 360) + 400}px`,
-                scrollbarWidth: 'none',
-                msOverflowStyle: 'none'
+                width: `${(duplicatedServices.length * 360) + 400}px`
               }}
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
