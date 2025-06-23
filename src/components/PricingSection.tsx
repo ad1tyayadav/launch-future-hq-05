@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Bot, Blocks, Smartphone, Palette, Settings } from 'lucide-react';
@@ -15,7 +16,9 @@ const PricingSection = () => {
       ],
       price: "Starting from $999",
       tag: "NEURAL",
-      polygon: "polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%)" // Octagon
+      cardNumber: "4127 8394 5621 7890",
+      validThru: "12/27",
+      size: "large" // Takes 2 columns
     },
     {
       title: "Blockchain Development",
@@ -28,7 +31,9 @@ const PricingSection = () => {
       ],
       price: "Starting from $1,499",
       tag: "CRYPTO",
-      polygon: "polygon(30% 0%, 70% 0%, 100% 30%, 70% 100%, 30% 100%, 0% 70%)" // Hexagon
+      cardNumber: "5532 1047 8293 4567",
+      validThru: "10/28",
+      size: "medium"
     },
     {
       title: "App & Website Development",
@@ -41,7 +46,9 @@ const PricingSection = () => {
       ],
       price: "Starting from $799",
       tag: "MOBILE",
-      polygon: "polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%)" // Pentagon
+      cardNumber: "3784 5629 1037 842",
+      validThru: "05/29",
+      size: "medium"
     },
     {
       title: "UI/UX Designing",
@@ -54,7 +61,9 @@ const PricingSection = () => {
       ],
       price: "Starting from $599",
       tag: "DESIGN",
-      polygon: "polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)" // Hexagon (different orientation)
+      cardNumber: "6011 4578 9321 0456",
+      validThru: "08/26",
+      size: "small"
     },
     {
       title: "Custom Software",
@@ -67,9 +76,37 @@ const PricingSection = () => {
       ],
       price: "Starting from $1,299",
       tag: "SYSTEM",
-      polygon: "polygon(50% 0%, 90% 20%, 100% 60%, 75% 100%, 25% 100%, 0% 60%, 10% 20%)" // Heptagon
+      cardNumber: "4532 7890 1234 5678",
+      validThru: "03/30",
+      size: "large" // Takes 2 columns
     }
   ];
+
+  const getGridClasses = (size) => {
+    switch (size) {
+      case 'large':
+        return 'col-span-2 row-span-1';
+      case 'medium':
+        return 'col-span-1 row-span-1';
+      case 'small':
+        return 'col-span-1 row-span-1';
+      default:
+        return 'col-span-1 row-span-1';
+    }
+  };
+
+  const getCardHeight = (size) => {
+    switch (size) {
+      case 'large':
+        return 'h-80';
+      case 'medium':
+        return 'h-96';
+      case 'small':
+        return 'h-72';
+      default:
+        return 'h-80';
+    }
+  };
 
   return (
     <section id="pricing" className="py-20 relative overflow-hidden">
@@ -108,14 +145,15 @@ const PricingSection = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-6xl font-bold text-white mb-6 font-orbitron glow-text">
-            Our Pricing
+            Service Cards
           </h2>
           <p className="text-xl text-white/80 font-sora max-w-3xl mx-auto">
-            Transparent pricing tailored for your unique digital journey
+            Premium access to cutting-edge digital solutions
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        {/* Bento Grid Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto auto-rows-min">
           {services.map((service, index) => {
             const IconComponent = service.icon;
             return (
@@ -125,218 +163,109 @@ const PricingSection = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="group relative"
+                className={`group relative ${getGridClasses(service.size)}`}
               >
-                {/* Data Module Card with Polygon Shape */}
+                {/* Futuristic ID Card */}
                 <div 
-                  className="relative h-96 bg-gradient-to-b from-gray-900/50 to-black/80 backdrop-blur-sm border border-cyan-500/20 overflow-hidden transition-all duration-700 ease-out group-hover:border-cyan-400/60 group-hover:shadow-[0_0_30px_rgba(6,182,212,0.3)]"
-                  style={{
-                    clipPath: service.polygon,
-                    transform: 'scale(0.95)',
-                    transition: 'all 0.7s cubic-bezier(0.4, 0, 0.2, 1)',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'scale(1)';
-                    e.currentTarget.style.clipPath = 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'scale(0.95)';
-                    e.currentTarget.style.clipPath = service.polygon;
-                  }}
+                  className={`relative ${getCardHeight(service.size)} bg-gradient-to-br from-gray-900 via-gray-800 to-black rounded-2xl overflow-hidden border border-cyan-500/30 group-hover:border-cyan-400/60 transition-all duration-500 group-hover:shadow-[0_0_40px_rgba(6,182,212,0.4)]`}
                 >
+                  {/* Holographic overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/5 via-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   
-                  {/* Hex Grid Pattern Overlay */}
-                  <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity duration-700"
+                  {/* Circuit pattern background */}
+                  <div className="absolute inset-0 opacity-10"
                     style={{
-                      backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2306b6d4' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-                      backgroundSize: '30px 30px'
+                      backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%2306b6d4' fill-opacity='0.3'%3E%3Cpath d='M20 20.5V18H18v2.5h2zm0-2.5v-2.5h-2V18h2zM18 18H15.5v2H18v-2zm-2.5 0h-2.5v2h2.5v-2z'/%3E%3C/g%3E%3C/svg%3E")`,
                     }}
                   />
 
-                  {/* Animated Circuit Lines */}
-                  <motion.div 
-                    className="absolute top-4 left-4 h-px bg-gradient-to-r from-cyan-400 to-transparent opacity-60"
-                    initial={{ width: '0%' }}
-                    whileInView={{ width: '40%' }}
-                    transition={{ duration: 1.2, delay: 0.2 }}
-                  />
-                  <motion.div 
-                    className="absolute top-4 right-4 h-px bg-gradient-to-l from-cyan-400 to-transparent opacity-60"
-                    initial={{ width: '0%' }}
-                    whileInView={{ width: '20%' }}
-                    transition={{ duration: 1.2, delay: 0.4 }}
-                  />
-                  <motion.div 
-                    className="absolute bottom-4 left-4 h-px bg-gradient-to-r from-cyan-400 to-transparent opacity-60"
-                    initial={{ width: '0%' }}
-                    whileInView={{ width: '30%' }}
-                    transition={{ duration: 1.2, delay: 0.6 }}
-                  />
-
-                  {/* Default State - Minimalistic */}
-                  <motion.div 
-                    className="absolute inset-0 p-6 flex flex-col justify-between group-hover:opacity-0 transition-all duration-700 ease-out"
-                    initial={{ opacity: 1 }}
-                  >
-                    <div className="flex items-center justify-between">
+                  {/* Card Header */}
+                  <div className="absolute top-6 left-6 right-6 flex justify-between items-start">
+                    <div className="flex items-center space-x-3">
                       <motion.div 
-                        className="w-10 h-10 rounded-full bg-cyan-500/20 flex items-center justify-center"
-                        whileHover={{ scale: 1.1 }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        <IconComponent size={20} className="text-cyan-400" />
-                      </motion.div>
-                      <motion.div 
-                        className="px-2 py-1 bg-cyan-500/20 rounded text-xs font-mono text-cyan-400 border border-cyan-500/30"
-                        initial={{ opacity: 0.8 }}
-                        whileHover={{ opacity: 1 }}
-                      >
-                        {service.tag}
-                      </motion.div>
-                    </div>
-                    
-                    <div>
-                      <h3 className="text-lg font-bold text-white font-orbitron mb-2">
-                        {service.title}
-                      </h3>
-                      <motion.div 
-                        className="h-px bg-gradient-to-r from-cyan-400/50 to-transparent"
-                        initial={{ width: '0%' }}
-                        whileInView={{ width: '100%' }}
-                        transition={{ duration: 1, delay: 0.8 }}
-                      />
-                    </div>
-                  </motion.div>
-
-                  {/* Hover State - Expanded Data with Smoother Animation */}
-                  <motion.div 
-                    className="absolute inset-0 p-6 opacity-0 group-hover:opacity-100"
-                    initial={{ scale: 0.9, opacity: 0 }}
-                    whileHover={{ scale: 1, opacity: 1 }}
-                    transition={{ 
-                      duration: 0.7, 
-                      ease: [0.4, 0, 0.2, 1],
-                      opacity: { duration: 0.5 },
-                      scale: { duration: 0.6 }
-                    }}
-                  >
-                    {/* Header with smoother decrypt animation */}
-                    <div className="flex items-center justify-between mb-4">
-                      <motion.div 
-                        className="w-12 h-12 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 flex items-center justify-center"
-                        initial={{ rotate: 0, scale: 0.8 }}
-                        whileHover={{ rotate: 360, scale: 1 }}
-                        transition={{ 
-                          duration: 0.8,
-                          ease: "easeInOut"
-                        }}
+                        className="w-12 h-12 rounded-xl bg-gradient-to-r from-cyan-400 to-blue-500 flex items-center justify-center"
+                        whileHover={{ rotate: 360 }}
+                        transition={{ duration: 0.8 }}
                       >
                         <IconComponent size={24} className="text-white" />
                       </motion.div>
-                      <motion.div 
-                        className="px-3 py-1 bg-gradient-to-r from-cyan-500 to-blue-500 rounded text-xs font-mono text-white font-bold"
-                        initial={{ x: 20, opacity: 0 }}
-                        whileInView={{ x: 0, opacity: 1 }}
-                        transition={{ duration: 0.5, delay: 0.2 }}
-                      >
-                        {service.tag} MODULE
-                      </motion.div>
+                      <div>
+                        <div className="text-cyan-400 text-xs font-mono tracking-wider">SERVICE MODULE</div>
+                        <div className="text-white font-orbitron font-bold text-sm">{service.tag}</div>
+                      </div>
                     </div>
                     
-                    {/* Title with smooth typing effect */}
-                    <motion.h3 
-                      className="text-xl font-bold text-white mb-4 font-orbitron"
-                      initial={{ y: 10, opacity: 0 }}
-                      whileInView={{ y: 0, opacity: 1 }}
-                      transition={{ duration: 0.4, delay: 0.1 }}
-                    >
-                      {service.title}
-                    </motion.h3>
-                    
-                    {/* Features with smoother stagger animation */}
-                    <div className="space-y-2 mb-4">
-                      {service.features.map((feature, featureIndex) => (
-                        <motion.div
-                          key={featureIndex}
-                          initial={{ opacity: 0, x: -30, scale: 0.9 }}
-                          whileInView={{ opacity: 1, x: 0, scale: 1 }}
-                          transition={{ 
-                            duration: 0.5,
-                            delay: featureIndex * 0.1 + 0.3,
-                            ease: [0.4, 0, 0.2, 1]
-                          }}
-                          className="text-sm text-cyan-100 flex items-center"
-                        >
-                          <motion.div 
-                            className="w-1 h-1 bg-cyan-400 rounded-full mr-3"
-                            initial={{ scale: 0 }}
-                            whileInView={{ scale: 1 }}
-                            transition={{ 
-                              duration: 0.3,
-                              delay: featureIndex * 0.1 + 0.4
-                            }}
-                          />
-                          {feature}
-                        </motion.div>
-                      ))}
+                    {/* Security chip */}
+                    <div className="w-8 h-6 bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-sm flex items-center justify-center">
+                      <div className="w-4 h-3 bg-yellow-300 rounded-xs opacity-80" />
                     </div>
-                    
-                    {/* Price with enhanced glow effect */}
-                    <motion.div 
-                      className="mb-4"
-                      initial={{ y: 15, opacity: 0 }}
-                      whileInView={{ y: 0, opacity: 1 }}
-                      transition={{ duration: 0.5, delay: 0.6 }}
-                    >
-                      <p className="text-xl font-bold text-cyan-400 font-orbitron glow-text">
-                        {service.price}
-                      </p>
-                    </motion.div>
-                    
-                    {/* CTA Button with smoother hover effect */}
-                    <motion.button
-                      initial={{ y: 20, opacity: 0 }}
-                      whileInView={{ y: 0, opacity: 1 }}
-                      whileHover={{ 
-                        scale: 1.05,
-                        boxShadow: "0 0 25px rgba(6,182,212,0.6)"
-                      }}
-                      whileTap={{ scale: 0.98 }}
-                      transition={{ 
-                        duration: 0.4,
-                        delay: 0.7
-                      }}
-                      className="w-full py-2 px-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold rounded border border-cyan-400/50 hover:border-cyan-300 transition-all duration-400 font-mono text-sm"
-                    >
-                      INITIATE PROTOCOL →
-                    </motion.button>
-                  </motion.div>
+                  </div>
 
-                  {/* Corner decorations with animation */}
+                  {/* Card Number */}
+                  <div className="absolute top-20 left-6 right-6">
+                    <div className="text-cyan-300 font-mono text-lg tracking-[0.2em] mb-2">
+                      {service.cardNumber}
+                    </div>
+                  </div>
+
+                  {/* Card Content */}
+                  <div className="absolute bottom-20 left-6 right-6">
+                    <h3 className="text-white font-orbitron font-bold text-lg mb-3 leading-tight">
+                      {service.title}
+                    </h3>
+                    
+                    {/* Features - Only show on larger cards */}
+                    {service.size !== 'small' && (
+                      <div className="space-y-1 mb-4">
+                        {service.features.slice(0, service.size === 'large' ? 4 : 2).map((feature, featureIndex) => (
+                          <motion.div
+                            key={featureIndex}
+                            initial={{ opacity: 0, x: -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.3, delay: featureIndex * 0.1 + 0.3 }}
+                            className="text-cyan-100 text-xs flex items-center"
+                          >
+                            <div className="w-1 h-1 bg-cyan-400 rounded-full mr-2" />
+                            {feature}
+                          </motion.div>
+                        ))}
+                      </div>
+                    )}
+                    
+                    <div className="text-cyan-400 font-orbitron font-bold text-lg glow-text">
+                      {service.price}
+                    </div>
+                  </div>
+
+                  {/* Card Footer */}
+                  <div className="absolute bottom-6 left-6 right-6 flex justify-between items-end">
+                    <div>
+                      <div className="text-xs text-cyan-300 font-mono">VALID THRU</div>
+                      <div className="text-sm text-white font-mono">{service.validThru}</div>
+                    </div>
+                    
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-mono text-xs rounded-lg border border-cyan-400/50 hover:border-cyan-300 transition-all duration-300"
+                    >
+                      ACTIVATE →
+                    </motion.button>
+                  </div>
+
+                  {/* Holographic stripe */}
                   <motion.div 
-                    className="absolute top-0 left-0 w-4 h-4 border-l-2 border-t-2 border-cyan-400/60"
-                    initial={{ opacity: 0, scale: 0 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5, delay: 1 }}
+                    className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent"
+                    initial={{ x: '-100%' }}
+                    animate={{ x: '100%' }}
+                    transition={{ duration: 3, repeat: Infinity, repeatDelay: 2 }}
                   />
-                  <motion.div 
-                    className="absolute top-0 right-0 w-4 h-4 border-r-2 border-t-2 border-cyan-400/60"
-                    initial={{ opacity: 0, scale: 0 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5, delay: 1.1 }}
-                  />
-                  <motion.div 
-                    className="absolute bottom-0 left-0 w-4 h-4 border-l-2 border-b-2 border-cyan-400/60"
-                    initial={{ opacity: 0, scale: 0 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5, delay: 1.2 }}
-                  />
-                  <motion.div 
-                    className="absolute bottom-0 right-0 w-4 h-4 border-r-2 border-b-2 border-cyan-400/60"
-                    initial={{ opacity: 0, scale: 0 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5, delay: 1.3 }}
-                  />
+
+                  {/* Corner accents */}
+                  <div className="absolute top-0 left-0 w-6 h-6 border-l-2 border-t-2 border-cyan-400/60 rounded-tl-2xl" />
+                  <div className="absolute top-0 right-0 w-6 h-6 border-r-2 border-t-2 border-cyan-400/60 rounded-tr-2xl" />
+                  <div className="absolute bottom-0 left-0 w-6 h-6 border-l-2 border-b-2 border-cyan-400/60 rounded-bl-2xl" />
+                  <div className="absolute bottom-0 right-0 w-6 h-6 border-r-2 border-b-2 border-cyan-400/60 rounded-br-2xl" />
                 </div>
               </motion.div>
             );
