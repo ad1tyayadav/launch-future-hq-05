@@ -7,7 +7,19 @@ import * as THREE from 'three';
 
 function Stars(props: any) {
   const ref = useRef<THREE.Points>(null);
-  const [sphere] = useMemo(() => [random.inSphere(new Float32Array(5000), { radius: 1.5 })], []);
+  
+  const [sphere] = useMemo(() => {
+    // Generate valid sphere positions with proper validation
+    const positions = new Float32Array(5000 * 3); // Ensure proper length
+    const tempSphere = random.inSphere(new Float32Array(5000 * 3), { radius: 1.5 });
+    
+    // Validate and clean positions to prevent NaN values
+    for (let i = 0; i < tempSphere.length; i++) {
+      positions[i] = isNaN(tempSphere[i]) ? 0 : tempSphere[i];
+    }
+    
+    return [positions];
+  }, []);
 
   useFrame((state, delta) => {
     if (ref.current) {
@@ -82,7 +94,11 @@ function FloatingTorus() {
 export default function ThreeBackground() {
   return (
     <div className="fixed inset-0 z-0">
-      <Canvas camera={{ position: [0, 0, 1] }}>
+      <Canvas 
+        camera={{ position: [0, 0, 1] }}
+        performance={{ min: 0.5 }}
+        dpr={[1, 2]}
+      >
         <ambientLight intensity={0.5} />
         <pointLight position={[10, 10, 10]} intensity={1} />
         <Stars />
