@@ -1,9 +1,10 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Check, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const ServicesSection = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [isHovered, setIsHovered] = useState(false);
 
   const services = [
     {
@@ -112,9 +113,9 @@ const ServicesSection = () => {
             <motion.div
               ref={scrollContainerRef}
               className="flex gap-6 absolute left-0 overflow-x-auto scrollbar-hide"
-              animate={{
+              animate={!isHovered ? {
                 x: [200, -((duplicatedServices.length * 360) - 200)]
-              }}
+              } : {}}
               transition={{
                 duration: 80,
                 repeat: Infinity,
@@ -125,6 +126,8 @@ const ServicesSection = () => {
                 scrollbarWidth: 'none',
                 msOverflowStyle: 'none'
               }}
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
             >
               {duplicatedServices.map((service, index) => (
                 <motion.div

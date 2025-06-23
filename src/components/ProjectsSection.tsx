@@ -1,3 +1,4 @@
+
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, Github, X, Eye, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -90,6 +91,7 @@ const ProjectsSection: React.FC = () => {
   const [projectType, setProjectType] = useState<'client' | 'devlaunch'>('client');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [isHovered, setIsHovered] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   // Filter projects based on current type only
@@ -429,9 +431,9 @@ const ProjectsSection: React.FC = () => {
                   <motion.div
                     ref={scrollContainerRef}
                     className="flex gap-12 absolute left-0 overflow-x-auto scrollbar-hide"
-                    animate={{
+                    animate={!isHovered ? {
                       x: [200, -((duplicatedProjects.length * 480) - 200)]
-                    }}
+                    } : {}}
                     transition={{
                       duration: 60,
                       repeat: Infinity,
@@ -442,6 +444,8 @@ const ProjectsSection: React.FC = () => {
                       scrollbarWidth: 'none',
                       msOverflowStyle: 'none'
                     }}
+                    onMouseEnter={() => setIsHovered(true)}
+                    onMouseLeave={() => setIsHovered(false)}
                   >
                     {duplicatedProjects.map((project, index) => 
                       renderSpacePodCard(project, index)
