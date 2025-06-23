@@ -165,9 +165,16 @@
   }
 
   .enhanced-calendar .rdp-day_today {
-    @apply bg-gradient-to-br from-cyber-pink/40 to-cyber-purple/40 text-white border-2 border-cyber-pink font-semibold;
-    box-shadow: 0 0 15px rgba(255, 0, 128, 0.5);
-    animation: today-pulse 3s ease-in-out infinite;
+    @apply text-white border-2 font-bold;
+    background: linear-gradient(135deg, #ff0080, #8b5cf6, #00f5ff);
+    background-size: 200% 200%;
+    animation: today-pulse 3s ease-in-out infinite, gradient-shift 4s ease-in-out infinite;
+    border-color: #ff0080;
+    box-shadow: 
+      0 0 20px rgba(255, 0, 128, 0.8), 
+      0 0 35px rgba(139, 92, 246, 0.6),
+      0 0 50px rgba(0, 245, 255, 0.4),
+      inset 0 0 15px rgba(255, 255, 255, 0.2);
   }
 
   .enhanced-calendar .rdp-caption_label {
@@ -206,10 +213,33 @@
 
   @keyframes today-pulse {
     0%, 100% {
-      box-shadow: 0 0 15px rgba(255, 0, 128, 0.5);
+      box-shadow: 
+        0 0 20px rgba(255, 0, 128, 0.8), 
+        0 0 35px rgba(139, 92, 246, 0.6),
+        0 0 50px rgba(0, 245, 255, 0.4),
+        inset 0 0 15px rgba(255, 255, 255, 0.2);
+      transform: scale(1);
     }
     50% {
-      box-shadow: 0 0 25px rgba(255, 0, 128, 0.8), 0 0 35px rgba(139, 92, 246, 0.4);
+      box-shadow: 
+        0 0 30px rgba(255, 0, 128, 1), 
+        0 0 50px rgba(139, 92, 246, 0.8),
+        0 0 70px rgba(0, 245, 255, 0.6),
+        0 0 90px rgba(255, 0, 128, 0.3),
+        inset 0 0 25px rgba(255, 255, 255, 0.3);
+      transform: scale(1.05);
+    }
+  }
+
+  @keyframes gradient-shift {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
     }
   }
 
