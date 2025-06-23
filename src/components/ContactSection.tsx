@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { format } from 'date-fns';
@@ -102,13 +103,17 @@ const ContactSection = () => {
                   <CalendarIcon className="w-5 h-5 inline mr-2" />
                   Select Date
                 </Label>
-                <Calendar
-                  mode="single"
-                  selected={selectedDate}
-                  onSelect={setSelectedDate}
-                  disabled={(date) => date < new Date()}
-                  className="rounded-lg border border-white/20 bg-white/5 p-3"
-                />
+                <div className="enhanced-calendar-container relative group">
+                  <Calendar
+                    mode="single"
+                    selected={selectedDate}
+                    onSelect={setSelectedDate}
+                    disabled={(date) => date < new Date()}
+                    className="enhanced-calendar rounded-lg border-2 border-cyber-blue/30 bg-white/5 p-4 backdrop-blur-md transition-all duration-300 hover:border-cyber-blue/60 hover:shadow-[0_0_30px_rgba(0,245,255,0.3)] group-hover:scale-[1.02]"
+                  />
+                  {/* Neon glow overlay */}
+                  <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-cyber-blue/10 via-cyber-purple/10 to-cyber-pink/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                </div>
               </div>
 
               {selectedDate && (
@@ -127,10 +132,10 @@ const ContactSection = () => {
                         key={time}
                         type="button"
                         variant={selectedTime === time ? "default" : "outline"}
-                        className={`h-12 ${
+                        className={`h-12 transition-all duration-300 hover:scale-105 ${
                           selectedTime === time 
-                            ? 'bg-cyber-blue text-white' 
-                            : 'bg-white/10 border-white/20 text-white hover:bg-white/20'
+                            ? 'bg-cyber-blue text-white shadow-[0_0_20px_rgba(0,245,255,0.5)] border-cyber-blue' 
+                            : 'bg-white/10 border-white/20 text-white hover:bg-white/20 hover:border-cyber-blue/50 hover:shadow-[0_0_15px_rgba(0,245,255,0.2)]'
                         }`}
                         onClick={() => setSelectedTime(time)}
                       >
@@ -199,7 +204,7 @@ const ContactSection = () => {
                     placeholder="Your full name"
                     value={bookingData.name}
                     onChange={(e) => handleInputChange('name', e.target.value)}
-                    className="bg-white/5 border-white/20 text-white placeholder:text-white/50 focus:border-cyber-blue"
+                    className="bg-white/5 border-white/20 text-white placeholder:text-white/50 focus:border-cyber-blue transition-all duration-300 hover:border-cyber-blue/50"
                     required
                   />
                 </div>
@@ -211,7 +216,7 @@ const ContactSection = () => {
                     placeholder="your.email@example.com"
                     value={bookingData.email}
                     onChange={(e) => handleInputChange('email', e.target.value)}
-                    className="bg-white/5 border-white/20 text-white placeholder:text-white/50 focus:border-cyber-blue"
+                    className="bg-white/5 border-white/20 text-white placeholder:text-white/50 focus:border-cyber-blue transition-all duration-300 hover:border-cyber-blue/50"
                     required
                   />
                 </div>
@@ -219,7 +224,7 @@ const ContactSection = () => {
                 <div>
                   <Label className="text-white font-sora">Project Type</Label>
                   <Select value={bookingData.projectType} onValueChange={(value) => handleInputChange('projectType', value)}>
-                    <SelectTrigger className="bg-white/5 border-white/20 text-white focus:border-cyber-blue">
+                    <SelectTrigger className="bg-white/5 border-white/20 text-white focus:border-cyber-blue transition-all duration-300 hover:border-cyber-blue/50">
                       <SelectValue placeholder="Select project type" />
                     </SelectTrigger>
                     <SelectContent className="bg-dark-space border-white/20">
@@ -240,7 +245,7 @@ const ContactSection = () => {
                     rows={4}
                     value={bookingData.message}
                     onChange={(e) => handleInputChange('message', e.target.value)}
-                    className="flex w-full rounded-md border border-white/20 bg-white/5 px-3 py-2 text-white placeholder:text-white/50 focus:border-cyber-blue focus:outline-none focus:ring-2 focus:ring-cyber-blue/20 resize-none"
+                    className="flex w-full rounded-md border border-white/20 bg-white/5 px-3 py-2 text-white placeholder:text-white/50 focus:border-cyber-blue focus:outline-none focus:ring-2 focus:ring-cyber-blue/20 resize-none transition-all duration-300 hover:border-cyber-blue/50"
                   />
                 </div>
               </div>
@@ -249,7 +254,7 @@ const ContactSection = () => {
                 <motion.div
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="glass-morphism p-4 rounded-lg border border-cyber-blue/30"
+                  className="glass-morphism p-4 rounded-lg border border-cyber-blue/30 hover:border-cyber-blue/60 hover:shadow-[0_0_20px_rgba(0,245,255,0.2)] transition-all duration-300"
                 >
                   <h4 className="text-white font-semibold mb-2 flex items-center">
                     <User className="w-4 h-4 mr-2" />
@@ -266,7 +271,7 @@ const ContactSection = () => {
 
               <Button
                 type="submit"
-                className="w-full cyber-button h-12 text-lg font-semibold"
+                className="w-full cyber-button h-12 text-lg font-semibold hover:shadow-[0_0_30px_rgba(0,245,255,0.4)] transition-all duration-300"
                 disabled={!selectedDate || !selectedTime || !bookingData.name || !bookingData.email}
               >
                 <Video className="w-5 h-5 mr-2" />
@@ -277,15 +282,15 @@ const ContactSection = () => {
               <div className="mt-8 pt-8 border-t border-white/10">
                 <h4 className="text-white font-semibold mb-4">Prefer to reach out directly?</h4>
                 <div className="space-y-3">
-                  <div className="flex items-center space-x-3">
+                  <div className="flex items-center space-x-3 hover:text-cyber-blue transition-colors duration-300">
                     <span className="text-cyber-blue">📧</span>
                     <span className="text-white/80">hello@devlaunch.co.in</span>
                   </div>
-                  <div className="flex items-center space-x-3">
+                  <div className="flex items-center space-x-3 hover:text-cyber-purple transition-colors duration-300">
                     <span className="text-cyber-purple">📱</span>
                     <span className="text-white/80">+91 (555) 123-4567</span>
                   </div>
-                  <div className="flex items-center space-x-3">
+                  <div className="flex items-center space-x-3 hover:text-cyber-pink transition-colors duration-300">
                     <span className="text-cyber-pink">📍</span>
                     <span className="text-white/80">Bangalore, India</span>
                   </div>
