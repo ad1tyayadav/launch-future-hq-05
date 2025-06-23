@@ -1,157 +1,94 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Check, ChevronRight, ArrowRight, Zap, Brain, Code, Rocket } from 'lucide-react';
+import { Check, ChevronDown } from 'lucide-react';
 
 const ServicesSection = () => {
-  const [activeService, setActiveService] = useState<number>(0);
+  const [expandedCard, setExpandedCard] = useState<number | null>(null);
 
   const services = [
     {
       title: 'AI-Powered Web Apps',
-      subtitle: 'From Concept to Intelligent Application',
+      shortDescription: 'Intelligent applications that learn and adapt to user behavior.',
+      fullDescription: 'Build cutting-edge web applications powered by machine learning algorithms that understand and adapt to your users\' needs. Our AI solutions include natural language processing, predictive analytics, and adaptive user interfaces that evolve with usage patterns.',
       icon: '🤖',
+      features: ['Machine Learning Integration', 'Adaptive User Interfaces', 'Predictive Analytics', 'Natural Language Processing'],
       color: 'from-blue-500/20 to-cyan-500/20',
       borderColor: 'border-blue-500/30',
-      story: {
-        overview: 'Transform your ideas into intelligent applications that learn, adapt, and evolve with your users. Our AI development journey combines cutting-edge machine learning with intuitive user experiences.',
-        stages: [
-          {
-            phase: 'Discovery & Planning',
-            icon: <Brain className="w-5 h-5" />,
-            title: 'Understanding Your Vision',
-            description: 'We dive deep into your requirements, analyzing user needs and defining the AI capabilities that will make your application truly intelligent.',
-            deliverables: ['User Journey Mapping', 'AI Requirements Analysis', 'Technical Architecture Planning'],
-            duration: '1-2 weeks'
-          },
-          {
-            phase: 'Model Selection & Design',
-            icon: <Zap className="w-5 h-5" />,
-            title: 'Choosing the Right AI Brain',
-            description: 'From GPT models to custom neural networks, we select and design the perfect AI architecture for your specific use case.',
-            deliverables: ['Model Architecture Design', 'Performance Benchmarking', 'Cost Optimization Strategy'],
-            duration: '2-3 weeks'
-          },
-          {
-            phase: 'Fine-tuning & Training',
-            icon: <Code className="w-5 h-5" />,
-            title: 'Teaching Your AI',
-            description: 'Using AWS SageMaker and advanced training techniques, we fine-tune models with your specific data to achieve optimal performance.',
-            deliverables: ['Custom Dataset Preparation', 'Model Fine-tuning', 'Performance Validation'],
-            duration: '3-4 weeks'
-          },
-          {
-            phase: 'Integration & Deployment',
-            icon: <Rocket className="w-5 h-5" />,
-            title: 'Bringing It All Together',
-            description: 'We integrate the AI models into beautiful, responsive web applications with real-time capabilities and scalable infrastructure.',
-            deliverables: ['Full Stack Integration', 'API Development', 'Cloud Deployment'],
-            duration: '2-3 weeks'
-          }
-        ],
-        technologies: ['OpenAI GPT', 'AWS SageMaker', 'TensorFlow', 'React', 'Node.js', 'WebSockets']
-      }
-    },
-    {
-      title: 'Blockchain Solutions',
-      subtitle: 'Decentralized Innovation Journey',
-      icon: '⛓️',
-      color: 'from-emerald-500/20 to-teal-500/20',
-      borderColor: 'border-emerald-500/30',
-      story: {
-        overview: 'Build the future of decentralized applications with secure, transparent, and trustless blockchain solutions that revolutionize how users interact with digital assets.',
-        stages: [
-          {
-            phase: 'Blockchain Strategy',
-            icon: <Brain className="w-5 h-5" />,
-            title: 'Defining Your DeFi Vision',
-            description: 'We analyze your business model and design a blockchain strategy that aligns with your goals, from tokenomics to governance structures.',
-            deliverables: ['Tokenomics Design', 'Smart Contract Architecture', 'Security Audit Plan'],
-            duration: '2-3 weeks'
-          },
-          {
-            phase: 'Smart Contract Development',
-            icon: <Code className="w-5 h-5" />,
-            title: 'Building Trustless Logic',
-            description: 'Develop robust smart contracts using Solidity, with comprehensive testing and security best practices to ensure bulletproof execution.',
-            deliverables: ['Smart Contract Code', 'Unit Testing Suite', 'Gas Optimization'],
-            duration: '4-6 weeks'
-          },
-          {
-            phase: 'DApp Frontend',
-            icon: <Zap className="w-5 h-5" />,
-            title: 'Crafting User Experience',
-            description: 'Create intuitive web interfaces that make blockchain interactions feel seamless, with wallet integration and real-time transaction feedback.',
-            deliverables: ['Web3 Integration', 'Wallet Connectivity', 'Transaction UI/UX'],
-            duration: '3-4 weeks'
-          },
-          {
-            phase: 'Launch & Governance',
-            icon: <Rocket className="w-5 h-5" />,
-            title: 'Going Live Securely',
-            description: 'Deploy to mainnet with comprehensive security audits, community governance setup, and ongoing monitoring systems.',
-            deliverables: ['Mainnet Deployment', 'Security Audit Report', 'Governance Setup'],
-            duration: '2-3 weeks'
-          }
-        ],
-        technologies: ['Solidity', 'Ethereum', 'Web3.js', 'Hardhat', 'OpenZeppelin', 'IPFS']
-      }
+      size: 'large' // Takes up 2 columns
     },
     {
       title: '3D Interactive Experiences',
-      subtitle: 'Immersive Digital Worlds',
+      shortDescription: 'Immersive 3D interfaces and visualizations.',
+      fullDescription: 'Create stunning 3D web experiences that captivate users with interactive visualizations, WebGL integration, and real-time rendering. Perfect for product showcases, virtual tours, and immersive storytelling.',
       icon: '🎮',
+      features: ['WebGL Integration', 'Real-time Rendering', 'Interactive Animations', 'Cross-platform Support'],
       color: 'from-purple-500/20 to-pink-500/20',
       borderColor: 'border-purple-500/30',
-      story: {
-        overview: 'Create breathtaking 3D web experiences that captivate users with immersive visualizations, interactive elements, and cutting-edge WebGL technology.',
-        stages: [
-          {
-            phase: 'Concept & Storyboarding',
-            icon: <Brain className="w-5 h-5" />,
-            title: 'Visualizing the Experience',
-            description: 'We collaborate with you to design the user journey, create detailed storyboards, and plan interactive elements that will make your 3D experience unforgettable.',
-            deliverables: ['3D Concept Art', 'User Flow Design', 'Interactive Wireframes'],
-            duration: '1-2 weeks'
-          },
-          {
-            phase: '3D Modeling & Animation',
-            icon: <Code className="w-5 h-5" />,
-            title: 'Crafting Digital Assets',
-            description: 'Our 3D artists create stunning models, textures, and animations optimized for web performance while maintaining visual excellence.',
-            deliverables: ['3D Models & Textures', 'Animation Sequences', 'Performance Optimization'],
-            duration: '3-5 weeks'
-          },
-          {
-            phase: 'WebGL Integration',
-            icon: <Zap className="w-5 h-5" />,
-            title: 'Bringing 3D to the Web',
-            description: 'Using Three.js and advanced WebGL techniques, we integrate 3D elements seamlessly into responsive web applications with smooth performance.',
-            deliverables: ['WebGL Implementation', 'Cross-browser Testing', 'Mobile Optimization'],
-            duration: '3-4 weeks'
-          },
-          {
-            phase: 'Interactive Polish',
-            icon: <Rocket className="w-5 h-5" />,
-            title: 'Adding Magic Touches',
-            description: 'Fine-tune interactions, add particle effects, implement physics, and optimize for different devices to create a truly immersive experience.',
-            deliverables: ['Physics Integration', 'Particle Systems', 'Performance Tuning'],
-            duration: '2-3 weeks'
-          }
-        ],
-        technologies: ['Three.js', 'WebGL', 'Blender', 'React Three Fiber', 'GSAP', 'Cannon.js']
-      }
+      size: 'medium'
+    },
+    {
+      title: 'Blockchain Solutions',
+      shortDescription: 'Secure, decentralized applications and smart contracts.',
+      fullDescription: 'Develop robust blockchain applications with smart contracts, DeFi protocols, and secure wallet integrations. We specialize in creating trustless systems that redefine digital transactions and ownership.',
+      icon: '⛓️',
+      features: ['Smart Contract Development', 'DeFi Protocols', 'NFT Marketplaces', 'Wallet Integration'],
+      color: 'from-emerald-500/20 to-teal-500/20',
+      borderColor: 'border-emerald-500/30',
+      size: 'medium'
+    },
+    {
+      title: 'AR/VR Development',
+      shortDescription: 'Next-generation augmented and virtual reality experiences.',
+      fullDescription: 'Push the boundaries of reality with immersive AR/VR applications. From WebXR experiences to mobile AR apps, we create digital experiences that blur the line between virtual and physical worlds.',
+      icon: '🥽',
+      features: ['Immersive Experiences', 'Cross-platform VR', 'AR Mobile Apps', 'WebXR Development'],
+      color: 'from-orange-500/20 to-red-500/20',
+      borderColor: 'border-orange-500/30',
+      size: 'tall' // Takes up 2 rows
+    },
+    {
+      title: 'Cloud Architecture',
+      shortDescription: 'Scalable, resilient cloud infrastructure solutions.',
+      fullDescription: 'Design and implement cloud-native architectures that scale automatically with your business needs. Our solutions include microservices, containerization, and DevOps integration for maximum reliability and performance.',
+      icon: '☁️',
+      features: ['Auto-scaling Solutions', 'Microservices Architecture', 'DevOps Integration', 'Security by Design'],
+      color: 'from-indigo-500/20 to-blue-500/20',
+      borderColor: 'border-indigo-500/30',
+      size: 'medium'
+    },
+    {
+      title: 'IoT Integration',
+      shortDescription: 'Smart device ecosystems and connectivity.',
+      fullDescription: 'Connect the physical world to your digital infrastructure with comprehensive IoT solutions. We handle device management, real-time data processing, edge computing, and secure connectivity protocols.',
+      icon: '📡',
+      features: ['Device Management', 'Real-time Data Processing', 'Edge Computing', 'Secure Connectivity'],
+      color: 'from-yellow-500/20 to-orange-500/20',
+      borderColor: 'border-yellow-500/30',
+      size: 'medium'
     }
   ];
 
-  const currentService = services[activeService];
+  const handleCardClick = (index: number) => {
+    setExpandedCard(expandedCard === index ? null : index);
+  };
+
+  const getGridClasses = (size: string, index: number) => {
+    switch (size) {
+      case 'large':
+        return 'col-span-2 row-span-1';
+      case 'tall':
+        return 'col-span-1 row-span-2';
+      default:
+        return 'col-span-1 row-span-1';
+    }
+  };
 
   return (
-    <section id="services" className="py-20 relative overflow-hidden min-h-screen">
+    <section id="services" className="py-20 relative overflow-hidden">
       <div className="absolute inset-0 bg-black/5 backdrop-blur-sm" />
       
-      <div className="container mx-auto px-6 relative z-10 max-w-7xl">
-        {/* Header */}
+      <div className="container mx-auto px-6 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -169,181 +106,156 @@ const ServicesSection = () => {
             }}
             transition={{ duration: 2, repeat: Infinity }}
           >
-            Our Development Journey
+            Our Services
           </motion.h2>
-          <p className="text-lg text-white/80 font-sora max-w-3xl mx-auto mb-8">
-            Every great application has a story. Discover how we transform your vision into reality through our proven development process.
+          <p className="text-lg text-white/80 font-sora max-w-2xl mx-auto">
+            Discover our cutting-edge solutions designed to transform your digital presence
           </p>
         </motion.div>
 
-        {/* Service Navigation */}
-        <div className="flex flex-wrap justify-center gap-4 mb-12">
+        {/* Bento Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 auto-rows-fr gap-4 max-w-6xl mx-auto">
           {services.map((service, index) => (
-            <motion.button
+            <motion.div
               key={index}
-              onClick={() => setActiveService(index)}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
               className={`
-                relative px-6 py-3 rounded-2xl transition-all duration-300 border backdrop-blur-xl
-                ${activeService === index 
-                  ? `bg-gradient-to-r ${service.color} ${service.borderColor} text-white shadow-lg`
-                  : 'bg-white/5 border-white/10 text-white/70 hover:bg-white/10 hover:text-white'
-                }
+                relative cursor-pointer group
+                ${getGridClasses(service.size, index)}
+                ${expandedCard === index ? 'z-20' : 'z-10'}
               `}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              onClick={() => handleCardClick(index)}
             >
-              <span className="text-2xl mr-2">{service.icon}</span>
-              <span className="font-orbitron font-medium text-sm">{service.title}</span>
-            </motion.button>
-          ))}
-        </div>
-
-        {/* Service Story */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeService}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.5 }}
-            className="relative"
-          >
-            {/* Service Header */}
-            <div className={`bg-gradient-to-r ${currentService.color} backdrop-blur-xl border ${currentService.borderColor} rounded-3xl p-8 mb-8`}>
-              <div className="flex items-center gap-6 mb-6">
-                <div className="w-20 h-20 bg-white/10 backdrop-blur-md rounded-3xl flex items-center justify-center border border-white/20">
-                  <span className="text-4xl">{currentService.icon}</span>
-                </div>
-                <div>
-                  <h3 className="text-3xl md:text-4xl font-orbitron font-bold text-white mb-2">
-                    {currentService.title}
-                  </h3>
-                  <p className="text-xl text-white/80 font-sora">
-                    {currentService.subtitle}
-                  </p>
-                </div>
-              </div>
-              <p className="text-white/90 font-sora text-lg leading-relaxed">
-                {currentService.story.overview}
-              </p>
-            </div>
-
-            {/* Development Stages */}
-            <div className="grid gap-6">
-              {currentService.story.stages.map((stage, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="relative"
-                >
-                  <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-all duration-300 group">
-                    <div className="flex items-start gap-4">
-                      {/* Stage Number & Icon */}
-                      <div className="flex flex-col items-center gap-2">
-                        <div className={`w-12 h-12 bg-gradient-to-r ${currentService.color} border ${currentService.borderColor} rounded-xl flex items-center justify-center text-white group-hover:scale-110 transition-transform duration-300`}>
-                          {stage.icon}
-                        </div>
-                        <span className="text-xs text-white/50 font-orbitron">
-                          {String(index + 1).padStart(2, '0')}
-                        </span>
-                      </div>
-
-                      {/* Stage Content */}
-                      <div className="flex-1">
-                        <div className="flex items-center justify-between mb-3">
-                          <div>
-                            <h4 className="text-xl font-orbitron font-bold text-white mb-1">
-                              {stage.title}
-                            </h4>
-                            <span className="text-sm text-cyan-400 font-sora">{stage.phase}</span>
-                          </div>
-                          <div className="text-right">
-                            <span className="text-xs text-white/60 bg-white/10 px-3 py-1 rounded-full">
-                              {stage.duration}
-                            </span>
-                          </div>
-                        </div>
-
-                        <p className="text-white/80 font-sora mb-4 leading-relaxed">
-                          {stage.description}
-                        </p>
-
-                        {/* Deliverables */}
-                        <div className="space-y-2">
-                          <h5 className="text-sm font-orbitron font-semibold text-white/90 mb-2">
-                            Key Deliverables:
-                          </h5>
-                          <div className="flex flex-wrap gap-2">
-                            {stage.deliverables.map((deliverable, delIndex) => (
-                              <span
-                                key={delIndex}
-                                className="text-xs bg-white/10 text-white/80 px-3 py-1 rounded-full border border-white/20"
-                              >
-                                {deliverable}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+              <motion.div
+                className={`
+                  h-full w-full bg-white/5 backdrop-blur-xl border ${service.borderColor} 
+                  rounded-3xl p-6 shadow-2xl hover:shadow-3xl transition-all duration-300
+                  hover:bg-white/10 hover:border-opacity-50
+                  ${expandedCard === index ? 'ring-2 ring-cyan-400/30 scale-[1.02]' : ''}
+                  relative overflow-hidden
+                `}
+                whileHover={{ 
+                  y: -8,
+                  transition: { type: "spring", stiffness: 400, damping: 25 }
+                }}
+                layout
+              >
+                {/* Background gradient */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${service.color} rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+                
+                {/* Content */}
+                <div className="relative z-10 h-full flex flex-col">
+                  {/* Header */}
+                  <div className="flex items-start justify-between mb-4">
+                    <motion.div 
+                      className="w-14 h-14 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/20 group-hover:scale-110 transition-transform duration-300"
+                    >
+                      <span className="text-3xl">{service.icon}</span>
+                    </motion.div>
+                    
+                    <motion.div
+                      animate={{ rotate: expandedCard === index ? 180 : 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="text-white/60 group-hover:text-cyan-400 transition-colors duration-300"
+                    >
+                      <ChevronDown size={20} />
+                    </motion.div>
                   </div>
 
-                  {/* Connector Arrow */}
-                  {index < currentService.story.stages.length - 1 && (
-                    <div className="flex justify-center py-4">
-                      <ChevronRight className="w-6 h-6 text-cyan-400/60" />
-                    </div>
-                  )}
-                </motion.div>
-              ))}
-            </div>
+                  {/* Title and Description */}
+                  <div className="flex-1 flex flex-col">
+                    <h3 className="text-xl md:text-2xl font-orbitron font-bold text-white mb-3 group-hover:text-cyan-300 transition-colors duration-300">
+                      {service.title}
+                    </h3>
 
-            {/* Technologies Used */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.6 }}
-              className="mt-12 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6"
-            >
-              <h4 className="text-xl font-orbitron font-bold text-white mb-4 flex items-center gap-2">
-                <Code className="w-5 h-5 text-cyan-400" />
-                Technologies We Use
-              </h4>
-              <div className="flex flex-wrap gap-3">
-                {currentService.story.technologies.map((tech, index) => (
-                  <motion.span
-                    key={index}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.3, delay: index * 0.05 }}
-                    className={`px-4 py-2 bg-gradient-to-r ${currentService.color} border ${currentService.borderColor} rounded-xl text-white font-sora text-sm font-medium`}
-                  >
-                    {tech}
-                  </motion.span>
+                    <p className="text-white/70 font-sora text-sm md:text-base leading-relaxed mb-4 group-hover:text-white/90 transition-colors duration-300 flex-1">
+                      {service.shortDescription}
+                    </p>
+
+                    {/* Expanded Content */}
+                    <AnimatePresence>
+                      {expandedCard === index && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.4, ease: "easeInOut" }}
+                          className="overflow-hidden"
+                        >
+                          <motion.div
+                            initial={{ y: -10, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            exit={{ y: -10, opacity: 0 }}
+                            transition={{ duration: 0.3, delay: 0.1 }}
+                            className="pt-4 border-t border-white/10"
+                          >
+                            <p className="text-white/80 font-sora text-sm leading-relaxed mb-6">
+                              {service.fullDescription}
+                            </p>
+
+                            <div className="space-y-3 mb-6">
+                              <h4 className="text-white font-orbitron font-semibold text-sm mb-3">
+                                Key Features:
+                              </h4>
+                              {service.features.map((feature, featureIndex) => (
+                                <motion.div
+                                  key={featureIndex}
+                                  initial={{ opacity: 0, x: -20 }}
+                                  animate={{ opacity: 1, x: 0 }}
+                                  transition={{ duration: 0.3, delay: featureIndex * 0.1 }}
+                                  className="flex items-center space-x-3"
+                                >
+                                  <div className="w-4 h-4 bg-cyan-400/20 backdrop-blur-md rounded-full flex items-center justify-center border border-cyan-400/30">
+                                    <Check size={10} className="text-cyan-400" />
+                                  </div>
+                                  <span className="text-white/80 text-xs font-sora">
+                                    {feature}
+                                  </span>
+                                </motion.div>
+                              ))}
+                            </div>
+
+                            <motion.button
+                              className="w-full py-3 px-4 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 border border-cyan-400/30 rounded-xl text-cyan-300 font-sora text-sm font-medium hover:from-cyan-500/30 hover:to-purple-500/30 hover:border-cyan-400/50 transition-all duration-300"
+                              whileHover={{ scale: 1.02 }}
+                              whileTap={{ scale: 0.98 }}
+                            >
+                              Learn More →
+                            </motion.button>
+                          </motion.div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                </div>
+
+                {/* Floating particles on hover */}
+                {[...Array(3)].map((_, i) => (
+                  <motion.div
+                    key={i}
+                    className="absolute w-1 h-1 bg-cyan-400/60 rounded-full opacity-0 group-hover:opacity-100 pointer-events-none"
+                    style={{
+                      left: `${20 + Math.random() * 60}%`,
+                      top: `${20 + Math.random() * 60}%`,
+                    }}
+                    animate={{
+                      scale: [0, 1, 0],
+                      opacity: [0, 1, 0],
+                      y: [0, -20, -40],
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      delay: i * 0.3,
+                    }}
+                  />
                 ))}
-              </div>
+              </motion.div>
             </motion.div>
-
-            {/* CTA Button */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.8 }}
-              className="text-center mt-12"
-            >
-              <motion.button
-                className={`px-8 py-4 bg-gradient-to-r ${currentService.color} border ${currentService.borderColor} rounded-2xl text-white font-orbitron font-bold hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl`}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Start Your {currentService.title} Journey
-                <ArrowRight className="w-5 h-5 ml-2 inline" />
-              </motion.button>
-            </motion.div>
-          </motion.div>
-        </AnimatePresence>
+          ))}
+        </div>
       </div>
     </section>
   );
