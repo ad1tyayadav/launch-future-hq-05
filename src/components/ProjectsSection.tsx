@@ -102,8 +102,8 @@ const ProjectsSection: React.FC = () => {
   React.useEffect(() => {
     const startAnimation = () => {
       if (animationRef.current.isPaused || isManualScrolling || duplicatedProjects.length === 0) return;
-      const cardWidth = 480;
-      const gap = 48; // 12 * 4 = 48px gap
+      const cardWidth = 520; // Increased from 480
+      const gap = 32; // Reduced from 48px gap
       const totalCardWidth = cardWidth + gap;
       const singleSetWidth = filteredProjects.length * totalCardWidth;
 
@@ -187,8 +187,8 @@ const ProjectsSection: React.FC = () => {
   };
   const scrollRight = () => {
     setIsManualScrolling(true);
-    const cardWidth = 480;
-    const gap = 48;
+    const cardWidth = 520; // Updated to match new card width
+    const gap = 32; // Updated to match new gap
     const totalCardWidth = cardWidth + gap;
     const singleSetWidth = filteredProjects.length * totalCardWidth;
     const minX = -(singleSetWidth * 2); // Allow scrolling through two sets
@@ -204,50 +204,66 @@ const ProjectsSection: React.FC = () => {
       setTimeout(() => setIsManualScrolling(false), 1000);
     });
   };
-  const renderSpacePodCard = (project: Project, index: number) => <motion.div key={`${project.id}-${project.type}-${index}`} className="flex-shrink-0 w-96 relative group cursor-pointer perspective-1000" animate={{
-    y: [0, -15, 0]
-  }} transition={{
-    duration: 4 + index % 3,
-    repeat: Infinity,
-    ease: "easeInOut",
-    delay: index * 0.3
-  }} onClick={() => openModal(project)}>
+  const renderSpacePodCard = (project: Project, index: number) => (
+    <motion.div
+      key={`${project.id}-${project.type}-${index}`}
+      className="flex-shrink-0 w-[500px] relative group cursor-pointer perspective-1000" // Increased from w-96 (384px) to w-[500px]
+      animate={{
+        y: [0, -15, 0]
+      }}
+      transition={{
+        duration: 4 + index % 3,
+        repeat: Infinity,
+        ease: "easeInOut",
+        delay: index * 0.3
+      }}
+      onClick={() => openModal(project)}
+    >
       {/* Floating Animation Container */}
-      <motion.div animate={{
-      y: [0, -10, 0],
-      rotateZ: [0, 2, -2, 0]
-    }} transition={{
-      duration: 6,
-      repeat: Infinity,
-      ease: "easeInOut",
-      delay: index * 0.5
-    }} className="relative">
+      <motion.div
+        animate={{
+          y: [0, -10, 0],
+          rotateZ: [0, 2, -2, 0]
+        }}
+        transition={{
+          duration: 6,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: index * 0.5
+        }}
+        className="relative"
+      >
         {/* Space Pod Frame */}
-        <div className="relative w-80 h-96 mx-auto">
+        <div className="relative w-[480px] h-96 mx-auto"> {/* Increased from w-80 to w-[480px] */}
           {/* Holographic Card Container */}
-          <motion.div className="relative w-full h-full rounded-3xl overflow-hidden" style={{
-          background: 'linear-gradient(135deg, rgba(6,182,212,0.1) 0%, rgba(139,92,246,0.05) 50%, rgba(255,0,128,0.1) 100%)',
-          backdropFilter: 'blur(20px)',
-          border: '1px solid rgba(255,255,255,0.1)',
-          boxShadow: `
+          <motion.div
+            className="relative w-full h-full rounded-3xl overflow-hidden"
+            style={{
+              background: 'linear-gradient(135deg, rgba(6,182,212,0.1) 0%, rgba(139,92,246,0.05) 50%, rgba(255,0,128,0.1) 100%)',
+              backdropFilter: 'blur(20px)',
+              border: '1px solid rgba(255,255,255,0.1)',
+              boxShadow: `
                 0 8px 32px rgba(0,0,0,0.3),
                 inset 0 1px 0 rgba(255,255,255,0.1),
                 0 0 40px rgba(6,182,212,0.1)
               `
-        }} whileHover={{
-          rotateY: 15,
-          rotateX: 5,
-          scale: 1.05,
-          boxShadow: `
+            }}
+            whileHover={{
+              rotateY: 15,
+              rotateX: 5,
+              scale: 1.05,
+              boxShadow: `
                 0 20px 60px rgba(0,0,0,0.4),
                 inset 0 1px 0 rgba(255,255,255,0.2),
                 0 0 60px rgba(6,182,212,0.2),
                 0 0 80px rgba(139,92,246,0.1)
               `
-        }} transition={{
-          duration: 0.6,
-          ease: "easeOut"
-        }}>
+            }}
+            transition={{
+              duration: 0.6,
+              ease: "easeOut"
+            }}
+          >
             {/* Diagonal Light Rays */}
             <div className="absolute inset-0 opacity-30">
               <div className="absolute top-0 left-0 w-full h-full" style={{
@@ -357,8 +373,10 @@ const ProjectsSection: React.FC = () => {
           </motion.div>
         </div>
       </motion.div>
-    </motion.div>;
-  return <section id="projects" className="py-12 relative overflow-hidden">
+    </motion.div>
+  );
+  return (
+    <section id="projects" className="py-12 relative overflow-hidden">
       {/* Reduced Background opacity - matching main site */}
       <div className="absolute inset-0">
         {/* Minimal background blend */}
@@ -479,8 +497,8 @@ const ProjectsSection: React.FC = () => {
 
                 {/* Horizontal scrolling container */}
                 <div className="relative h-[520px] w-full overflow-hidden">
-                  <motion.div ref={scrollContainerRef} className="flex gap-12 absolute left-0" animate={controls} style={{
-                  width: `${duplicatedProjects.length * 480 + duplicatedProjects.length * 48 + 400}px`
+                  <motion.div ref={scrollContainerRef} className="flex gap-8 absolute left-0" animate={controls} style={{
+                  width: `${duplicatedProjects.length * 520 + duplicatedProjects.length * 32 + 400}px`
                 }} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                     {duplicatedProjects.map((project, index) => renderSpacePodCard(project, index))}
                   </motion.div>
@@ -592,6 +610,7 @@ const ProjectsSection: React.FC = () => {
             </motion.div>
           </motion.div>}
       </AnimatePresence>
-    </section>;
+    </section>
+  );
 };
 export default ProjectsSection;
