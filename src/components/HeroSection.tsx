@@ -1,6 +1,8 @@
 
+
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { Button } from './ui/button';
 
 const HeroSection = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -80,22 +82,6 @@ const HeroSection = () => {
   };
 
   const devLaunchLetters = "DevLaunch".split("");
-
-  // Coding elements data
-  const codeSnippets = [
-    "const dev = 'awesome';",
-    "npm install success",
-    "git commit -m 'magic'",
-    "function() { return joy; }",
-    "console.log('hello world');",
-    "import React from 'react';",
-    "<Component />",
-    "{ status: 'deployed' }",
-    "404: bugs not found",
-    "while(alive) { code(); }"
-  ];
-
-  const techSymbols = ["{ }", "< />", "( )", "[ ]", "=>", "&&", "||", "++", "--", "==="];
 
   return (
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
@@ -197,80 +183,6 @@ const HeroSection = () => {
             }}
           />
         ))}
-
-        {/* Floating code snippets */}
-        {codeSnippets.map((snippet, i) => (
-          <motion.div
-            key={`code-${i}`}
-            className="absolute text-xs font-mono text-cyber-blue/30 select-none pointer-events-none"
-            style={{
-              left: `${Math.random() * 90 + 5}%`,
-              top: `${Math.random() * 90 + 5}%`,
-            }}
-            animate={{
-              y: [-20, 20, -20],
-              opacity: [0.1, 0.4, 0.1],
-              x: [-10, 10, -10]
-            }}
-            transition={{
-              duration: 8 + Math.random() * 4,
-              repeat: Infinity,
-              delay: Math.random() * 5,
-              ease: "easeInOut" as const
-            }}
-          >
-            {snippet}
-          </motion.div>
-        ))}
-
-        {/* Floating tech symbols */}
-        {techSymbols.map((symbol, i) => (
-          <motion.div
-            key={`symbol-${i}`}
-            className="absolute text-lg font-mono text-cyber-purple/20 select-none pointer-events-none"
-            style={{
-              left: `${Math.random() * 95 + 2.5}%`,
-              top: `${Math.random() * 95 + 2.5}%`,
-            }}
-            animate={{
-              rotate: [0, 360],
-              scale: [0.8, 1.2, 0.8],
-              opacity: [0.1, 0.3, 0.1]
-            }}
-            transition={{
-              duration: 10 + Math.random() * 5,
-              repeat: Infinity,
-              delay: Math.random() * 3,
-              ease: "linear" as const
-            }}
-          >
-            {symbol}
-          </motion.div>
-        ))}
-
-        {/* Small binary numbers */}
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={`binary-${i}`}
-            className="absolute text-xs font-mono text-cyber-pink/20 select-none pointer-events-none"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              opacity: [0.1, 0.3, 0.1],
-              y: [-50, 50]
-            }}
-            transition={{
-              duration: 15 + Math.random() * 10,
-              repeat: Infinity,
-              delay: Math.random() * 8,
-              ease: "linear" as const
-            }}
-          >
-            {Math.random() > 0.5 ? '1' : '0'}
-          </motion.div>
-        ))}
       </div>
       
       <div className="container mx-auto px-6 text-center relative z-10">
@@ -316,6 +228,49 @@ const HeroSection = () => {
               ))}
             </motion.h1>
           </div>
+
+          {/* Enhanced subtitle */}
+          <motion.p 
+            className="text-xl md:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.8 }}
+          >
+            Where innovation meets execution. Transform your ideas into powerful digital solutions.
+          </motion.p>
+
+          {/* Enhanced CTA Buttons with glowing hover effect */}
+          <motion.div 
+            className="flex flex-col sm:flex-row gap-6 justify-center items-center"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8, duration: 0.8 }}
+          >
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Button 
+                size="lg" 
+                className="bg-gradient-to-r from-cyber-blue to-cyber-purple text-white px-8 py-4 text-lg font-semibold rounded-lg shadow-lg transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,245,255,0.6)] hover:bg-gradient-to-r hover:from-cyber-purple hover:to-cyber-pink border-0"
+              >
+                Get Started
+              </Button>
+            </motion.div>
+            
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Button 
+                variant="outline" 
+                size="lg"
+                className="border-2 border-cyber-blue text-cyber-blue px-8 py-4 text-lg font-semibold rounded-lg bg-transparent hover:bg-cyber-blue/10 hover:shadow-[0_0_25px_rgba(0,245,255,0.4)] transition-all duration-300"
+              >
+                Learn More
+              </Button>
+            </motion.div>
+          </motion.div>
         </motion.div>
       </div>
     </section>
@@ -323,3 +278,4 @@ const HeroSection = () => {
 };
 
 export default HeroSection;
+
