@@ -188,26 +188,27 @@ const ServicesSection = () => {
           </p>
         </motion.div>
 
-        <div className="w-full px-8 relative">
+        <div className="relative px-4 sm:px-8">
+          {/* Fixed Navigation Buttons */}
           <motion.button
-            className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-white/10 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/20 hover:border-cyan-400/50 transition-all duration-300 group"
+            className="fixed left-4 sm:left-8 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-12 sm:h-12 bg-white/10 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/20 hover:border-cyan-400/50 transition-all duration-300 group shadow-lg"
             onClick={scrollLeft}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
           >
-            <ChevronLeft size={20} className="group-hover:text-cyan-400 transition-colors duration-300" />
+            <ChevronLeft size={16} className="sm:w-5 sm:h-5 group-hover:text-cyan-400 transition-colors duration-300" />
           </motion.button>
 
           <motion.button
-            className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-white/10 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/20 hover:border-cyan-400/50 transition-all duration-300 group"
+            className="fixed right-4 sm:right-8 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-12 sm:h-12 bg-white/10 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/20 hover:border-cyan-400/50 transition-all duration-300 group shadow-lg"
             onClick={scrollRight}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
           >
-            <ChevronRight size={20} className="group-hover:text-cyan-400 transition-colors duration-300" />
+            <ChevronRight size={16} className="sm:w-5 sm:h-5 group-hover:text-cyan-400 transition-colors duration-300" />
           </motion.button>
 
-          <div className="relative h-[500px] w-full">
+          <div className="relative h-[500px] w-full overflow-hidden">
             <motion.div
               ref={scrollContainerRef}
               className="flex gap-6 absolute left-0"

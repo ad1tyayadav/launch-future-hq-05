@@ -503,7 +503,7 @@ const ProjectsSection: React.FC = () => {
         </div>
         
         {/* Horizontally Scrolling Space Pods with Navigation */}
-        <div className="w-full px-8 relative">
+        <div className="relative px-4 sm:px-8">
           <div className="mb-16">
             <AnimatePresence mode="wait">
               <motion.div
@@ -513,27 +513,27 @@ const ProjectsSection: React.FC = () => {
                 exit={{ opacity: 0, y: -50 }}
                 transition={{ duration: 0.6 }}
               >
-                {/* Navigation Buttons */}
+                {/* Fixed Navigation Buttons */}
                 <motion.button
-                  className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-gray-900/80 backdrop-blur-md border border-cyan-500/30 rounded-full flex items-center justify-center text-white hover:bg-gray-800/90 hover:border-cyan-400/50 transition-all duration-300 group"
+                  className="fixed left-4 sm:left-8 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-12 sm:h-12 bg-gray-900/80 backdrop-blur-md border border-cyan-500/30 rounded-full flex items-center justify-center text-white hover:bg-gray-800/90 hover:border-cyan-400/50 transition-all duration-300 group shadow-lg"
                   onClick={scrollLeft}
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <ChevronLeft size={20} className="group-hover:text-cyan-400 transition-colors duration-300" />
+                  <ChevronLeft size={16} className="sm:w-5 sm:h-5 group-hover:text-cyan-400 transition-colors duration-300" />
                 </motion.button>
 
                 <motion.button
-                  className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-gray-900/80 backdrop-blur-md border border-cyan-500/30 rounded-full flex items-center justify-center text-white hover:bg-gray-800/90 hover:border-cyan-400/50 transition-all duration-300 group"
+                  className="fixed right-4 sm:right-8 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-12 sm:h-12 bg-gray-900/80 backdrop-blur-md border border-cyan-500/30 rounded-full flex items-center justify-center text-white hover:bg-gray-800/90 hover:border-cyan-400/50 transition-all duration-300 group shadow-lg"
                   onClick={scrollRight}
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <ChevronRight size={20} className="group-hover:text-cyan-400 transition-colors duration-300" />
+                  <ChevronRight size={16} className="sm:w-5 sm:h-5 group-hover:text-cyan-400 transition-colors duration-300" />
                 </motion.button>
 
                 {/* Horizontal scrolling container */}
-                <div className="relative h-[520px] w-full">
+                <div className="relative h-[520px] w-full overflow-hidden">
                   <motion.div
                     ref={scrollContainerRef}
                     className="flex gap-12 absolute left-0"
