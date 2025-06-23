@@ -464,7 +464,7 @@ const ProjectsSection: React.FC = () => {
         
         {/* Horizontally Scrolling Space Pods with Navigation */}
         <div className="relative px-4 sm:px-8">
-          <div className="mb-16">
+          <div className="mb-8"> {/* Reduced from mb-16 to mb-8 */}
             <AnimatePresence mode="wait">
               <motion.div key={projectType} initial={{
               opacity: 0,
