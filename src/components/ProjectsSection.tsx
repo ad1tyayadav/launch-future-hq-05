@@ -1,7 +1,6 @@
 
-
 import React, { useState, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useAnimation } from 'framer-motion';
 import { ExternalLink, Github, X, Eye, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -94,6 +93,8 @@ const ProjectsSection: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isHovered, setIsHovered] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const controls = useAnimation();
+  const animationRef = useRef<{ currentX: number; isPaused: boolean }>({ currentX: 200, isPaused: false });
 
   // Filter projects based on current type only
   const getFilteredProjects = () => {
@@ -103,6 +104,51 @@ const ProjectsSection: React.FC = () => {
   const filteredProjects = getFilteredProjects();
   // Duplicate projects for infinite scroll effect
   const duplicatedProjects = [...filteredProjects, ...filteredProjects];
+
+  React.useEffect(() => {
+    const startAnimation = () => {
+      if (animationRef.current.isPaused) return;
+      
+      const totalWidth = duplicatedProjects.length * 480;
+      const endX = -(totalWidth - 200);
+      const remainingDistance = animationRef.current.currentX - endX;
+      const totalDistance = 200 - endX;
+      const duration = 60 * (remainingDistance / totalDistance);
+      
+      controls.start({
+        x: [animationRef.current.currentX, endX],
+        transition: {
+          duration,
+          ease: "linear",
+          repeat: Infinity,
+          repeatType: "loop"
+        }
+      });
+    };
+
+    if (!isHovered && duplicatedProjects.length > 0) {
+      animationRef.current.isPaused = false;
+      startAnimation();
+    } else {
+      animationRef.current.isPaused = true;
+      controls.stop();
+    }
+  }, [isHovered, controls, duplicatedProjects.length]);
+
+  const handleMouseEnter = () => {
+    const currentTransform = scrollContainerRef.current?.style.transform;
+    if (currentTransform) {
+      const match = currentTransform.match(/translateX\(([^)]+)px\)/);
+      if (match) {
+        animationRef.current.currentX = parseFloat(match[1]);
+      }
+    }
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
 
   const openModal = (project: Project) => {
     setSelectedProject(project);
@@ -432,21 +478,14 @@ const ProjectsSection: React.FC = () => {
                   <motion.div
                     ref={scrollContainerRef}
                     className="flex gap-12 absolute left-0 overflow-x-auto scrollbar-hide"
-                    animate={!isHovered ? {
-                      x: [200, -((duplicatedProjects.length * 480) - 200)]
-                    } : undefined}
-                    transition={{
-                      duration: 60,
-                      repeat: Infinity,
-                      ease: "linear"
-                    }}
+                    animate={controls}
                     style={{
                       width: `${(duplicatedProjects.length * 480) + 400}px`,
                       scrollbarWidth: 'none',
                       msOverflowStyle: 'none'
                     }}
-                    onMouseEnter={() => setIsHovered(true)}
-                    onMouseLeave={() => setIsHovered(false)}
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
                   >
                     {duplicatedProjects.map((project, index) => 
                       renderSpacePodCard(project, index)
