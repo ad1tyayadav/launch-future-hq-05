@@ -23,13 +23,13 @@ const BookingCalendar = ({ selectedDate, onSelectDate }: BookingCalendarProps) =
           <CalendarIcon className="w-5 h-5 inline mr-2" />
           Select Date
         </Label>
-        <div className="enhanced-calendar-container relative group">
+        <div className="enhanced-calendar-container relative group flex justify-center">
           <Calendar
             mode="single"
             selected={selectedDate}
             onSelect={onSelectDate}
             disabled={(date) => date < new Date()}
-            className="enhanced-calendar rounded-lg border-2 border-cyber-blue/30 bg-white/5 p-4 backdrop-blur-md transition-all duration-300 hover:border-cyber-blue/60 hover:shadow-[0_0_30px_rgba(0,245,255,0.3)] group-hover:scale-[1.02]"
+            className="enhanced-calendar rounded-lg border-2 border-cyber-blue/30 bg-white/5 p-6 backdrop-blur-md transition-all duration-300 hover:border-cyber-blue/60 hover:shadow-[0_0_30px_rgba(0,245,255,0.3)] group-hover:scale-[1.02] w-fit mx-auto"
           />
           {/* Neon glow overlay */}
           <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-cyber-blue/10 via-cyber-purple/10 to-cyber-pink/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
