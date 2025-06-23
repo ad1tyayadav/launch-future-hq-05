@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Bot, Blocks, Smartphone, Palette, Settings } from 'lucide-react';
@@ -305,8 +304,7 @@ const PricingSection = () => {
                       whileTap={{ scale: 0.98 }}
                       transition={{ 
                         duration: 0.4,
-                        delay: 0.7,
-                        hover: { duration: 0.3 }
+                        delay: 0.7
                       }}
                       className="w-full py-2 px-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold rounded border border-cyan-400/50 hover:border-cyan-300 transition-all duration-400 font-mono text-sm"
                     >
