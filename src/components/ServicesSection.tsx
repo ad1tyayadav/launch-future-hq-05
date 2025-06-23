@@ -1,13 +1,13 @@
+
 import React, { useRef, useState, useEffect } from 'react';
-import { motion, useAnimation } from 'framer-motion';
-import { Check, ChevronLeft, ChevronRight } from 'lucide-react';
+import { motion, useAnimation, PanInfo } from 'framer-motion';
+import { Check } from 'lucide-react';
 
 const ServicesSection = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [isHovered, setIsHovered] = useState(false);
-  const [isManualScrolling, setIsManualScrolling] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragConstraints, setDragConstraints] = useState({ left: 0, right: 0 });
   const controls = useAnimation();
-  const animationRef = useRef<{ currentX: number; isPaused: boolean }>({ currentX: 200, isPaused: false });
 
   const services = [
     {
@@ -48,112 +48,75 @@ const ServicesSection = () => {
     }
   ];
 
-  // Create seamless loop by duplicating services multiple times
-  const duplicatedServices = [...services, ...services, ...services];
-
   useEffect(() => {
-    const startAnimation = () => {
-      if (animationRef.current.isPaused || isManualScrolling || duplicatedServices.length === 0) return;
-      
-      const cardWidth = 360;
-      const gap = 24; // 6 * 4 = 24px gap
-      const totalCardWidth = cardWidth + gap;
-      const singleSetWidth = services.length * totalCardWidth;
-      
-      // Start from current position and animate to one full set width to the left
-      const startX = animationRef.current.currentX;
-      const endX = startX - singleSetWidth;
-      
-      // Calculate duration based on remaining distance
-      const distance = Math.abs(startX - endX);
-      const duration = (distance / singleSetWidth) * 40; // 40 seconds for one full cycle
-      
-      controls.start({
-        x: endX,
-        transition: {
-          duration,
-          ease: "linear"
-        }
-      }).then(() => {
-        // Reset position seamlessly when animation completes
-        if (!animationRef.current.isPaused && !isManualScrolling) {
-          animationRef.current.currentX = startX;
-          controls.set({ x: startX });
-          // Restart animation
-          setTimeout(() => {
-            if (!animationRef.current.isPaused && !isManualScrolling) {
-              startAnimation();
-            }
-          }, 0);
-        }
-      });
+    const updateConstraints = () => {
+      if (scrollContainerRef.current) {
+        const container = scrollContainerRef.current;
+        const containerWidth = container.offsetWidth;
+        const scrollWidth = container.scrollWidth;
+        const maxScroll = scrollWidth - containerWidth;
+        
+        setDragConstraints({
+          left: -maxScroll,
+          right: 0
+        });
+      }
     };
 
-    if (!isHovered && !isManualScrolling && duplicatedServices.length > 0) {
-      animationRef.current.isPaused = false;
-      startAnimation();
-    } else {
-      animationRef.current.isPaused = true;
-      controls.stop();
-    }
-  }, [isHovered, isManualScrolling, controls, duplicatedServices.length]);
+    updateConstraints();
+    window.addEventListener('resize', updateConstraints);
+    return () => window.removeEventListener('resize', updateConstraints);
+  }, [services.length]);
 
-  const handleMouseEnter = () => {
-    // Get current position from the actual transform
-    const element = scrollContainerRef.current;
-    if (element) {
-      const transform = window.getComputedStyle(element).transform;
-      if (transform && transform !== 'none') {
-        const matrix = transform.match(/matrix\(([^)]+)\)/);
-        if (matrix) {
-          const values = matrix[1].split(',').map(parseFloat);
-          animationRef.current.currentX = values[4] || animationRef.current.currentX;
+  const handleDragStart = () => {
+    setIsDragging(true);
+  };
+
+  const handleDragEnd = (event: any, info: PanInfo) => {
+    setIsDragging(false);
+    
+    // Add momentum based on velocity
+    const velocity = info.velocity.x;
+    const currentX = info.point.x;
+    
+    if (Math.abs(velocity) > 500) {
+      const momentumDistance = velocity * 0.3;
+      const newX = Math.max(dragConstraints.left, Math.min(dragConstraints.right, currentX + momentumDistance));
+      
+      controls.start({
+        x: newX,
+        transition: {
+          type: "spring",
+          damping: 20,
+          stiffness: 300
         }
-      }
+      });
     }
-    setIsHovered(true);
   };
 
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-  };
-
-  const scrollLeft = () => {
-    setIsManualScrolling(true);
-    const newX = Math.min(animationRef.current.currentX + 400, 200);
-    animationRef.current.currentX = newX;
-    
-    controls.start({
-      x: newX,
-      transition: { duration: 0.5, ease: "easeOut" }
-    }).then(() => {
-      setTimeout(() => setIsManualScrolling(false), 1000);
-    });
-  };
-
-  const scrollRight = () => {
-    setIsManualScrolling(true);
-    const cardWidth = 360;
-    const gap = 24;
-    const totalCardWidth = cardWidth + gap;
-    const singleSetWidth = services.length * totalCardWidth;
-    const minX = -(singleSetWidth * 2); // Allow scrolling through two sets
-    const newX = Math.max(animationRef.current.currentX - 400, minX);
-    animationRef.current.currentX = newX;
-    
-    controls.start({
-      x: newX,
-      transition: { duration: 0.5, ease: "easeOut" }
-    }).then(() => {
-      setTimeout(() => setIsManualScrolling(false), 1000);
-    });
+  const handleWheel = (e: React.WheelEvent) => {
+    e.preventDefault();
+    if (scrollContainerRef.current && !isDragging) {
+      const currentTransform = scrollContainerRef.current.style.transform;
+      const currentX = currentTransform ? parseFloat(currentTransform.match(/translateX\(([^)]+)px\)/)?.[1] || '0') : 0;
+      const deltaX = e.deltaY * 2; // Increase sensitivity
+      const newX = Math.max(dragConstraints.left, Math.min(dragConstraints.right, currentX - deltaX));
+      
+      controls.start({
+        x: newX,
+        transition: {
+          type: "spring",
+          damping: 25,
+          stiffness: 400
+        }
+      });
+    }
   };
 
   return (
-    <section id="services" className="py-12 relative overflow-hidden">
-      {/* Minimal background overlay to show main site background */}
-      <div className="absolute inset-0 bg-black/5 backdrop-blur-sm" />
-
+    <section id="services" className="py-20 relative overflow-hidden bg-gradient-to-br from-dark-space via-slate-900 to-dark-space">
+      <div className="absolute inset-0 bg-black/20 backdrop-blur-sm" />
+      
       <div className="container mx-auto px-6 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -172,155 +135,158 @@ const ServicesSection = () => {
             }}
             transition={{ duration: 2, repeat: Infinity }}
           >
-            Services
+            Our Services
           </motion.h2>
-          <p className="text-xl text-white/80 font-sora max-w-3xl mx-auto">
-            We harness tomorrow's technologies today to build digital experiences 
-            that push the boundaries of what's possible.
+          <p className="text-xl text-white/80 font-sora max-w-3xl mx-auto mb-8">
+            Discover our cutting-edge solutions that push the boundaries of digital innovation
+          </p>
+          <p className="text-sm text-cyan-400/70 font-sora">
+            Drag to explore • Use scroll wheel • Touch to navigate
           </p>
         </motion.div>
 
-        <div className="relative px-4 sm:px-8">
-          {/* Section-relative Navigation Buttons */}
-          <motion.button
-            className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-12 sm:h-12 bg-white/10 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/20 hover:border-cyan-400/50 transition-all duration-300 group shadow-lg"
-            onClick={scrollLeft}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
+        <div 
+          className="relative overflow-hidden cursor-grab active:cursor-grabbing"
+          onWheel={handleWheel}
+        >
+          <motion.div
+            ref={scrollContainerRef}
+            className="flex gap-8 pb-8"
+            drag="x"
+            dragConstraints={dragConstraints}
+            dragElastic={0.1}
+            dragMomentum={false}
+            onDragStart={handleDragStart}
+            onDragEnd={handleDragEnd}
+            animate={controls}
+            style={{
+              width: `${services.length * 400 + (services.length - 1) * 32}px`
+            }}
           >
-            <ChevronLeft size={16} className="sm:w-5 sm:h-5 group-hover:text-cyan-400 transition-colors duration-300" />
-          </motion.button>
-
-          <motion.button
-            className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-12 sm:h-12 bg-white/10 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/20 hover:border-cyan-400/50 transition-all duration-300 group shadow-lg"
-            onClick={scrollRight}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <ChevronRight size={16} className="sm:w-5 sm:h-5 group-hover:text-cyan-400 transition-colors duration-300" />
-          </motion.button>
-
-          <div className="relative h-[500px] w-full overflow-hidden">
-            <motion.div
-              ref={scrollContainerRef}
-              className="flex gap-6 absolute left-0"
-              animate={controls}
-              style={{
-                width: `${(duplicatedServices.length * 360) + (duplicatedServices.length * 24) + 400}px`
-              }}
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
-            >
-              {duplicatedServices.map((service, index) => (
-                <motion.div
-                  key={`${service.title}-${index}`}
-                  className="flex-shrink-0 w-80 h-[480px] relative group cursor-pointer"
-                  animate={{
-                    y: [0, -10, 0]
-                  }}
-                  transition={{
-                    duration: 6 + (index % 3),
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: index * 0.5
-                  }}
-                  whileHover={{
-                    scale: 1.05,
-                    y: -20
-                  }}
-                >
-                  <div className="absolute inset-0 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl group-hover:bg-white/10 group-hover:border-cyan-400/30 transition-all duration-500">
-                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-400/20 via-purple-400/20 to-pink-400/20 opacity-0 group-hover:opacity-100 blur-sm transition-opacity duration-500" />
-                    
-                    <div className="relative z-10 p-6 h-full flex flex-col">
-                      <motion.div 
-                        className="mb-6 relative flex justify-center"
-                        whileHover={{ 
-                          scale: 1.2,
-                          rotate: [0, -5, 5, 0]
+            {services.map((service, index) => (
+              <motion.div
+                key={service.title}
+                className="flex-shrink-0 w-96 h-[500px] relative group cursor-pointer select-none"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                whileHover={{ 
+                  scale: 1.05,
+                  y: -10,
+                  rotateY: 5,
+                  transition: { type: "spring", damping: 15, stiffness: 300 }
+                }}
+              >
+                <div className="absolute inset-0 bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl shadow-2xl group-hover:bg-white/10 group-hover:border-cyan-400/30 transition-all duration-500 overflow-hidden">
+                  {/* Animated background gradient */}
+                  <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-cyan-400/10 via-purple-400/10 to-pink-400/10 opacity-0 group-hover:opacity-100 blur-sm transition-opacity duration-500" />
+                  
+                  {/* Floating particles on hover */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    {[...Array(8)].map((_, i) => (
+                      <motion.div
+                        key={i}
+                        className="absolute w-1 h-1 bg-cyan-400/60 rounded-full"
+                        style={{
+                          left: `${20 + Math.random() * 60}%`,
+                          top: `${20 + Math.random() * 60}%`,
                         }}
-                        transition={{ duration: 0.6 }}
-                      >
-                        <div className="w-16 h-16 bg-white/10 backdrop-blur-md rounded-xl flex items-center justify-center border border-white/20 group-hover:border-cyan-400/50 transition-all duration-300">
-                          <span className="text-3xl">{service.icon}</span>
-                        </div>
-                        
-                        <div className="absolute inset-0 bg-cyan-400/20 rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10" />
-                      </motion.div>
-
-                      <h3 className="text-xl font-orbitron font-bold text-white mb-4 text-center group-hover:text-cyan-300 transition-colors duration-300">
-                        {service.title}
-                      </h3>
-
-                      <p className="text-white/70 font-sora text-sm leading-relaxed mb-6 flex-grow text-center group-hover:text-white/90 transition-colors duration-300">
-                        {service.description}
-                      </p>
-
-                      <div className="space-y-3 mb-8">
-                        {service.features.slice(0, 3).map((feature, featureIndex) => (
-                          <motion.div
-                            key={featureIndex}
-                            className="flex items-center space-x-3"
-                            initial={{ opacity: 0, x: -20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.3, delay: featureIndex * 0.1 }}
-                          >
-                            <div className="w-5 h-5 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20 group-hover:border-cyan-400/50 group-hover:bg-cyan-400/20 transition-all duration-300 flex-shrink-0">
-                              <Check size={12} className="text-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                            </div>
-                            <span className="text-white/80 text-sm font-sora group-hover:text-white transition-colors duration-300">
-                              {feature}
-                            </span>
-                          </motion.div>
-                        ))}
+                        animate={{
+                          scale: [0, 1, 0],
+                          opacity: [0, 1, 0],
+                          y: [0, -30, -60],
+                        }}
+                        transition={{
+                          duration: 2 + Math.random(),
+                          repeat: Infinity,
+                          delay: i * 0.2,
+                        }}
+                      />
+                    ))}
+                  </div>
+                  
+                  <div className="relative z-10 p-8 h-full flex flex-col">
+                    {/* Icon */}
+                    <motion.div 
+                      className="mb-6 relative flex justify-center"
+                      whileHover={{ 
+                        scale: 1.2,
+                        rotate: [0, -10, 10, 0]
+                      }}
+                      transition={{ duration: 0.6 }}
+                    >
+                      <div className="w-20 h-20 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/20 group-hover:border-cyan-400/50 transition-all duration-300">
+                        <span className="text-4xl">{service.icon}</span>
                       </div>
+                      <div className="absolute inset-0 bg-cyan-400/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10" />
+                    </motion.div>
 
-                      <div className="mt-auto">
-                        <motion.button
-                          className="relative w-full py-3 px-6 bg-white/5 backdrop-blur-md border border-white/20 rounded-xl text-white font-sora text-sm font-medium overflow-hidden group-hover:border-cyan-400/50 transition-all duration-300"
-                          whileHover={{
-                            scale: 1.02,
-                          }}
-                          whileTap={{ scale: 0.98 }}
+                    {/* Title */}
+                    <motion.h3 
+                      className="text-2xl font-orbitron font-bold text-white mb-4 text-center group-hover:text-cyan-300 transition-colors duration-300"
+                      whileHover={{ scale: 1.05 }}
+                    >
+                      {service.title}
+                    </motion.h3>
+
+                    {/* Description */}
+                    <p className="text-white/70 font-sora text-sm leading-relaxed mb-6 flex-grow text-center group-hover:text-white/90 transition-colors duration-300">
+                      {service.description}
+                    </p>
+
+                    {/* Features */}
+                    <div className="space-y-3 mb-6">
+                      {service.features.slice(0, 3).map((feature, featureIndex) => (
+                        <motion.div
+                          key={featureIndex}
+                          className="flex items-center space-x-3"
+                          initial={{ opacity: 0, x: -20 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          transition={{ duration: 0.3, delay: featureIndex * 0.1 }}
                         >
-                          <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/0 via-cyan-400/20 to-purple-400/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                          
-                          <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-400/30 via-purple-400/30 to-pink-400/30 opacity-0 group-hover:opacity-100 blur-sm transition-opacity duration-500 -z-10" />
-                          
-                          <span className="relative z-10 group-hover:text-cyan-300 transition-colors duration-300">
-                            Explore Solution →
+                          <div className="w-5 h-5 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20 group-hover:border-cyan-400/50 group-hover:bg-cyan-400/20 transition-all duration-300 flex-shrink-0">
+                            <Check size={12} className="text-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                          </div>
+                          <span className="text-white/80 text-xs font-sora group-hover:text-white transition-colors duration-300">
+                            {feature}
                           </span>
-                        </motion.button>
-                      </div>
+                        </motion.div>
+                      ))}
                     </div>
 
-                    <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-cyan-400/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
-                    <div className="absolute bottom-1/4 right-1/4 w-24 h-24 bg-purple-400/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000 delay-200" />
+                    {/* CTA Button */}
+                    <motion.button
+                      className="relative w-full py-3 px-6 bg-white/5 backdrop-blur-md border border-white/20 rounded-xl text-white font-sora text-sm font-medium overflow-hidden group-hover:border-cyan-400/50 transition-all duration-300"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/0 via-cyan-400/20 to-purple-400/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      <span className="relative z-10 group-hover:text-cyan-300 transition-colors duration-300">
+                        Explore Solution →
+                      </span>
+                    </motion.button>
                   </div>
 
-                  {[...Array(5)].map((_, i) => (
-                    <motion.div
-                      key={i}
-                      className="absolute w-1 h-1 bg-cyan-400/60 rounded-full opacity-0 group-hover:opacity-100"
-                      style={{
-                        left: `${20 + Math.random() * 60}%`,
-                        top: `${20 + Math.random() * 60}%`,
-                      }}
-                      animate={{
-                        scale: [0, 1, 0],
-                        opacity: [0, 1, 0],
-                        y: [0, -20, -40],
-                      }}
-                      transition={{
-                        duration: 3,
-                        repeat: Infinity,
-                        delay: i * 0.5,
-                      }}
-                    />
-                  ))}
-                </motion.div>
-              ))}
-            </motion.div>
+                  {/* Corner glow effects */}
+                  <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-cyan-400/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+                  <div className="absolute bottom-1/4 right-1/4 w-24 h-24 bg-purple-400/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000 delay-200" />
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+          
+          {/* Scroll indicator */}
+          <div className="flex justify-center mt-8">
+            <div className="bg-white/10 backdrop-blur-md rounded-full px-4 py-2 border border-white/20">
+              <div className="flex space-x-2">
+                {services.map((_, index) => (
+                  <div 
+                    key={index}
+                    className="w-2 h-2 rounded-full bg-white/30 transition-all duration-300"
+                  />
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>
