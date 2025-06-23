@@ -78,9 +78,9 @@ const ServicesSection = () => {
         <div className="w-full px-8">
           <div className="relative h-[500px] w-full">
             <motion.div
-              className="flex gap-8 absolute left-0"
+              className="flex gap-6 absolute left-0"
               animate={{
-                x: [200, -((duplicatedServices.length * 380) - 200)]
+                x: [200, -((duplicatedServices.length * 360) - 200)]
               }}
               transition={{
                 duration: 80,
@@ -88,13 +88,13 @@ const ServicesSection = () => {
                 ease: "linear"
               }}
               style={{
-                width: `${(duplicatedServices.length * 380) + 400}px`
+                width: `${(duplicatedServices.length * 360) + 400}px`
               }}
             >
               {duplicatedServices.map((service, index) => (
                 <motion.div
                   key={`${service.title}-${index}`}
-                  className="flex-shrink-0 w-80 h-96 relative group cursor-pointer"
+                  className="flex-shrink-0 w-80 h-[480px] relative group cursor-pointer"
                   animate={{
                     y: [0, -10, 0]
                   }}
@@ -115,10 +115,10 @@ const ServicesSection = () => {
                     <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-400/20 via-purple-400/20 to-pink-400/20 opacity-0 group-hover:opacity-100 blur-sm transition-opacity duration-500" />
                     
                     {/* Inner content container */}
-                    <div className="relative z-10 p-8 h-full flex flex-col">
+                    <div className="relative z-10 p-6 h-full flex flex-col">
                       {/* Service Icon/Logo at top */}
                       <motion.div 
-                        className="mb-6 relative"
+                        className="mb-6 relative flex justify-center"
                         whileHover={{ 
                           scale: 1.2,
                           rotate: [0, -5, 5, 0]
@@ -134,17 +134,17 @@ const ServicesSection = () => {
                       </motion.div>
 
                       {/* Service Title */}
-                      <h3 className="text-xl font-orbitron font-bold text-white mb-3 group-hover:text-cyan-300 transition-colors duration-300">
+                      <h3 className="text-xl font-orbitron font-bold text-white mb-4 text-center group-hover:text-cyan-300 transition-colors duration-300">
                         {service.title}
                       </h3>
 
                       {/* Service Description */}
-                      <p className="text-white/70 font-sora text-sm leading-relaxed mb-6 flex-grow group-hover:text-white/90 transition-colors duration-300">
+                      <p className="text-white/70 font-sora text-sm leading-relaxed mb-6 flex-grow text-center group-hover:text-white/90 transition-colors duration-300">
                         {service.description}
                       </p>
 
                       {/* Features with checkmarks */}
-                      <div className="space-y-2 mb-6">
+                      <div className="space-y-3 mb-8">
                         {service.features.slice(0, 3).map((feature, featureIndex) => (
                           <motion.div
                             key={featureIndex}
@@ -153,7 +153,7 @@ const ServicesSection = () => {
                             whileInView={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.3, delay: featureIndex * 0.1 }}
                           >
-                            <div className="w-5 h-5 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20 group-hover:border-cyan-400/50 group-hover:bg-cyan-400/20 transition-all duration-300">
+                            <div className="w-5 h-5 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20 group-hover:border-cyan-400/50 group-hover:bg-cyan-400/20 transition-all duration-300 flex-shrink-0">
                               <Check size={12} className="text-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                             </div>
                             <span className="text-white/80 text-sm font-sora group-hover:text-white transition-colors duration-300">
@@ -163,24 +163,26 @@ const ServicesSection = () => {
                         ))}
                       </div>
 
-                      {/* CTA Button with glass blur and glow */}
-                      <motion.button
-                        className="relative w-full py-3 px-6 bg-white/5 backdrop-blur-md border border-white/20 rounded-xl text-white font-sora text-sm font-medium overflow-hidden group-hover:border-cyan-400/50 transition-all duration-300"
-                        whileHover={{
-                          scale: 1.02,
-                        }}
-                        whileTap={{ scale: 0.98 }}
-                      >
-                        {/* Button background glow */}
-                        <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/0 via-cyan-400/20 to-purple-400/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                        
-                        {/* Button border glow */}
-                        <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-400/30 via-purple-400/30 to-pink-400/30 opacity-0 group-hover:opacity-100 blur-sm transition-opacity duration-500 -z-10" />
-                        
-                        <span className="relative z-10 group-hover:text-cyan-300 transition-colors duration-300">
-                          Explore Solution →
-                        </span>
-                      </motion.button>
+                      {/* CTA Button with glass blur and glow - positioned at bottom */}
+                      <div className="mt-auto">
+                        <motion.button
+                          className="relative w-full py-3 px-6 bg-white/5 backdrop-blur-md border border-white/20 rounded-xl text-white font-sora text-sm font-medium overflow-hidden group-hover:border-cyan-400/50 transition-all duration-300"
+                          whileHover={{
+                            scale: 1.02,
+                          }}
+                          whileTap={{ scale: 0.98 }}
+                        >
+                          {/* Button background glow */}
+                          <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/0 via-cyan-400/20 to-purple-400/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                          
+                          {/* Button border glow */}
+                          <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-400/30 via-purple-400/30 to-pink-400/30 opacity-0 group-hover:opacity-100 blur-sm transition-opacity duration-500 -z-10" />
+                          
+                          <span className="relative z-10 group-hover:text-cyan-300 transition-colors duration-300">
+                            Explore Solution →
+                          </span>
+                        </motion.button>
+                      </div>
                     </div>
 
                     {/* Ambient light effects */}
