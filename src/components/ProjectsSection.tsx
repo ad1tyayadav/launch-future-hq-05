@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, Github, ArrowRight, X, Rocket, Terminal, Code, Zap, Eye } from 'lucide-react';
@@ -637,29 +638,62 @@ const ProjectsSection = () => {
               ))}
             </motion.div>
 
-            {/* Client Projects Grid */}
-            <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
-              <AnimatePresence>
-                {filteredClientProjects.map((project, index) => (
-                  <SpacePodCard key={project.id} project={project} index={index} />
-                ))}
-              </AnimatePresence>
-            </motion.div>
-          </TabsContent>
-
-          <TabsContent value="devlaunch" className="focus-visible:outline-none">
-            {/* DevLaunch Projects Grid */}
+            {/* Client Projects Carousel */}
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center"
+              className="relative"
             >
-              <AnimatePresence>
-                {devLaunchProjects.map((project, index) => (
-                  <SpacePodCard key={project.id} project={project} index={index} />
-                ))}
-              </AnimatePresence>
+              <Carousel
+                opts={{
+                  align: "start",
+                  loop: true,
+                }}
+                className="w-full"
+              >
+                <CarouselContent className="-ml-2 md:-ml-4">
+                  <AnimatePresence>
+                    {filteredClientProjects.map((project, index) => (
+                      <CarouselItem key={project.id} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
+                        <SpacePodCard project={project} index={index} />
+                      </CarouselItem>
+                    ))}
+                  </AnimatePresence>
+                </CarouselContent>
+                <CarouselPrevious className="left-4 bg-white/10 border-white/20 hover:bg-white/20 text-white" />
+                <CarouselNext className="right-4 bg-white/10 border-white/20 hover:bg-white/20 text-white" />
+              </Carousel>
+            </motion.div>
+          </TabsContent>
+
+          <TabsContent value="devlaunch" className="focus-visible:outline-none">
+            {/* DevLaunch Projects Carousel */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
+              className="relative"
+            >
+              <Carousel
+                opts={{
+                  align: "start",
+                  loop: true,
+                }}
+                className="w-full"
+              >
+                <CarouselContent className="-ml-2 md:-ml-4">
+                  <AnimatePresence>
+                    {devLaunchProjects.map((project, index) => (
+                      <CarouselItem key={project.id} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
+                        <SpacePodCard project={project} index={index} />
+                      </CarouselItem>
+                    ))}
+                  </AnimatePresence>
+                </CarouselContent>
+                <CarouselPrevious className="left-4 bg-white/10 border-white/20 hover:bg-white/20 text-white" />
+                <CarouselNext className="right-4 bg-white/10 border-white/20 hover:bg-white/20 text-white" />
+              </Carousel>
             </motion.div>
           </TabsContent>
         </Tabs>
