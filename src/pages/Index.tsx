@@ -16,14 +16,13 @@ const Index = () => {
       <Navigation />
       <div className="relative z-10">
         <HeroSection />
+        <ServicesSection />
+        <ProjectsSection />
+        <TestimonialSection />
+        <PricingSection />
         <div className="relative">
-          {/* Seamless transition overlay */}
           <InvestorSection />
         </div>
-        <ServicesSection />
-        <TestimonialSection />
-        <ProjectsSection />
-        <PricingSection />
         <ContactSection />
       </div>
     </div>
