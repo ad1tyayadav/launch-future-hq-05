@@ -235,247 +235,214 @@ const ProjectsSection = () => {
     }
   };
 
-  const ProjectCard = ({ project, index }) => (
+  const SpacePodCard = ({ project, index }) => (
     <motion.div
-      initial={{ opacity: 0, y: 50 }}
+      initial={{ opacity: 0, y: 100 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.1, duration: 0.6 }}
+      transition={{ delay: index * 0.1, duration: 0.8, type: "spring" }}
       whileHover={{ 
-        y: -15,
-        rotateX: 10,
-        rotateY: 5,
-        scale: 1.03,
-        z: 100
+        y: -20,
+        rotateX: 15,
+        rotateY: 10,
+        scale: 1.05,
+        transition: { duration: 0.6, type: "spring", stiffness: 300 }
       }}
-      className="group relative cursor-pointer h-full"
+      className="group relative cursor-pointer"
       style={{ perspective: '1000px' }}
       onClick={() => setSelectedProject(project)}
     >
-      <div className="relative bg-gradient-to-br from-dark-space/90 via-space-gray/50 to-dark-space/90 backdrop-blur-xl rounded-3xl overflow-hidden border border-white/10 group-hover:border-white/30 transition-all duration-500 h-full flex flex-col">
-        
-        {/* Enhanced holographic border effect */}
-        <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-          <div className={`absolute inset-0 rounded-3xl bg-gradient-to-r ${project.color} p-[1px]`}>
-            <div className="h-full w-full rounded-3xl bg-dark-space/95 backdrop-blur-xl" />
-          </div>
-        </div>
-
-        {/* Circuit pattern overlay */}
-        <div className="absolute inset-0 opacity-5 group-hover:opacity-15 transition-opacity duration-500 overflow-hidden rounded-3xl">
-          <svg className="w-full h-full scale-150" viewBox="0 0 100 100">
-            <defs>
-              <pattern id={`circuit-project-${project.id}`} x="0" y="0" width="10" height="10" patternUnits="userSpaceOnUse">
-                <path d="M0 5h10M5 0v10M2.5 2.5h5v5h-5z" stroke="currentColor" strokeWidth="0.3" fill="none" className="text-cyber-blue"/>
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill={`url(#circuit-project-${project.id})`}/>
-          </svg>
-        </div>
-
-        {/* Enhanced Project Image */}
-        <div className="relative h-56 overflow-hidden rounded-t-3xl flex-shrink-0">
-          <motion.img 
-            src={project.image} 
-            alt={project.title} 
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-            whileHover={{ scale: 1.1 }}
-          />
-          
-          {/* Multi-layered gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-dark-space via-transparent to-transparent opacity-60" />
-          <div className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-30 group-hover:opacity-50 transition-opacity duration-500`} />
-          
-          {/* Scanning line effect */}
-          <motion.div
-            className="absolute inset-0 bg-gradient-to-r from-transparent via-cyber-blue/60 to-transparent opacity-0 group-hover:opacity-100"
-            animate={{
-              x: [-100, 400],
-            }}
-            transition={{
-              duration: 1.5,
-              repeat: Infinity,
-              repeatDelay: 2,
-            }}
-            style={{
-              width: '3px',
-              height: '100%',
-            }}
-          />
-          
-          {/* Enhanced badges */}
-          <div className="absolute top-4 left-4 flex flex-col gap-2">
-            {project.isDevLaunch ? (
-              <>
-                <motion.div 
-                  className={`px-3 py-1.5 bg-gradient-to-r ${getStatusColor(project.status)} text-white font-semibold rounded-full text-sm flex items-center space-x-2 backdrop-blur-sm`}
-                  whileHover={{ scale: 1.05 }}
-                >
-                  {getStatusIcon(project.status)}
-                  <span>{project.status}</span>
-                </motion.div>
-              </>
-            ) : (
-              <motion.span 
-                className="px-3 py-1.5 bg-dark-space/80 text-cyber-blue font-semibold rounded-full text-sm backdrop-blur-sm border border-cyber-blue/30"
-                whileHover={{ scale: 1.05, backgroundColor: 'rgba(0, 245, 255, 0.1)' }}
-              >
-                {project.category}
-              </motion.span>
-            )}
-          </div>
-
-          <div className="absolute top-4 right-4">
-            {project.isDevLaunch ? (
-              <motion.span 
-                className="px-3 py-1.5 bg-gradient-to-r from-cyan-400 to-violet-600 text-white font-semibold rounded-full text-sm backdrop-blur-sm"
-                whileHover={{ scale: 1.05 }}
-                animate={{
-                  boxShadow: [
-                    '0 0 10px rgba(6, 182, 212, 0.3)',
-                    '0 0 20px rgba(6, 182, 212, 0.6)',
-                    '0 0 10px rgba(6, 182, 212, 0.3)'
-                  ]
-                }}
-                transition={{ duration: 2, repeat: Infinity }}
-              >
-                DevLaunch
-              </motion.span>
-            ) : (
-              project.featured && (
-                <motion.span 
-                  className="px-3 py-1.5 bg-gradient-to-r from-cyber-blue to-cyber-purple text-white font-semibold rounded-full text-sm backdrop-blur-sm"
-                  whileHover={{ scale: 1.05 }}
-                  animate={{
-                    boxShadow: [
-                      '0 0 10px rgba(0, 245, 255, 0.3)',
-                      '0 0 20px rgba(0, 245, 255, 0.6)',
-                      '0 0 10px rgba(0, 245, 255, 0.3)'
-                    ]
-                  }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                >
-                  Featured
-                </motion.span>
-              )
-            )}
-          </div>
-
-          {/* Enhanced hover overlay */}
-          <div className="absolute inset-0 bg-dark-space/70 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
-            <motion.div
-              initial={{ scale: 0, rotate: -180 }}
-              whileHover={{ scale: 1, rotate: 0 }}
-              className="flex items-center space-x-3 text-white text-xl font-semibold"
-            >
-              <Eye size={24} className="text-cyber-blue" />
-              <span>View Project</span>
-              <motion.div
-                animate={{ x: [0, 5, 0] }}
-                transition={{ duration: 1, repeat: Infinity }}
-              >
-                <ArrowRight size={24} className="text-cyber-blue" />
-              </motion.div>
-            </motion.div>
-          </div>
-        </div>
-
-        {/* Enhanced Project Content */}
-        <div className="relative p-6 bg-gradient-to-br from-dark-space/80 to-space-gray/40 backdrop-blur-sm flex-1 flex flex-col">
-          {/* Tech indicators floating */}
-          <div className="absolute -top-3 left-6 flex space-x-2">
-            {project.tech.slice(0, 2).map((tech, techIndex) => (
-              <motion.div
-                key={techIndex}
-                className={`px-2 py-1 ${project.isDevLaunch ? 'bg-cyan-400/20 text-cyan-400 border border-cyan-400/30' : 'bg-cyber-blue/20 text-cyber-blue border border-cyber-blue/30'} rounded-md text-xs font-medium backdrop-blur-sm`}
-                animate={{
-                  y: [0, -2, 0],
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  delay: techIndex * 0.2
-                }}
-              >
-                {tech}
-              </motion.div>
-            ))}
-          </div>
-
-          <motion.h3 
-            className="text-2xl font-orbitron font-bold text-white mb-3 mt-4 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-cyber-blue group-hover:to-cyber-purple transition-all duration-500"
-            whileHover={{ scale: 1.02 }}
-          >
-            {project.title}
-          </motion.h3>
-          
-          <p className="text-white/70 font-sora text-sm leading-relaxed mb-6 group-hover:text-white/90 transition-colors duration-300 flex-1">
-            {project.description}
-          </p>
-
-          {/* Enhanced tech stack display */}
-          <div className="flex flex-wrap gap-2 mb-6">
-            {project.tech.slice(2, 4).map((tech, techIndex) => (
-              <motion.span
-                key={techIndex}
-                className={`px-3 py-1 ${project.isDevLaunch ? 'bg-violet-600/20 text-violet-400' : 'bg-cyber-purple/20 text-cyber-purple'} rounded-md text-xs font-medium`}
-                whileHover={{ scale: 1.05 }}
-              >
-                {tech}
-              </motion.span>
-            ))}
-            {project.tech.length > 4 && (
-              <span className="px-3 py-1 bg-white/10 text-white/60 rounded-md text-xs font-medium">
-                +{project.tech.length - 4} more
-              </span>
-            )}
-          </div>
-
-          {/* Enhanced action buttons */}
-          <div className="flex space-x-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 mt-auto">
-            <motion.button
-              whileHover={{ scale: 1.05, boxShadow: '0 10px 25px rgba(0, 245, 255, 0.3)' }}
-              whileTap={{ scale: 0.95 }}
-              className={`flex-1 py-3 px-4 ${project.isDevLaunch ? 'bg-gradient-to-r from-cyan-400 to-violet-600' : 'bg-gradient-to-r from-cyber-blue to-cyber-purple'} text-white rounded-xl text-sm font-semibold flex items-center justify-center space-x-2 backdrop-blur-sm`}
-            >
-              <Zap size={16} />
-              <span>View Live</span>
-            </motion.button>
-            <motion.button
-              whileHover={{ 
-                scale: 1.05, 
-                backgroundColor: project.isDevLaunch ? 'rgba(6, 182, 212, 0.1)' : 'rgba(0, 245, 255, 0.1)',
-                borderColor: project.isDevLaunch ? 'rgb(6, 182, 212)' : 'rgb(0, 245, 255)'
-              }}
-              whileTap={{ scale: 0.95 }}
-              className={`p-3 border ${project.isDevLaunch ? 'border-cyan-400 text-cyan-400' : 'border-cyber-blue text-cyber-blue'} hover:text-white transition-all duration-300 rounded-xl backdrop-blur-sm`}
-            >
-              <Github size={16} />
-            </motion.button>
-          </div>
-        </div>
-
-        {/* Floating particles effect */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-3xl">
-          {[...Array(8)].map((_, i) => (
+      {/* Space pod container */}
+      <div className="relative w-80 h-96 mx-auto">
+        {/* Floating particles around the pod */}
+        <div className="absolute inset-0 pointer-events-none">
+          {[...Array(12)].map((_, i) => (
             <motion.div
               key={i}
-              className={`absolute w-1 h-1 ${project.isDevLaunch ? 'bg-cyan-400' : 'bg-cyber-blue'} rounded-full opacity-0 group-hover:opacity-60`}
+              className={`absolute w-1 h-1 ${project.isDevLaunch ? 'bg-cyan-400' : 'bg-cyber-blue'} rounded-full opacity-40`}
               style={{
                 left: `${20 + Math.random() * 60}%`,
                 top: `${20 + Math.random() * 60}%`,
               }}
               animate={{
-                y: [0, -20, 0],
-                opacity: [0, 1, 0],
-                scale: [0, 1, 0],
+                y: [0, -15, 0],
+                x: [0, Math.random() * 10 - 5, 0],
+                opacity: [0.2, 0.8, 0.2],
+                scale: [0.5, 1, 0.5],
+              }}
+              transition={{
+                duration: 3 + Math.random() * 2,
+                repeat: Infinity,
+                delay: i * 0.2,
+                ease: "easeInOut"
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Main circular pod frame */}
+        <motion.div
+          className="relative w-64 h-64 mx-auto mb-6 group-hover:shadow-2xl transition-all duration-700"
+          animate={{
+            y: [0, -5, 0],
+          }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        >
+          {/* Outer glow ring */}
+          <div className={`absolute inset-0 rounded-full bg-gradient-to-r ${project.color} opacity-0 group-hover:opacity-30 transition-opacity duration-700 blur-xl scale-110`} />
+          
+          {/* Main frame */}
+          <div className="relative w-full h-full rounded-full border-4 border-white/20 group-hover:border-white/40 transition-all duration-700 overflow-hidden bg-dark-space/60 backdrop-blur-sm">
+            {/* Inner glow effect */}
+            <div className={`absolute inset-2 rounded-full bg-gradient-to-br ${project.color} opacity-10 group-hover:opacity-20 transition-opacity duration-700`} />
+            
+            {/* Project image */}
+            <motion.div 
+              className="absolute inset-4 rounded-full overflow-hidden"
+              whileHover={{ scale: 1.1 }}
+              transition={{ duration: 0.6 }}
+            >
+              <img 
+                src={project.image} 
+                alt={project.title} 
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-dark-space/60 via-transparent to-transparent" />
+            </motion.div>
+
+            {/* Scanning line effect */}
+            <motion.div
+              className={`absolute inset-0 bg-gradient-to-r from-transparent via-${project.isDevLaunch ? 'cyan-400' : 'cyber-blue'}/80 to-transparent opacity-0 group-hover:opacity-100 rounded-full`}
+              animate={{
+                rotate: [0, 360],
               }}
               transition={{
                 duration: 3,
                 repeat: Infinity,
-                delay: i * 0.3,
+                ease: "linear",
+              }}
+              style={{
+                background: `conic-gradient(from 0deg, transparent 0deg, ${project.isDevLaunch ? '#22d3ee' : '#00f5ff'} 30deg, transparent 60deg)`,
+                mask: 'radial-gradient(circle, transparent 60%, black 70%, black 100%)',
               }}
             />
-          ))}
+
+            {/* Status badges */}
+            <div className="absolute top-4 right-4 flex flex-col gap-2">
+              {project.isDevLaunch ? (
+                <>
+                  <motion.div 
+                    className="px-2 py-1 bg-gradient-to-r from-cyan-400 to-violet-600 text-white font-semibold rounded-full text-xs backdrop-blur-sm"
+                    whileHover={{ scale: 1.05 }}
+                  >
+                    DevLaunch
+                  </motion.div>
+                  <motion.div 
+                    className={`px-2 py-1 bg-gradient-to-r ${getStatusColor(project.status)} text-white font-semibold rounded-full text-xs backdrop-blur-sm flex items-center gap-1`}
+                    whileHover={{ scale: 1.05 }}
+                  >
+                    {getStatusIcon(project.status)}
+                    <span>{project.status}</span>
+                  </motion.div>
+                </>
+              ) : (
+                <>
+                  <motion.span 
+                    className="px-2 py-1 bg-dark-space/80 text-cyber-blue font-semibold rounded-full text-xs backdrop-blur-sm border border-cyber-blue/30"
+                    whileHover={{ scale: 1.05 }}
+                  >
+                    {project.category}
+                  </motion.span>
+                  {project.featured && (
+                    <motion.span 
+                      className="px-2 py-1 bg-gradient-to-r from-cyber-blue to-cyber-purple text-white font-semibold rounded-full text-xs backdrop-blur-sm"
+                      whileHover={{ scale: 1.05 }}
+                    >
+                      Featured
+                    </motion.span>
+                  )}
+                </>
+              )}
+            </div>
+          </div>
+
+          {/* Orbiting tech stack icons */}
+          <div className="absolute inset-0 pointer-events-none">
+            {project.tech.slice(0, 3).map((tech, techIndex) => (
+              <motion.div
+                key={techIndex}
+                className={`absolute w-8 h-8 ${project.isDevLaunch ? 'bg-cyan-400/20 border-cyan-400/40' : 'bg-cyber-blue/20 border-cyber-blue/40'} border rounded-full flex items-center justify-center text-xs font-mono opacity-0 group-hover:opacity-100 transition-opacity duration-700`}
+                style={{
+                  left: '50%',
+                  top: '50%',
+                  transformOrigin: '0 120px',
+                }}
+                animate={{
+                  rotate: [0, 360],
+                }}
+                transition={{
+                  duration: 10 + techIndex * 2,
+                  repeat: Infinity,
+                  ease: "linear",
+                  delay: techIndex * 1,
+                }}
+              >
+                <span className="text-white/80 text-[8px] font-bold">
+                  {tech.slice(0, 2).toUpperCase()}
+                </span>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Project info */}
+        <div className="text-center space-y-4">
+          <motion.h3 
+            className="text-2xl font-orbitron font-bold text-white glow-text group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-cyber-blue group-hover:to-cyber-purple transition-all duration-500"
+            whileHover={{ scale: 1.05 }}
+          >
+            {project.title}
+          </motion.h3>
+          
+          <p className="text-white/70 font-sora text-sm leading-relaxed px-4 group-hover:text-white/90 transition-colors duration-300">
+            {project.description}
+          </p>
+
+          {/* Glowing action buttons */}
+          <div className="flex justify-center space-x-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+            <motion.button
+              whileHover={{ 
+                scale: 1.05, 
+                boxShadow: project.isDevLaunch 
+                  ? '0 0 30px rgba(34, 211, 238, 0.6)' 
+                  : '0 0 30px rgba(0, 245, 255, 0.6)',
+                textShadow: '0 0 10px rgba(255, 255, 255, 0.8)'
+              }}
+              whileTap={{ scale: 0.95 }}
+              className={`px-6 py-2 ${project.isDevLaunch ? 'bg-gradient-to-r from-cyan-400 to-violet-600 hover:shadow-cyan-400/50' : 'bg-gradient-to-r from-cyber-blue to-cyber-purple hover:shadow-cyber-blue/50'} text-white rounded-full text-sm font-semibold flex items-center space-x-2 backdrop-blur-sm border border-white/20 hover:border-white/40 transition-all duration-300`}
+            >
+              <Zap size={14} />
+              <span>Live Demo</span>
+            </motion.button>
+            
+            <motion.button
+              whileHover={{ 
+                scale: 1.05, 
+                backgroundColor: project.isDevLaunch ? 'rgba(34, 211, 238, 0.2)' : 'rgba(0, 245, 255, 0.2)',
+                borderColor: project.isDevLaunch ? 'rgb(34, 211, 238)' : 'rgb(0, 245, 255)',
+                boxShadow: project.isDevLaunch 
+                  ? '0 0 20px rgba(34, 211, 238, 0.4)' 
+                  : '0 0 20px rgba(0, 245, 255, 0.4)'
+              }}
+              whileTap={{ scale: 0.95 }}
+              className={`p-2 border ${project.isDevLaunch ? 'border-cyan-400 text-cyan-400' : 'border-cyber-blue text-cyber-blue'} hover:text-white transition-all duration-300 rounded-full backdrop-blur-sm`}
+            >
+              <Github size={14} />
+            </motion.button>
+          </div>
         </div>
       </div>
     </motion.div>
@@ -578,7 +545,33 @@ const ProjectsSection = () => {
 
   return (
     <section id="projects" className="py-20 relative overflow-hidden">
-      <div className="container mx-auto px-6">
+      {/* Space background with animated stars */}
+      <div className="absolute inset-0 pointer-events-none">
+        {[...Array(200)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute rounded-full"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              width: Math.random() > 0.8 ? '2px' : '1px',
+              height: Math.random() > 0.8 ? '2px' : '1px',
+              background: Math.random() > 0.5 ? '#00f5ff' : '#8b5cf6'
+            }}
+            animate={{
+              opacity: [0.2, 1, 0.2],
+              scale: [0.5, 1.5, 0.5]
+            }}
+            transition={{
+              duration: 2 + Math.random() * 4,
+              repeat: Infinity,
+              delay: Math.random() * 3
+            }}
+          />
+        ))}
+      </div>
+
+      <div className="container mx-auto px-6 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -644,57 +637,29 @@ const ProjectsSection = () => {
               ))}
             </motion.div>
 
-            {/* Client Projects Carousel */}
-            <motion.div layout className="relative">
-              <Carousel
-                opts={{
-                  align: "start",
-                  loop: true,
-                }}
-                className="w-full"
-              >
-                <CarouselContent className="-ml-2 md:-ml-4">
-                  <AnimatePresence>
-                    {filteredClientProjects.map((project, index) => (
-                      <CarouselItem key={project.id} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
-                        <ProjectCard project={project} index={index} />
-                      </CarouselItem>
-                    ))}
-                  </AnimatePresence>
-                </CarouselContent>
-                <CarouselPrevious className="text-white border-white/20 hover:bg-white/10 hover:text-white -left-4 lg:-left-12" />
-                <CarouselNext className="text-white border-white/20 hover:bg-white/10 hover:text-white -right-4 lg:-right-12" />
-              </Carousel>
+            {/* Client Projects Grid */}
+            <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
+              <AnimatePresence>
+                {filteredClientProjects.map((project, index) => (
+                  <SpacePodCard key={project.id} project={project} index={index} />
+                ))}
+              </AnimatePresence>
             </motion.div>
           </TabsContent>
 
           <TabsContent value="devlaunch" className="focus-visible:outline-none">
-            {/* DevLaunch Projects Carousel */}
+            {/* DevLaunch Projects Grid */}
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
-              className="relative"
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center"
             >
-              <Carousel
-                opts={{
-                  align: "start",
-                  loop: true,
-                }}
-                className="w-full"
-              >
-                <CarouselContent className="-ml-2 md:-ml-4">
-                  <AnimatePresence>
-                    {devLaunchProjects.map((project, index) => (
-                      <CarouselItem key={project.id} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
-                        <ProjectCard project={project} index={index} />
-                      </CarouselItem>
-                    ))}
-                  </AnimatePresence>
-                </CarouselContent>
-                <CarouselPrevious className="text-white border-white/20 hover:bg-white/10 hover:text-white -left-4 lg:-left-12" />
-                <CarouselNext className="text-white border-white/20 hover:bg-white/10 hover:text-white -right-4 lg:-right-12" />
-              </Carousel>
+              <AnimatePresence>
+                {devLaunchProjects.map((project, index) => (
+                  <SpacePodCard key={project.id} project={project} index={index} />
+                ))}
+              </AnimatePresence>
             </motion.div>
           </TabsContent>
         </Tabs>
