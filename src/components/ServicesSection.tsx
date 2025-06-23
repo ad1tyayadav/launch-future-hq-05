@@ -1,9 +1,10 @@
-
-import React from 'react';
+import React, { useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Check } from 'lucide-react';
+import { Check, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const ServicesSection = () => {
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
   const services = [
     {
       title: 'AI-Powered Web Apps',
@@ -46,6 +47,18 @@ const ServicesSection = () => {
   // Duplicate services for infinite scroll effect
   const duplicatedServices = [...services, ...services];
 
+  const scrollLeft = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: -400, behavior: 'smooth' });
+    }
+  };
+
+  const scrollRight = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: 400, behavior: 'smooth' });
+    }
+  };
+
   return (
     <section id="services" className="py-20 relative overflow-hidden">
       <div className="container mx-auto px-6 relative z-10">
@@ -74,11 +87,31 @@ const ServicesSection = () => {
           </p>
         </motion.div>
 
-        {/* Enhanced horizontal scrolling cards container with frosted glass design */}
-        <div className="w-full px-8">
+        {/* Enhanced horizontal scrolling cards container with frosted glass design and navigation */}
+        <div className="w-full px-8 relative">
+          {/* Navigation Buttons */}
+          <motion.button
+            className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-white/10 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/20 hover:border-cyan-400/50 transition-all duration-300 group"
+            onClick={scrollLeft}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <ChevronLeft size={20} className="group-hover:text-cyan-400 transition-colors duration-300" />
+          </motion.button>
+
+          <motion.button
+            className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-white/10 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/20 hover:border-cyan-400/50 transition-all duration-300 group"
+            onClick={scrollRight}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <ChevronRight size={20} className="group-hover:text-cyan-400 transition-colors duration-300" />
+          </motion.button>
+
           <div className="relative h-[500px] w-full">
             <motion.div
-              className="flex gap-6 absolute left-0"
+              ref={scrollContainerRef}
+              className="flex gap-6 absolute left-0 overflow-x-auto scrollbar-hide"
               animate={{
                 x: [200, -((duplicatedServices.length * 360) - 200)]
               }}
@@ -88,7 +121,9 @@ const ServicesSection = () => {
                 ease: "linear"
               }}
               style={{
-                width: `${(duplicatedServices.length * 360) + 400}px`
+                width: `${(duplicatedServices.length * 360) + 400}px`,
+                scrollbarWidth: 'none',
+                msOverflowStyle: 'none'
               }}
             >
               {duplicatedServices.map((service, index) => (

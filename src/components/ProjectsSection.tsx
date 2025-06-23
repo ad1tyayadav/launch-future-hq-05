@@ -1,7 +1,6 @@
-
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink, Github, X, Eye } from 'lucide-react';
+import { ExternalLink, Github, X, Eye, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
@@ -91,6 +90,7 @@ const ProjectsSection: React.FC = () => {
   const [projectType, setProjectType] = useState<'client' | 'devlaunch'>('client');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   // Filter projects based on current type only
   const getFilteredProjects = () => {
@@ -109,6 +109,18 @@ const ProjectsSection: React.FC = () => {
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedProject(null);
+  };
+
+  const scrollLeft = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: -500, behavior: 'smooth' });
+    }
+  };
+
+  const scrollRight = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: 500, behavior: 'smooth' });
+    }
   };
 
   const renderSpacePodCard = (project: Project, index: number) => (
@@ -382,8 +394,8 @@ const ProjectsSection: React.FC = () => {
           </motion.div>
         </div>
         
-        {/* Horizontally Scrolling Space Pods */}
-        <div className="w-full px-8">
+        {/* Horizontally Scrolling Space Pods with Navigation */}
+        <div className="w-full px-8 relative">
           <div className="mb-16">
             <AnimatePresence mode="wait">
               <motion.div
@@ -393,10 +405,30 @@ const ProjectsSection: React.FC = () => {
                 exit={{ opacity: 0, y: -50 }}
                 transition={{ duration: 0.6 }}
               >
+                {/* Navigation Buttons */}
+                <motion.button
+                  className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-gray-900/80 backdrop-blur-md border border-cyan-500/30 rounded-full flex items-center justify-center text-white hover:bg-gray-800/90 hover:border-cyan-400/50 transition-all duration-300 group"
+                  onClick={scrollLeft}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <ChevronLeft size={20} className="group-hover:text-cyan-400 transition-colors duration-300" />
+                </motion.button>
+
+                <motion.button
+                  className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-gray-900/80 backdrop-blur-md border border-cyan-500/30 rounded-full flex items-center justify-center text-white hover:bg-gray-800/90 hover:border-cyan-400/50 transition-all duration-300 group"
+                  onClick={scrollRight}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <ChevronRight size={20} className="group-hover:text-cyan-400 transition-colors duration-300" />
+                </motion.button>
+
                 {/* Horizontal scrolling container with proper spacing */}
                 <div className="relative h-[520px] w-full">
                   <motion.div
-                    className="flex gap-12 absolute left-0"
+                    ref={scrollContainerRef}
+                    className="flex gap-12 absolute left-0 overflow-x-auto scrollbar-hide"
                     animate={{
                       x: [200, -((duplicatedProjects.length * 480) - 200)]
                     }}
@@ -406,7 +438,9 @@ const ProjectsSection: React.FC = () => {
                       ease: "linear"
                     }}
                     style={{
-                      width: `${(duplicatedProjects.length * 480) + 400}px`
+                      width: `${(duplicatedProjects.length * 480) + 400}px`,
+                      scrollbarWidth: 'none',
+                      msOverflowStyle: 'none'
                     }}
                   >
                     {duplicatedProjects.map((project, index) => 
