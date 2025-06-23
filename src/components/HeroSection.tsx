@@ -1,8 +1,23 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 const HeroSection = () => {
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  // Track mouse movement
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({
+        x: e.clientX,
+        y: e.clientY
+      });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
   // Animation variants for individual letters
   const letterVariants = {
     hidden: {
@@ -65,6 +80,29 @@ const HeroSection = () => {
 
   return (
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
+      {/* Mouse-following glow effect */}
+      <motion.div
+        className="fixed pointer-events-none z-0"
+        style={{
+          left: mousePosition.x - 250,
+          top: mousePosition.y - 250,
+          width: 500,
+          height: 500,
+          background: 'radial-gradient(circle, rgba(0, 245, 255, 0.15) 0%, rgba(139, 92, 246, 0.1) 30%, rgba(255, 0, 128, 0.05) 60%, transparent 100%)',
+          borderRadius: '50%',
+          filter: 'blur(40px)',
+        }}
+        animate={{
+          scale: [1, 1.1, 1],
+          opacity: [0.3, 0.5, 0.3]
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
+
       {/* Background effects */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
         <div className="absolute top-1/4 left-0 w-64 h-64 bg-gradient-to-r from-cyber-blue/20 to-transparent rounded-full filter blur-3xl -translate-y-1/2 -translate-x-1/4" />
