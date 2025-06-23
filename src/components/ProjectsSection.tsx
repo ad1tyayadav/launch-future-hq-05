@@ -383,7 +383,7 @@ const ProjectsSection: React.FC = () => {
         </div>
         
         {/* Horizontally Scrolling Space Pods */}
-        <div className="container mx-auto px-4">
+        <div className="w-full px-8">
           <div className="mb-16">
             <AnimatePresence mode="wait">
               <motion.div
@@ -393,12 +393,12 @@ const ProjectsSection: React.FC = () => {
                 exit={{ opacity: 0, y: -50 }}
                 transition={{ duration: 0.6 }}
               >
-                {/* Horizontal scrolling container */}
-                <div className="relative h-[480px] overflow-hidden">
+                {/* Horizontal scrolling container with proper spacing */}
+                <div className="relative h-[520px] w-full">
                   <motion.div
-                    className="flex gap-8 absolute"
+                    className="flex gap-12 absolute left-0"
                     animate={{
-                      x: [-100, -50 * duplicatedProjects.length + 'vw']
+                      x: [200, -((duplicatedProjects.length * 480) - 200)]
                     }}
                     transition={{
                       duration: 60,
@@ -406,7 +406,7 @@ const ProjectsSection: React.FC = () => {
                       ease: "linear"
                     }}
                     style={{
-                      width: `${duplicatedProjects.length * 420}px`
+                      width: `${(duplicatedProjects.length * 480) + 400}px`
                     }}
                   >
                     {duplicatedProjects.map((project, index) => 
