@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Bot, Blocks, Smartphone, Palette, Settings } from 'lucide-react';
@@ -63,21 +62,6 @@ const PricingSection = () => {
       tag: "DESIGN",
       cardNumber: "6011 4578 9321 0456",
       validThru: "08/26",
-      size: "small"
-    },
-    {
-      title: "Custom Software",
-      icon: Settings,
-      features: [
-        "Enterprise software solutions",
-        "API development & integration",
-        "Database architecture",
-        "Cloud deployment"
-      ],
-      price: "Starting from $1,299",
-      tag: "SYSTEM",
-      cardNumber: "4532 7890 1234 5678",
-      validThru: "03/30",
       size: "large" // Takes 2 columns
     }
   ];
@@ -87,8 +71,6 @@ const PricingSection = () => {
       case 'large':
         return 'md:col-span-2 col-span-1';
       case 'medium':
-        return 'col-span-1';
-      case 'small':
         return 'col-span-1';
       default:
         return 'col-span-1';
@@ -101,8 +83,6 @@ const PricingSection = () => {
         return 'h-80';
       case 'medium':
         return 'h-96';
-      case 'small':
-        return 'h-72';
       default:
         return 'h-80';
     }
@@ -152,8 +132,8 @@ const PricingSection = () => {
           </p>
         </motion.div>
 
-        {/* Bento Grid Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+        {/* Bento Grid Layout - 2x2 grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
           {services.map((service, index) => {
             const IconComponent = service.icon;
             return (
@@ -163,7 +143,7 @@ const PricingSection = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className={`group relative ${getGridClasses(service.size)}`}
+                className="group relative"
               >
                 {/* Futuristic ID Card */}
                 <div 
