@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Users, TrendingUp, Rocket } from 'lucide-react';
 import { Link } from 'react-router-dom';
+
 const InvestorSection = () => {
   const highlights = [{
     icon: Users,
@@ -19,7 +20,8 @@ const InvestorSection = () => {
     label: "MVPs Launched",
     color: "from-orange-400 to-red-500"
   }];
-  return <section className="py-20 relative overflow-hidden">
+  return (
+    <section className="py-20 relative overflow-hidden">
       {/* Background effects */}
       <div className="absolute inset-0">
         <div className="absolute top-1/2 left-1/4 w-64 h-64 bg-gradient-to-r from-cyber-purple/10 to-transparent rounded-full filter blur-3xl" />
@@ -76,23 +78,22 @@ const InvestorSection = () => {
         </motion.div>
 
         {/* CTA Button */}
-        <motion.div initial={{
-        opacity: 0,
-        y: 20
-      }} whileInView={{
-        opacity: 1,
-        y: 0
-      }} transition={{
-        duration: 0.8,
-        delay: 0.5
-      }} className="text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+          className="text-center"
+        >
           <Link to="/investor-deck">
-            <motion.button className="cyber-button text-lg px-12 py-6 inline-flex items-center space-x-3" whileHover={{
-            scale: 1.05,
-            boxShadow: "0 0 30px rgba(139, 92, 246, 0.5)"
-          }} whileTap={{
-            scale: 0.95
-          }}>
+            <motion.button 
+              className="glass-morphism text-lg px-12 py-6 inline-flex items-center space-x-3 text-white font-semibold transition-all duration-300 hover:border-cyber-blue hover:shadow-[0_0_30px_rgba(0,245,255,0.5)] hover:bg-white/10"
+              whileHover={{
+                scale: 1.05,
+              }}
+              whileTap={{
+                scale: 0.95
+              }}
+            >
               <span>View Full Investor Deck</span>
               <ArrowRight size={20} />
             </motion.button>
@@ -102,6 +103,8 @@ const InvestorSection = () => {
           </p>
         </motion.div>
       </div>
-    </section>;
+    </section>
+  );
 };
+
 export default InvestorSection;
