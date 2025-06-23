@@ -85,13 +85,13 @@ const PricingSection = () => {
   const getGridClasses = (size) => {
     switch (size) {
       case 'large':
-        return 'col-span-2 row-span-1';
+        return 'md:col-span-2 col-span-1';
       case 'medium':
-        return 'col-span-1 row-span-1';
+        return 'col-span-1';
       case 'small':
-        return 'col-span-1 row-span-1';
+        return 'col-span-1';
       default:
-        return 'col-span-1 row-span-1';
+        return 'col-span-1';
     }
   };
 
@@ -153,7 +153,7 @@ const PricingSection = () => {
         </motion.div>
 
         {/* Bento Grid Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto auto-rows-min">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
           {services.map((service, index) => {
             const IconComponent = service.icon;
             return (
