@@ -1,19 +1,10 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink, Github, ArrowRight, X, Rocket, Terminal, Code, Zap, Eye } from 'lucide-react';
+import { ExternalLink, Github, X, Eye } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-  type CarouselApi,
-} from "@/components/ui/carousel";
 
 interface Project {
   id: number;
@@ -101,8 +92,6 @@ const ProjectsSection: React.FC = () => {
   const [projectType, setProjectType] = useState<'client' | 'devlaunch'>('client');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [featuredApi, setFeaturedApi] = useState<CarouselApi>();
-  const [allApi, setAllApi] = useState<CarouselApi>();
 
   // Filter projects based on current settings
   const getFilteredProjects = () => {
@@ -113,79 +102,8 @@ const ProjectsSection: React.FC = () => {
   };
 
   const filteredProjects = getFilteredProjects();
-
-  // Autoplay functionality
-  useEffect(() => {
-    if (!featuredApi) return;
-
-    const interval = setInterval(() => {
-      if (featuredApi.canScrollNext()) {
-        featuredApi.scrollNext();
-      } else {
-        featuredApi.scrollTo(0);
-      }
-    }, 3000);
-
-    const handlePointerDown = () => clearInterval(interval);
-    const handlePointerUp = () => {
-      clearInterval(interval);
-      setTimeout(() => {
-        const newInterval = setInterval(() => {
-          if (featuredApi.canScrollNext()) {
-            featuredApi.scrollNext();
-          } else {
-            featuredApi.scrollTo(0);
-          }
-        }, 3000);
-        return () => clearInterval(newInterval);
-      }, 1000);
-    };
-
-    featuredApi.on('pointerDown', handlePointerDown);
-    featuredApi.on('pointerUp', handlePointerUp);
-
-    return () => {
-      clearInterval(interval);
-      featuredApi.off('pointerDown', handlePointerDown);
-      featuredApi.off('pointerUp', handlePointerUp);
-    };
-  }, [featuredApi]);
-
-  useEffect(() => {
-    if (!allApi) return;
-
-    const interval = setInterval(() => {
-      if (allApi.canScrollNext()) {
-        allApi.scrollNext();
-      } else {
-        allApi.scrollTo(0);
-      }
-    }, 3000);
-
-    const handlePointerDown = () => clearInterval(interval);
-    const handlePointerUp = () => {
-      clearInterval(interval);
-      setTimeout(() => {
-        const newInterval = setInterval(() => {
-          if (allApi.canScrollNext()) {
-            allApi.scrollNext();
-          } else {
-            allApi.scrollTo(0);
-          }
-        }, 3000);
-        return () => clearInterval(newInterval);
-      }, 1000);
-    };
-
-    allApi.on('pointerDown', handlePointerDown);
-    allApi.on('pointerUp', handlePointerUp);
-
-    return () => {
-      clearInterval(interval);
-      allApi.off('pointerDown', handlePointerDown);
-      allApi.off('pointerUp', handlePointerUp);
-    };
-  }, [allApi]);
+  // Duplicate projects for infinite scroll effect
+  const duplicatedProjects = [...filteredProjects, ...filteredProjects];
 
   const openModal = (project: Project) => {
     setSelectedProject(project);
@@ -199,11 +117,17 @@ const ProjectsSection: React.FC = () => {
 
   const renderSpacePodCard = (project: Project, index: number) => (
     <motion.div
-      key={`${project.id}-${project.type}`}
-      className="relative group cursor-pointer"
-      initial={{ opacity: 0, y: 50 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
+      key={`${project.id}-${project.type}-${index}`}
+      className="flex-shrink-0 w-96 relative group cursor-pointer"
+      animate={{
+        y: [0, -15, 0]
+      }}
+      transition={{
+        duration: 4 + (index % 3),
+        repeat: Infinity,
+        ease: "easeInOut",
+        delay: index * 0.3
+      }}
       whileHover={{ 
         scale: 1.05,
         rotateY: 15,
@@ -449,7 +373,7 @@ const ProjectsSection: React.FC = () => {
         </motion.div>
       </div>
       
-      {/* Space Pod Project Carousel */}
+      {/* Horizontally Scrolling Space Pods */}
       <div className="container mx-auto px-4 relative z-10">
         <div className="mb-16">
           <div className="flex justify-center items-center mb-12">
@@ -476,24 +400,27 @@ const ProjectsSection: React.FC = () => {
               exit={{ opacity: 0, y: -50 }}
               transition={{ duration: 0.6 }}
             >
-              <Carousel
-                setApi={activeView === 'featured' ? setFeaturedApi : setAllApi}
-                className="w-full max-w-7xl mx-auto"
-                opts={{
-                  align: "start",
-                  loop: true,
-                }}
-              >
-                <CarouselContent>
-                  {filteredProjects.map((project, index) => (
-                    <CarouselItem key={`${project.id}-${project.type}`} className="md:basis-1/2 lg:basis-1/3">
-                      {renderSpacePodCard(project, index)}
-                    </CarouselItem>
-                  ))}
-                </CarouselContent>
-                <CarouselPrevious className="border-cyan-400/50 text-cyan-400 hover:bg-cyan-400/20" />
-                <CarouselNext className="border-cyan-400/50 text-cyan-400 hover:bg-cyan-400/20" />
-              </Carousel>
+              {/* Horizontal scrolling container */}
+              <div className="relative h-[480px] overflow-hidden">
+                <motion.div
+                  className="flex gap-8 absolute"
+                  animate={{
+                    x: [-100, -50 * duplicatedProjects.length + 'vw']
+                  }}
+                  transition={{
+                    duration: 60,
+                    repeat: Infinity,
+                    ease: "linear"
+                  }}
+                  style={{
+                    width: `${duplicatedProjects.length * 420}px`
+                  }}
+                >
+                  {duplicatedProjects.map((project, index) => 
+                    renderSpacePodCard(project, index)
+                  )}
+                </motion.div>
+              </div>
             </motion.div>
           </AnimatePresence>
         </div>
