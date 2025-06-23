@@ -68,9 +68,7 @@ const InvestorSection = () => {
           }} transition={{
             delay: index * 0.1 + 0.3
           }} className="glass-morphism p-6 text-center rounded-xl hover:scale-105 transition-transform duration-300">
-                <div className={`w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r ${highlight.color} flex items-center justify-center`}>
-                  <IconComponent size={24} className="text-white" />
-                </div>
+                
                 <h3 className="text-2xl font-bold text-white font-orbitron mb-2">{highlight.value}</h3>
                 <p className="text-white/70 font-sora">{highlight.label}</p>
               </motion.div>;
