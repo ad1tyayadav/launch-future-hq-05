@@ -1,11 +1,12 @@
-
-import React, { useRef, useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef, useState, useEffect } from 'react';
+import { motion, useAnimation } from 'framer-motion';
 import { Check, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const ServicesSection = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
+  const controls = useAnimation();
+  const animationRef = useRef<{ startTime: number; currentX: number }>({ startTime: Date.now(), currentX: 200 });
 
   const services = [
     {
@@ -46,8 +47,45 @@ const ServicesSection = () => {
     }
   ];
 
-  // Duplicate services for infinite scroll effect
   const duplicatedServices = [...services, ...services];
+
+  useEffect(() => {
+    const startAnimation = () => {
+      const totalWidth = (duplicatedServices.length * 360);
+      const endX = -(totalWidth - 200);
+      
+      controls.start({
+        x: [animationRef.current.currentX, endX],
+        transition: {
+          duration: 80 * ((animationRef.current.currentX - endX) / (200 - endX)),
+          ease: "linear",
+          repeat: Infinity,
+          repeatType: "loop"
+        }
+      });
+    };
+
+    if (!isHovered) {
+      startAnimation();
+    } else {
+      controls.stop();
+    }
+  }, [isHovered, controls, duplicatedServices.length]);
+
+  const handleMouseEnter = () => {
+    const currentTransform = scrollContainerRef.current?.style.transform;
+    if (currentTransform) {
+      const match = currentTransform.match(/translateX\(([^)]+)px\)/);
+      if (match) {
+        animationRef.current.currentX = parseFloat(match[1]);
+      }
+    }
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
 
   const scrollLeft = () => {
     if (scrollContainerRef.current) {
@@ -89,9 +127,7 @@ const ServicesSection = () => {
           </p>
         </motion.div>
 
-        {/* Enhanced horizontal scrolling cards container with frosted glass design and navigation */}
         <div className="w-full px-8 relative">
-          {/* Navigation Buttons */}
           <motion.button
             className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-white/10 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/20 hover:border-cyan-400/50 transition-all duration-300 group"
             onClick={scrollLeft}
@@ -114,21 +150,14 @@ const ServicesSection = () => {
             <motion.div
               ref={scrollContainerRef}
               className="flex gap-6 absolute left-0 overflow-x-auto scrollbar-hide"
-              animate={!isHovered ? {
-                x: [200, -((duplicatedServices.length * 360) - 200)]
-              } : undefined}
-              transition={{
-                duration: 80,
-                repeat: Infinity,
-                ease: "linear"
-              }}
+              animate={controls}
               style={{
                 width: `${(duplicatedServices.length * 360) + 400}px`,
                 scrollbarWidth: 'none',
                 msOverflowStyle: 'none'
               }}
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
             >
               {duplicatedServices.map((service, index) => (
                 <motion.div
@@ -148,14 +177,10 @@ const ServicesSection = () => {
                     y: -20
                   }}
                 >
-                  {/* Frosted Glass Card */}
                   <div className="absolute inset-0 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl group-hover:bg-white/10 group-hover:border-cyan-400/30 transition-all duration-500">
-                    {/* Soft frosted border glow */}
                     <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-400/20 via-purple-400/20 to-pink-400/20 opacity-0 group-hover:opacity-100 blur-sm transition-opacity duration-500" />
                     
-                    {/* Inner content container */}
                     <div className="relative z-10 p-6 h-full flex flex-col">
-                      {/* Service Icon/Logo at top */}
                       <motion.div 
                         className="mb-6 relative flex justify-center"
                         whileHover={{ 
@@ -168,21 +193,17 @@ const ServicesSection = () => {
                           <span className="text-3xl">{service.icon}</span>
                         </div>
                         
-                        {/* Floating glow effect around icon */}
                         <div className="absolute inset-0 bg-cyan-400/20 rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10" />
                       </motion.div>
 
-                      {/* Service Title */}
                       <h3 className="text-xl font-orbitron font-bold text-white mb-4 text-center group-hover:text-cyan-300 transition-colors duration-300">
                         {service.title}
                       </h3>
 
-                      {/* Service Description */}
                       <p className="text-white/70 font-sora text-sm leading-relaxed mb-6 flex-grow text-center group-hover:text-white/90 transition-colors duration-300">
                         {service.description}
                       </p>
 
-                      {/* Features with checkmarks */}
                       <div className="space-y-3 mb-8">
                         {service.features.slice(0, 3).map((feature, featureIndex) => (
                           <motion.div
@@ -202,7 +223,6 @@ const ServicesSection = () => {
                         ))}
                       </div>
 
-                      {/* CTA Button with glass blur and glow - positioned at bottom */}
                       <div className="mt-auto">
                         <motion.button
                           className="relative w-full py-3 px-6 bg-white/5 backdrop-blur-md border border-white/20 rounded-xl text-white font-sora text-sm font-medium overflow-hidden group-hover:border-cyan-400/50 transition-all duration-300"
@@ -211,10 +231,8 @@ const ServicesSection = () => {
                           }}
                           whileTap={{ scale: 0.98 }}
                         >
-                          {/* Button background glow */}
                           <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/0 via-cyan-400/20 to-purple-400/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                           
-                          {/* Button border glow */}
                           <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-400/30 via-purple-400/30 to-pink-400/30 opacity-0 group-hover:opacity-100 blur-sm transition-opacity duration-500 -z-10" />
                           
                           <span className="relative z-10 group-hover:text-cyan-300 transition-colors duration-300">
@@ -224,12 +242,10 @@ const ServicesSection = () => {
                       </div>
                     </div>
 
-                    {/* Ambient light effects */}
                     <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-cyan-400/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
                     <div className="absolute bottom-1/4 right-1/4 w-24 h-24 bg-purple-400/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000 delay-200" />
                   </div>
 
-                  {/* Floating particles effect */}
                   {[...Array(5)].map((_, i) => (
                     <motion.div
                       key={i}
