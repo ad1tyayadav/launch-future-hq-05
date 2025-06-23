@@ -478,21 +478,31 @@ const ProjectsSection: React.FC = () => {
             }} transition={{
               duration: 0.6
             }}>
-                {/* Navigation Buttons - positioned relative to section */}
-                <motion.button className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-12 sm:h-12 bg-gray-900/80 backdrop-blur-md border border-cyan-500/30 rounded-full flex items-center justify-center text-white hover:bg-gray-800/90 hover:border-cyan-400/50 transition-all duration-300 group shadow-lg" onClick={scrollLeft} whileHover={{
-                scale: 1.1
-              }} whileTap={{
-                scale: 0.95
-              }}>
-                  <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
+                {/* Navigation Buttons - improved positioning and responsiveness */}
+                <motion.button 
+                  className="absolute left-2 sm:left-4 md:left-6 lg:left-8 top-1/2 -translate-y-1/2 z-30 w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-gray-900/80 backdrop-blur-md border border-cyan-500/30 rounded-full flex items-center justify-center text-white hover:bg-gray-800/90 hover:border-cyan-400/50 transition-all duration-300 group shadow-lg" 
+                  onClick={scrollLeft} 
+                  whileHover={{
+                    scale: 1.1
+                  }} 
+                  whileTap={{
+                    scale: 0.95
+                  }}
+                >
+                  <ChevronLeft className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 lg:w-6 lg:h-6" />
                 </motion.button>
 
-                <motion.button className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-12 sm:h-12 bg-gray-900/80 backdrop-blur-md border border-cyan-500/30 rounded-full flex items-center justify-center text-white hover:bg-gray-800/90 hover:border-cyan-400/50 transition-all duration-300 group shadow-lg" onClick={scrollRight} whileHover={{
-                scale: 1.1
-              }} whileTap={{
-                scale: 0.95
-              }}>
-                  <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
+                <motion.button 
+                  className="absolute right-2 sm:right-4 md:right-6 lg:right-8 top-1/2 -translate-y-1/2 z-30 w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-gray-900/80 backdrop-blur-md border border-cyan-500/30 rounded-full flex items-center justify-center text-white hover:bg-gray-800/90 hover:border-cyan-400/50 transition-all duration-300 group shadow-lg" 
+                  onClick={scrollRight} 
+                  whileHover={{
+                    scale: 1.1
+                  }} 
+                  whileTap={{
+                    scale: 0.95
+                  }}
+                >
+                  <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 lg:w-6 lg:h-6" />
                 </motion.button>
 
                 {/* Horizontal scrolling container */}
