@@ -1,4 +1,5 @@
 
+
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, Github, X, Eye, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -433,7 +434,7 @@ const ProjectsSection: React.FC = () => {
                     className="flex gap-12 absolute left-0 overflow-x-auto scrollbar-hide"
                     animate={!isHovered ? {
                       x: [200, -((duplicatedProjects.length * 480) - 200)]
-                    } : {}}
+                    } : undefined}
                     transition={{
                       duration: 60,
                       repeat: Infinity,

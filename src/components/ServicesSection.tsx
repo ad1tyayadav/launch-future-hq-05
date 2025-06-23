@@ -1,3 +1,4 @@
+
 import React, { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Check, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -115,7 +116,7 @@ const ServicesSection = () => {
               className="flex gap-6 absolute left-0 overflow-x-auto scrollbar-hide"
               animate={!isHovered ? {
                 x: [200, -((duplicatedServices.length * 360) - 200)]
-              } : {}}
+              } : undefined}
               transition={{
                 duration: 80,
                 repeat: Infinity,
