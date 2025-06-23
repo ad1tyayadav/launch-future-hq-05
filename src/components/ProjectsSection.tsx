@@ -1,3 +1,4 @@
+
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence, useAnimation } from 'framer-motion';
 import { ExternalLink, Github, X, Eye, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -675,14 +676,6 @@ const ProjectsSection: React.FC = () => {
           </motion.div>
         )}
       </AnimatePresence>
-
-      {/* Custom CSS for shine effect */}
-      <style jsx>{`
-        @keyframes shine {
-          0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-          100% { transform: translateX(400%) translateY(400%) rotate(45deg); }
-        }
-      `}</style>
     </section>
   );
 };
