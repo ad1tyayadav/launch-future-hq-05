@@ -1,29 +1,9 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import BookingCalendar from './BookingCalendar';
 
 const ContactSection = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    project: '',
-    message: '',
-  });
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('Form submitted:', formData);
-    // Add form submission logic here
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
   return (
     <section id="contact" className="py-20 relative overflow-hidden">
       <div className="container mx-auto px-6">
@@ -38,25 +18,12 @@ const ContactSection = () => {
           </h2>
           <p className="text-xl text-white/80 font-sora max-w-3xl mx-auto mb-8">
             Ready to transform your vision into a cutting-edge digital reality? 
-            Let's start the conversation that will launch your next breakthrough.
+            Schedule a personalized consultation to discuss your project and explore the possibilities.
           </p>
-          
-          {/* Quick Meeting Booking */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="mb-12"
-          >
-            <p className="text-cyber-blue font-semibold mb-4">
-              🚀 Want to discuss your project directly?
-            </p>
-            <BookingCalendar />
-          </motion.div>
         </motion.div>
 
-        <div className="max-w-4xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             {/* Contact Info */}
             <motion.div
               initial={{ opacity: 0, x: -50 }}
@@ -65,47 +32,66 @@ const ContactSection = () => {
               className="space-y-8"
             >
               <div className="glass-morphism p-8 rounded-2xl">
-                <h3 className="text-2xl font-orbitron font-bold text-white mb-6 glow-text">
-                  Get In Touch
+                <h3 className="text-3xl font-orbitron font-bold text-white mb-6 glow-text">
+                  Why Schedule a Meeting?
                 </h3>
                 
                 <div className="space-y-6">
-                  <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 bg-gradient-to-r from-cyber-blue to-cyber-purple rounded-lg flex items-center justify-center">
-                      <span className="text-white text-xl">📧</span>
+                  <div className="flex items-start space-x-4">
+                    <div className="w-12 h-12 bg-gradient-to-r from-cyber-blue to-cyber-purple rounded-lg flex items-center justify-center flex-shrink-0">
+                      <span className="text-white text-xl">🎯</span>
                     </div>
                     <div>
-                      <p className="text-white/60 text-sm">Email</p>
-                      <p className="text-white font-semibold">hello@devlaunch.co.in</p>
+                      <h4 className="text-white font-semibold text-lg mb-2">Personalized Strategy</h4>
+                      <p className="text-white/70">Get tailored recommendations for your specific project needs and goals.</p>
                     </div>
                   </div>
 
-                  <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 bg-gradient-to-r from-cyber-purple to-cyber-pink rounded-lg flex items-center justify-center">
-                      <span className="text-white text-xl">📱</span>
+                  <div className="flex items-start space-x-4">
+                    <div className="w-12 h-12 bg-gradient-to-r from-cyber-purple to-cyber-pink rounded-lg flex items-center justify-center flex-shrink-0">
+                      <span className="text-white text-xl">⚡</span>
                     </div>
                     <div>
-                      <p className="text-white/60 text-sm">Phone</p>
-                      <p className="text-white font-semibold">+91 (555) 123-4567</p>
+                      <h4 className="text-white font-semibold text-lg mb-2">Fast Track Development</h4>
+                      <p className="text-white/70">Skip the back-and-forth emails and get immediate clarity on your project scope.</p>
                     </div>
                   </div>
 
-                  <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 bg-gradient-to-r from-cyber-pink to-neon-green rounded-lg flex items-center justify-center">
-                      <span className="text-white text-xl">📍</span>
+                  <div className="flex items-start space-x-4">
+                    <div className="w-12 h-12 bg-gradient-to-r from-cyber-pink to-neon-green rounded-lg flex items-center justify-center flex-shrink-0">
+                      <span className="text-white text-xl">🚀</span>
                     </div>
                     <div>
-                      <p className="text-white/60 text-sm">Location</p>
-                      <p className="text-white font-semibold">Bangalore, India</p>
+                      <h4 className="text-white font-semibold text-lg mb-2">Technical Expertise</h4>
+                      <p className="text-white/70">Discuss the latest technologies and innovations that could elevate your project.</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Contact Details */}
+                <div className="mt-8 pt-8 border-t border-white/10">
+                  <h4 className="text-white font-semibold mb-4">Prefer to reach out directly?</h4>
+                  <div className="space-y-3">
+                    <div className="flex items-center space-x-3">
+                      <span className="text-cyber-blue">📧</span>
+                      <span className="text-white/80">hello@devlaunch.co.in</span>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <span className="text-cyber-purple">📱</span>
+                      <span className="text-white/80">+91 (555) 123-4567</span>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <span className="text-cyber-pink">📍</span>
+                      <span className="text-white/80">Bangalore, India</span>
                     </div>
                   </div>
                 </div>
 
                 {/* Social Links */}
-                <div className="mt-8 pt-8 border-t border-white/10">
+                <div className="mt-6">
                   <p className="text-white/60 text-sm mb-4">Follow our journey</p>
                   <div className="flex space-x-4">
-                    {['Twitter', 'LinkedIn', 'GitHub', 'Dribbble'].map((social, index) => (
+                    {['Twitter', 'LinkedIn', 'GitHub', 'Dribbble'].map((social) => (
                       <motion.button
                         key={social}
                         whileHover={{ scale: 1.1, y: -2 }}
@@ -122,98 +108,16 @@ const ContactSection = () => {
               </div>
             </motion.div>
 
-            {/* Contact Form */}
+            {/* Calendar Booking */}
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
+              className="flex justify-center"
             >
-              <form onSubmit={handleSubmit} className="glass-morphism p-8 rounded-2xl space-y-6">
-                <h3 className="text-2xl font-orbitron font-bold text-white mb-6 glow-text">
-                  Start Your Project
-                </h3>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-white/80 font-semibold mb-2" htmlFor="name">
-                      Name
-                    </label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/50 focus:border-cyber-blue focus:outline-none focus:ring-2 focus:ring-cyber-blue/20 transition-all duration-300"
-                      placeholder="Your Name"
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-white/80 font-semibold mb-2" htmlFor="email">
-                      Email
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/50 focus:border-cyber-blue focus:outline-none focus:ring-2 focus:ring-cyber-blue/20 transition-all duration-300"
-                      placeholder="your.email@example.com"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-white/80 font-semibold mb-2" htmlFor="project">
-                    Project Type
-                  </label>
-                  <select
-                    id="project"
-                    name="project"
-                    value={formData.project}
-                    onChange={handleChange}
-                    className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-cyber-blue focus:outline-none focus:ring-2 focus:ring-cyber-blue/20 transition-all duration-300"
-                    required
-                  >
-                    <option value="">Select a project type</option>
-                    <option value="web-app">Web Application</option>
-                    <option value="mobile-app">Mobile App</option>
-                    <option value="3d-experience">3D Experience</option>
-                    <option value="ai-solution">AI Solution</option>
-                    <option value="blockchain">Blockchain</option>
-                    <option value="other">Other</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-white/80 font-semibold mb-2" htmlFor="message">
-                    Project Details
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    rows={5}
-                    className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/50 focus:border-cyber-blue focus:outline-none focus:ring-2 focus:ring-cyber-blue/20 transition-all duration-300"
-                    placeholder="Tell us about your vision..."
-                    required
-                  />
-                </div>
-
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  type="submit"
-                  className="w-full cyber-button text-lg py-4"
-                >
-                  <span>Launch Project →</span>
-                </motion.button>
-              </form>
+              <div className="w-full">
+                <BookingCalendar />
+              </div>
             </motion.div>
           </div>
         </div>
