@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, Github, X, Eye } from 'lucide-react';
@@ -88,17 +87,13 @@ const projectsData: Project[] = [
 ];
 
 const ProjectsSection: React.FC = () => {
-  const [activeView, setActiveView] = useState<'featured' | 'all'>('featured');
   const [projectType, setProjectType] = useState<'client' | 'devlaunch'>('client');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
-  // Filter projects based on current settings
+  // Filter projects based on current type only
   const getFilteredProjects = () => {
-    const typeFiltered = projectsData.filter(project => project.type === projectType);
-    return activeView === 'featured' 
-      ? typeFiltered.filter(project => project.featured)
-      : typeFiltered;
+    return projectsData.filter(project => project.type === projectType);
   };
 
   const filteredProjects = getFilteredProjects();
@@ -376,25 +371,9 @@ const ProjectsSection: React.FC = () => {
       {/* Horizontally Scrolling Space Pods */}
       <div className="container mx-auto px-4 relative z-10">
         <div className="mb-16">
-          <div className="flex justify-center items-center mb-12">
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              <Button 
-                variant="outline" 
-                className="bg-transparent border-cyan-400/50 text-cyan-400 hover:bg-cyan-400/20 hover:border-cyan-300 font-orbitron"
-                onClick={() => setActiveView(activeView === 'featured' ? 'all' : 'featured')}
-              >
-                {activeView === 'featured' ? 'View All Pods' : 'View Featured'}
-              </Button>
-            </motion.div>
-          </div>
-          
           <AnimatePresence mode="wait">
             <motion.div
-              key={`${activeView}-${projectType}`}
+              key={projectType}
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -50 }}
