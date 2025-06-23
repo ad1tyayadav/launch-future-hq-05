@@ -53,42 +53,6 @@ const ServicesSection = () => {
 
   return (
     <section id="services" className="py-20 relative overflow-hidden">
-      {/* Enhanced Galaxy background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-dark-space via-space-gray to-dark-space">
-        {/* Animated particles with different sizes */}
-        <div className="absolute inset-0">
-          {[...Array(60)].map((_, i) => (
-            <motion.div
-              key={i}
-              className={`absolute rounded-full ${i % 3 === 0 ? 'w-2 h-2 bg-cyber-blue' : i % 3 === 1 ? 'w-1 h-1 bg-cyber-purple' : 'w-1.5 h-1.5 bg-neon-green'} opacity-70`}
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-              }}
-              animate={{
-                opacity: [0.3, 1, 0.3],
-                scale: [0.5, 1.2, 0.5],
-                rotate: [0, 180, 360],
-              }}
-              transition={{
-                duration: 3 + Math.random() * 4,
-                repeat: Infinity,
-                delay: Math.random() * 2,
-              }}
-            />
-          ))}
-        </div>
-        
-        {/* Grid pattern overlay */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="grid grid-cols-20 grid-rows-20 h-full w-full">
-            {[...Array(400)].map((_, i) => (
-              <div key={i} className="border border-cyber-blue/20" />
-            ))}
-          </div>
-        </div>
-      </div>
-
       <div className="container mx-auto px-6 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -150,35 +114,44 @@ const ServicesSection = () => {
                   z: 50
                 }}
               >
-                {/* Main card background with enhanced glass effect */}
-                <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-xl border border-white/20 rounded-2xl" />
+                {/* Glassmorphism background */}
+                <div className="absolute inset-0 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl" />
                 
-                {/* Animated border glow */}
+                {/* Holographic glow effect on hover */}
                 <motion.div 
-                  className={`absolute inset-0 bg-gradient-to-r ${service.color} opacity-0 group-hover:opacity-30 rounded-2xl blur-sm`}
-                  animate={{
-                    opacity: [0, 0.1, 0]
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    delay: index * 0.5
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 rounded-2xl transition-opacity duration-500"
+                  style={{
+                    background: 'linear-gradient(45deg, rgba(0, 245, 255, 0.2), rgba(139, 92, 246, 0.2))',
+                    boxShadow: '0 0 50px rgba(0, 245, 255, 0.4), inset 0 0 50px rgba(139, 92, 246, 0.2)'
                   }}
                 />
                 
-                {/* Holographic effect overlay */}
-                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-cyber-blue/5 to-cyber-purple/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
+                {/* Floating edge effect */}
+                <motion.div 
+                  className="absolute inset-0 border border-cyber-blue/30 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  animate={{
+                    boxShadow: [
+                      '0 0 20px rgba(0, 245, 255, 0.3)',
+                      '0 0 40px rgba(139, 92, 246, 0.5)',
+                      '0 0 20px rgba(0, 245, 255, 0.3)'
+                    ]
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
                 
-                {/* Circuit pattern background */}
-                <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity duration-500">
-                  <svg className="w-full h-full" viewBox="0 0 100 100">
-                    <defs>
-                      <pattern id={`circuit-${index}`} x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
-                        <path d="M0 10h20M10 0v20M5 5h10v10h-10z" stroke="currentColor" strokeWidth="0.5" fill="none" className="text-cyber-blue/30"/>
-                      </pattern>
-                    </defs>
-                    <rect width="100%" height="100%" fill={`url(#circuit-${index})`}/>
-                  </svg>
+                {/* Subtle grid pattern overlay */}
+                <div className="absolute inset-0 opacity-5 group-hover:opacity-10 transition-opacity duration-500">
+                  <div 
+                    className="w-full h-full rounded-2xl"
+                    style={{
+                      backgroundImage: `radial-gradient(circle at 20px 20px, rgba(0, 245, 255, 0.3) 1px, transparent 1px)`,
+                      backgroundSize: '40px 40px'
+                    }}
+                  />
                 </div>
 
                 {/* Content */}
@@ -193,14 +166,14 @@ const ServicesSection = () => {
                       }}
                       transition={{ duration: 0.5 }}
                     >
-                      {/* Icon glow effect */}
-                      <div className={`absolute inset-0 blur-xl bg-${service.accentColor}/50 rounded-full scale-150 opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+                      {/* Icon holographic glow */}
+                      <div className="absolute inset-0 blur-xl bg-cyber-blue/30 rounded-full scale-150 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                       
                       {/* Floating particles around icon */}
                       {[...Array(6)].map((_, i) => (
                         <motion.div
                           key={i}
-                          className={`absolute w-1 h-1 bg-${service.accentColor} rounded-full`}
+                          className="absolute w-1 h-1 bg-cyber-blue rounded-full opacity-0 group-hover:opacity-100"
                           style={{
                             left: `${20 + Math.cos(i * 60 * Math.PI / 180) * 30}px`,
                             top: `${20 + Math.sin(i * 60 * Math.PI / 180) * 30}px`,
@@ -236,16 +209,16 @@ const ServicesSection = () => {
                     {service.description}
                   </p>
 
-                  {/* Enhanced CTA with tech elements */}
+                  {/* Enhanced CTA with holographic elements */}
                   <motion.div
                     className="relative"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}
                   >
-                    <div className={`absolute inset-0 bg-gradient-to-r ${service.color} opacity-0 group-hover:opacity-20 rounded-lg blur-sm transition-opacity duration-300`} />
-                    <div className="relative flex items-center justify-between p-3 border border-white/20 rounded-lg group-hover:border-white/40 transition-all duration-300">
-                      <span className="text-cyber-blue font-semibold text-sm">Explore Solution</span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-cyber-blue/20 to-cyber-purple/20 opacity-0 group-hover:opacity-100 rounded-lg blur-sm transition-opacity duration-300" />
+                    <div className="relative flex items-center justify-between p-3 border border-white/10 rounded-lg group-hover:border-cyber-blue/50 transition-all duration-300 backdrop-blur-sm">
+                      <span className="text-cyber-blue font-semibold text-sm group-hover:text-white transition-colors duration-300">Explore Solution</span>
                       <motion.div
                         animate={{ 
                           x: [0, 5, 0],
@@ -256,7 +229,7 @@ const ServicesSection = () => {
                           repeat: Infinity,
                           repeatType: "reverse"
                         }}
-                        className="text-cyber-blue"
+                        className="text-cyber-blue group-hover:text-white transition-colors duration-300"
                       >
                         →
                       </motion.div>
@@ -264,9 +237,9 @@ const ServicesSection = () => {
                   </motion.div>
                 </div>
 
-                {/* Scanning line effect */}
+                {/* Holographic scanning line effect */}
                 <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-cyber-blue/30 to-transparent opacity-0 group-hover:opacity-100"
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-cyber-blue/40 to-transparent opacity-0 group-hover:opacity-100"
                   animate={{
                     x: [-100, 400],
                   }}
@@ -280,34 +253,21 @@ const ServicesSection = () => {
                     height: '100%',
                   }}
                 />
+
+                {/* Additional holographic effects */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-30 transition-opacity duration-500 rounded-2xl">
+                  <div 
+                    className="absolute inset-0 rounded-2xl"
+                    style={{
+                      background: 'conic-gradient(from 0deg, transparent, rgba(0, 245, 255, 0.2), transparent, rgba(139, 92, 246, 0.2), transparent)',
+                      filter: 'blur(20px)'
+                    }}
+                  />
+                </div>
               </motion.div>
             ))}
           </motion.div>
         </div>
-
-        {/* Enhanced background decorations */}
-        <motion.div 
-          className="absolute top-1/4 left-0 w-40 h-40 bg-gradient-to-r from-cyber-blue/20 to-transparent opacity-30 rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.2, 0.4, 0.2]
-          }}
-          transition={{
-            duration: 4,
-            repeat: Infinity
-          }}
-        />
-        <motion.div 
-          className="absolute bottom-1/4 right-0 w-56 h-56 bg-gradient-to-l from-cyber-purple/20 to-transparent opacity-30 rounded-full blur-3xl"
-          animate={{
-            scale: [1.2, 1, 1.2],
-            opacity: [0.3, 0.1, 0.3]
-          }}
-          transition={{
-            duration: 5,
-            repeat: Infinity
-          }}
-        />
       </div>
     </section>
   );
