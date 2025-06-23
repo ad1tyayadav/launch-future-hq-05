@@ -252,8 +252,8 @@ const ProjectsSection = () => {
       style={{ perspective: '1000px' }}
       onClick={() => setSelectedProject(project)}
     >
-      {/* Space pod container */}
-      <div className="relative w-80 h-96 mx-auto">
+      {/* Space pod container - increased size */}
+      <div className="relative w-96 h-[450px] mx-auto">
         {/* Floating particles around the pod */}
         <div className="absolute inset-0 pointer-events-none">
           {[...Array(12)].map((_, i) => (
@@ -280,9 +280,9 @@ const ProjectsSection = () => {
           ))}
         </div>
 
-        {/* Main circular pod frame */}
+        {/* Main circular pod frame - increased size */}
         <motion.div
-          className="relative w-64 h-64 mx-auto mb-6 group-hover:shadow-2xl transition-all duration-700"
+          className="relative w-80 h-80 mx-auto mb-6 group-hover:shadow-2xl transition-all duration-700"
           animate={{
             y: [0, -5, 0],
           }}
@@ -379,7 +379,7 @@ const ProjectsSection = () => {
                 style={{
                   left: '50%',
                   top: '50%',
-                  transformOrigin: '0 120px',
+                  transformOrigin: '0 140px',
                 }}
                 animate={{
                   rotate: [0, 360],
@@ -638,7 +638,7 @@ const ProjectsSection = () => {
               ))}
             </motion.div>
 
-            {/* Client Projects Carousel */}
+            {/* Client Projects Carousel with autoplay */}
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -650,6 +650,24 @@ const ProjectsSection = () => {
                   align: "start",
                   loop: true,
                 }}
+                plugins={[
+                  {
+                    init: (embla) => {
+                      const autoplay = () => {
+                        if (embla.canScrollNext()) {
+                          embla.scrollNext();
+                        } else {
+                          embla.scrollTo(0);
+                        }
+                      };
+                      
+                      const interval = setInterval(autoplay, 3000);
+                      
+                      embla.on('pointerDown', () => clearInterval(interval));
+                      embla.on('destroy', () => clearInterval(interval));
+                    }
+                  }
+                ]}
                 className="w-full"
               >
                 <CarouselContent className="-ml-2 md:-ml-4">
@@ -668,7 +686,7 @@ const ProjectsSection = () => {
           </TabsContent>
 
           <TabsContent value="devlaunch" className="focus-visible:outline-none">
-            {/* DevLaunch Projects Carousel */}
+            {/* DevLaunch Projects Carousel with autoplay */}
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -680,6 +698,24 @@ const ProjectsSection = () => {
                   align: "start",
                   loop: true,
                 }}
+                plugins={[
+                  {
+                    init: (embla) => {
+                      const autoplay = () => {
+                        if (embla.canScrollNext()) {
+                          embla.scrollNext();
+                        } else {
+                          embla.scrollTo(0);
+                        }
+                      };
+                      
+                      const interval = setInterval(autoplay, 3000);
+                      
+                      embla.on('pointerDown', () => clearInterval(interval));
+                      embla.on('destroy', () => clearInterval(interval));
+                    }
+                  }
+                ]}
                 className="w-full"
               >
                 <CarouselContent className="-ml-2 md:-ml-4">
