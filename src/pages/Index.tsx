@@ -2,7 +2,7 @@
 import Navigation from "../components/Navigation";
 import HeroSection from "../components/HeroSection";
 import InvestorSection from "../components/InvestorSection";
-import DevelopmentTimeline from "../components/DevelopmentTimeline";
+import ServicesSection from "../components/ServicesSection";
 import TestimonialSection from "../components/TestimonialSection";
 import ProjectsSection from "../components/ProjectsSection";
 import PricingSection from "../components/PricingSection";
@@ -16,7 +16,7 @@ const Index = () => {
       <Navigation />
       <div className="relative z-10">
         <HeroSection />
-        <DevelopmentTimeline />
+        <ServicesSection />
         <ProjectsSection />
         <TestimonialSection />
         <PricingSection />
