@@ -151,16 +151,8 @@ const ServicesSection = () => {
 
   return (
     <section id="services" className="py-20 relative overflow-hidden">
-      {/* Blended Background - matching main site */}
-      <div className="absolute inset-0">
-        {/* Seamless background blend */}
-        <div 
-          className="absolute inset-0"
-          style={{
-            background: `radial-gradient(ellipse at center, #1a1a2e 0%, #0a0a0f 100%)`
-          }}
-        />
-      </div>
+      {/* Minimal background overlay to show main site background */}
+      <div className="absolute inset-0 bg-black/10 backdrop-blur-sm" />
 
       <div className="container mx-auto px-6 relative z-10">
         <motion.div
@@ -189,9 +181,9 @@ const ServicesSection = () => {
         </motion.div>
 
         <div className="relative px-4 sm:px-8">
-          {/* Fixed Navigation Buttons */}
+          {/* Section-relative Navigation Buttons */}
           <motion.button
-            className="fixed left-4 sm:left-8 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-12 sm:h-12 bg-white/10 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/20 hover:border-cyan-400/50 transition-all duration-300 group shadow-lg"
+            className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-12 sm:h-12 bg-white/10 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/20 hover:border-cyan-400/50 transition-all duration-300 group shadow-lg"
             onClick={scrollLeft}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
@@ -200,7 +192,7 @@ const ServicesSection = () => {
           </motion.button>
 
           <motion.button
-            className="fixed right-4 sm:right-8 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-12 sm:h-12 bg-white/10 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/20 hover:border-cyan-400/50 transition-all duration-300 group shadow-lg"
+            className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-12 sm:h-12 bg-white/10 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/20 hover:border-cyan-400/50 transition-all duration-300 group shadow-lg"
             onClick={scrollRight}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
