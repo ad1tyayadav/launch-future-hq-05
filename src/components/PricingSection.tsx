@@ -1,6 +1,7 @@
+
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Bot, Blocks, Smartphone, Palette, Settings } from 'lucide-react';
+import { Bot, Blocks, Smartphone, Palette } from 'lucide-react';
 
 const PricingSection = () => {
   const services = [
@@ -13,11 +14,18 @@ const PricingSection = () => {
         "Chatbot or NLP setup",
         "Ongoing support"
       ],
+      moreFeatures: [
+        "Machine learning algorithms",
+        "Natural language processing",
+        "Computer vision integration",
+        "AI model training & optimization",
+        "Real-time data processing",
+        "Predictive analytics"
+      ],
       price: "Starting from $999",
       tag: "NEURAL",
       cardNumber: "4127 8394 5621 7890",
-      validThru: "12/27",
-      size: "large" // Takes 2 columns
+      validThru: "12/27"
     },
     {
       title: "Blockchain Development",
@@ -28,11 +36,18 @@ const PricingSection = () => {
         "NFT marketplace setup",
         "Web3 integration"
       ],
+      moreFeatures: [
+        "Cross-chain compatibility",
+        "Token economics design",
+        "Security auditing",
+        "Gas optimization",
+        "Wallet integration",
+        "Decentralized governance"
+      ],
       price: "Starting from $1,499",
       tag: "CRYPTO",
       cardNumber: "5532 1047 8293 4567",
-      validThru: "10/28",
-      size: "medium"
+      validThru: "10/28"
     },
     {
       title: "App & Website Development",
@@ -43,11 +58,18 @@ const PricingSection = () => {
         "E-commerce platforms",
         "Progressive web apps"
       ],
+      moreFeatures: [
+        "Cross-platform development",
+        "Performance optimization",
+        "SEO implementation",
+        "Third-party integrations",
+        "Analytics setup",
+        "Maintenance & support"
+      ],
       price: "Starting from $799",
       tag: "MOBILE",
       cardNumber: "3784 5629 1037 842",
-      validThru: "05/29",
-      size: "medium"
+      validThru: "05/29"
     },
     {
       title: "UI/UX Designing",
@@ -58,35 +80,20 @@ const PricingSection = () => {
         "Prototyping & wireframing",
         "Design system creation"
       ],
+      moreFeatures: [
+        "User research & testing",
+        "Accessibility compliance",
+        "Brand identity design",
+        "Design consultation",
+        "Style guide creation",
+        "Interactive prototypes"
+      ],
       price: "Starting from $599",
       tag: "DESIGN",
       cardNumber: "6011 4578 9321 0456",
-      validThru: "08/26",
-      size: "large" // Takes 2 columns
+      validThru: "08/26"
     }
   ];
-
-  const getGridClasses = (size) => {
-    switch (size) {
-      case 'large':
-        return 'md:col-span-2 col-span-1';
-      case 'medium':
-        return 'col-span-1';
-      default:
-        return 'col-span-1';
-    }
-  };
-
-  const getCardHeight = (size) => {
-    switch (size) {
-      case 'large':
-        return 'h-80';
-      case 'medium':
-        return 'h-96';
-      default:
-        return 'h-80';
-    }
-  };
 
   return (
     <section id="pricing" className="py-20 relative overflow-hidden">
@@ -132,8 +139,8 @@ const PricingSection = () => {
           </p>
         </motion.div>
 
-        {/* Bento Grid Layout - 2x2 grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+        {/* 2x2 Bento Grid Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
           {services.map((service, index) => {
             const IconComponent = service.icon;
             return (
@@ -143,61 +150,60 @@ const PricingSection = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="group relative"
+                className="group relative h-80 [perspective:1000px]"
               >
-                {/* Futuristic ID Card */}
-                <div 
-                  className={`relative ${getCardHeight(service.size)} bg-gradient-to-br from-gray-900 via-gray-800 to-black rounded-2xl overflow-hidden border border-cyan-500/30 group-hover:border-cyan-400/60 transition-all duration-500 group-hover:shadow-[0_0_40px_rgba(6,182,212,0.4)]`}
-                >
-                  {/* Holographic overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/5 via-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                {/* Card Container with Flip Effect */}
+                <div className="relative w-full h-full [transform-style:preserve-3d] transition-transform duration-700 group-hover:[transform:rotateY(180deg)]">
                   
-                  {/* Circuit pattern background */}
-                  <div className="absolute inset-0 opacity-10"
-                    style={{
-                      backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%2306b6d4' fill-opacity='0.3'%3E%3Cpath d='M20 20.5V18H18v2.5h2zm0-2.5v-2.5h-2V18h2zM18 18H15.5v2H18v-2zm-2.5 0h-2.5v2h2.5v-2z'/%3E%3C/g%3E%3C/svg%3E")`,
-                    }}
-                  />
+                  {/* Front of Card */}
+                  <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] bg-gradient-to-br from-gray-900 via-gray-800 to-black rounded-2xl overflow-hidden border border-cyan-500/30 group-hover:border-cyan-400/60 transition-all duration-500 group-hover:shadow-[0_0_40px_rgba(6,182,212,0.4)]">
+                    {/* Holographic overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/5 via-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    
+                    {/* Circuit pattern background */}
+                    <div className="absolute inset-0 opacity-10"
+                      style={{
+                        backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%2306b6d4' fill-opacity='0.3'%3E%3Cpath d='M20 20.5V18H18v2.5h2zm0-2.5v-2.5h-2V18h2zM18 18H15.5v2H18v-2zm-2.5 0h-2.5v2h2.5v-2z'/%3E%3C/g%3E%3C/svg%3E")`,
+                      }}
+                    />
 
-                  {/* Card Header */}
-                  <div className="absolute top-6 left-6 right-6 flex justify-between items-start">
-                    <div className="flex items-center space-x-3">
-                      <motion.div 
-                        className="w-12 h-12 rounded-xl bg-gradient-to-r from-cyan-400 to-blue-500 flex items-center justify-center"
-                        whileHover={{ rotate: 360 }}
-                        transition={{ duration: 0.8 }}
-                      >
-                        <IconComponent size={24} className="text-white" />
-                      </motion.div>
-                      <div>
-                        <div className="text-cyan-400 text-xs font-mono tracking-wider">SERVICE MODULE</div>
-                        <div className="text-white font-orbitron font-bold text-sm">{service.tag}</div>
+                    {/* Card Header */}
+                    <div className="absolute top-6 left-6 right-6 flex justify-between items-start">
+                      <div className="flex items-center space-x-3">
+                        <motion.div 
+                          className="w-12 h-12 rounded-xl bg-gradient-to-r from-cyan-400 to-blue-500 flex items-center justify-center"
+                          whileHover={{ rotate: 360 }}
+                          transition={{ duration: 0.8 }}
+                        >
+                          <IconComponent size={24} className="text-white" />
+                        </motion.div>
+                        <div>
+                          <div className="text-cyan-400 text-xs font-mono tracking-wider">SERVICE MODULE</div>
+                          <div className="text-white font-orbitron font-bold text-sm">{service.tag}</div>
+                        </div>
+                      </div>
+                      
+                      {/* Security chip */}
+                      <div className="w-8 h-6 bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-sm flex items-center justify-center">
+                        <div className="w-4 h-3 bg-yellow-300 rounded-xs opacity-80" />
                       </div>
                     </div>
-                    
-                    {/* Security chip */}
-                    <div className="w-8 h-6 bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-sm flex items-center justify-center">
-                      <div className="w-4 h-3 bg-yellow-300 rounded-xs opacity-80" />
-                    </div>
-                  </div>
 
-                  {/* Card Number */}
-                  <div className="absolute top-20 left-6 right-6">
-                    <div className="text-cyan-300 font-mono text-lg tracking-[0.2em] mb-2">
-                      {service.cardNumber}
+                    {/* Card Number */}
+                    <div className="absolute top-20 left-6 right-6">
+                      <div className="text-cyan-300 font-mono text-lg tracking-[0.2em] mb-2">
+                        {service.cardNumber}
+                      </div>
                     </div>
-                  </div>
 
-                  {/* Card Content */}
-                  <div className="absolute bottom-20 left-6 right-6">
-                    <h3 className="text-white font-orbitron font-bold text-lg mb-3 leading-tight">
-                      {service.title}
-                    </h3>
-                    
-                    {/* Features - Only show on larger cards */}
-                    {service.size !== 'small' && (
+                    {/* Card Content */}
+                    <div className="absolute bottom-20 left-6 right-6">
+                      <h3 className="text-white font-orbitron font-bold text-lg mb-3 leading-tight">
+                        {service.title}
+                      </h3>
+                      
                       <div className="space-y-1 mb-4">
-                        {service.features.slice(0, service.size === 'large' ? 4 : 2).map((feature, featureIndex) => (
+                        {service.features.slice(0, 3).map((feature, featureIndex) => (
                           <motion.div
                             key={featureIndex}
                             initial={{ opacity: 0, x: -20 }}
@@ -210,42 +216,97 @@ const PricingSection = () => {
                           </motion.div>
                         ))}
                       </div>
-                    )}
-                    
-                    <div className="text-cyan-400 font-orbitron font-bold text-lg glow-text">
-                      {service.price}
+                      
+                      <div className="text-cyan-400 font-orbitron font-bold text-lg glow-text">
+                        {service.price}
+                      </div>
                     </div>
+
+                    {/* Card Footer */}
+                    <div className="absolute bottom-6 left-6 right-6 flex justify-between items-end">
+                      <div>
+                        <div className="text-xs text-cyan-300 font-mono">VALID THRU</div>
+                        <div className="text-sm text-white font-mono">{service.validThru}</div>
+                      </div>
+                      
+                      <div className="text-xs text-cyan-300 font-mono">HOVER TO FLIP →</div>
+                    </div>
+
+                    {/* Holographic stripe */}
+                    <motion.div 
+                      className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent"
+                      initial={{ x: '-100%' }}
+                      animate={{ x: '100%' }}
+                      transition={{ duration: 3, repeat: Infinity, repeatDelay: 2 }}
+                    />
+
+                    {/* Corner accents */}
+                    <div className="absolute top-0 left-0 w-6 h-6 border-l-2 border-t-2 border-cyan-400/60 rounded-tl-2xl" />
+                    <div className="absolute top-0 right-0 w-6 h-6 border-r-2 border-t-2 border-cyan-400/60 rounded-tr-2xl" />
+                    <div className="absolute bottom-0 left-0 w-6 h-6 border-l-2 border-b-2 border-cyan-400/60 rounded-bl-2xl" />
+                    <div className="absolute bottom-0 right-0 w-6 h-6 border-r-2 border-b-2 border-cyan-400/60 rounded-br-2xl" />
                   </div>
 
-                  {/* Card Footer */}
-                  <div className="absolute bottom-6 left-6 right-6 flex justify-between items-end">
-                    <div>
-                      <div className="text-xs text-cyan-300 font-mono">VALID THRU</div>
-                      <div className="text-sm text-white font-mono">{service.validThru}</div>
+                  {/* Back of Card */}
+                  <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] [transform:rotateY(180deg)] bg-gradient-to-br from-gray-900 via-gray-800 to-black rounded-2xl overflow-hidden border border-cyan-500/30 shadow-[0_0_40px_rgba(6,182,212,0.4)]">
+                    {/* Circuit pattern background */}
+                    <div className="absolute inset-0 opacity-10"
+                      style={{
+                        backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%2306b6d4' fill-opacity='0.3'%3E%3Cpath d='M20 20.5V18H18v2.5h2zm0-2.5v-2.5h-2V18h2zM18 18H15.5v2H18v-2zm-2.5 0h-2.5v2h2.5v-2z'/%3E%3C/g%3E%3C/svg%3E")`,
+                      }}
+                    />
+
+                    {/* Back Card Header */}
+                    <div className="absolute top-6 left-6 right-6">
+                      <div className="flex items-center space-x-3 mb-4">
+                        <IconComponent size={20} className="text-cyan-400" />
+                        <div>
+                          <div className="text-cyan-400 text-xs font-mono tracking-wider">EXTENDED FEATURES</div>
+                          <div className="text-white font-orbitron font-bold text-sm">{service.tag}</div>
+                        </div>
+                      </div>
                     </div>
-                    
-                    <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-mono text-xs rounded-lg border border-cyan-400/50 hover:border-cyan-300 transition-all duration-300"
-                    >
-                      ACTIVATE →
-                    </motion.button>
+
+                    {/* Extended Features */}
+                    <div className="absolute top-20 left-6 right-6 bottom-20">
+                      <h3 className="text-white font-orbitron font-bold text-lg mb-4">
+                        {service.title}
+                      </h3>
+                      
+                      <div className="space-y-2 mb-4">
+                        {service.moreFeatures.map((feature, featureIndex) => (
+                          <div
+                            key={featureIndex}
+                            className="text-cyan-100 text-xs flex items-center"
+                          >
+                            <div className="w-1 h-1 bg-cyan-400 rounded-full mr-2 flex-shrink-0" />
+                            {feature}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Back Card Footer */}
+                    <div className="absolute bottom-6 left-6 right-6 flex justify-between items-end">
+                      <div className="text-cyan-400 font-orbitron font-bold text-lg glow-text">
+                        {service.price}
+                      </div>
+                      
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-mono text-xs rounded-lg border border-cyan-400/50 hover:border-cyan-300 transition-all duration-300"
+                      >
+                        ACTIVATE →
+                      </motion.button>
+                    </div>
+
+                    {/* Corner accents */}
+                    <div className="absolute top-0 left-0 w-6 h-6 border-l-2 border-t-2 border-cyan-400/60 rounded-tl-2xl" />
+                    <div className="absolute top-0 right-0 w-6 h-6 border-r-2 border-t-2 border-cyan-400/60 rounded-tr-2xl" />
+                    <div className="absolute bottom-0 left-0 w-6 h-6 border-l-2 border-b-2 border-cyan-400/60 rounded-bl-2xl" />
+                    <div className="absolute bottom-0 right-0 w-6 h-6 border-r-2 border-b-2 border-cyan-400/60 rounded-br-2xl" />
                   </div>
-
-                  {/* Holographic stripe */}
-                  <motion.div 
-                    className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent"
-                    initial={{ x: '-100%' }}
-                    animate={{ x: '100%' }}
-                    transition={{ duration: 3, repeat: Infinity, repeatDelay: 2 }}
-                  />
-
-                  {/* Corner accents */}
-                  <div className="absolute top-0 left-0 w-6 h-6 border-l-2 border-t-2 border-cyan-400/60 rounded-tl-2xl" />
-                  <div className="absolute top-0 right-0 w-6 h-6 border-r-2 border-t-2 border-cyan-400/60 rounded-tr-2xl" />
-                  <div className="absolute bottom-0 left-0 w-6 h-6 border-l-2 border-b-2 border-cyan-400/60 rounded-bl-2xl" />
-                  <div className="absolute bottom-0 right-0 w-6 h-6 border-r-2 border-b-2 border-cyan-400/60 rounded-br-2xl" />
                 </div>
               </motion.div>
             );
