@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, Github, ArrowRight, X, Rocket, Terminal, Code, Zap, Eye } from 'lucide-react';
@@ -544,6 +543,44 @@ const ProjectsSection = () => {
     </motion.div>
   );
 
+  // Create autoplay plugin factory
+  const createAutoplayPlugin = () => ({
+    name: 'autoplay',
+    options: {},
+    init: (embla) => {
+      let intervalId;
+      
+      const autoplay = () => {
+        if (embla.canScrollNext()) {
+          embla.scrollNext();
+        } else {
+          embla.scrollTo(0);
+        }
+      };
+      
+      const startAutoplay = () => {
+        intervalId = setInterval(autoplay, 3000);
+      };
+      
+      const stopAutoplay = () => {
+        if (intervalId) {
+          clearInterval(intervalId);
+          intervalId = null;
+        }
+      };
+      
+      // Start autoplay
+      startAutoplay();
+      
+      // Stop on user interaction
+      embla.on('pointerDown', stopAutoplay);
+      embla.on('pointerUp', startAutoplay);
+    },
+    destroy: () => {
+      // Cleanup is handled in the init function
+    }
+  });
+
   return (
     <section id="projects" className="py-20 relative overflow-hidden">
       {/* Space background with animated stars */}
@@ -650,24 +687,7 @@ const ProjectsSection = () => {
                   align: "start",
                   loop: true,
                 }}
-                plugins={[
-                  {
-                    init: (embla) => {
-                      const autoplay = () => {
-                        if (embla.canScrollNext()) {
-                          embla.scrollNext();
-                        } else {
-                          embla.scrollTo(0);
-                        }
-                      };
-                      
-                      const interval = setInterval(autoplay, 3000);
-                      
-                      embla.on('pointerDown', () => clearInterval(interval));
-                      embla.on('destroy', () => clearInterval(interval));
-                    }
-                  }
-                ]}
+                plugins={[createAutoplayPlugin()]}
                 className="w-full"
               >
                 <CarouselContent className="-ml-2 md:-ml-4">
@@ -698,24 +718,7 @@ const ProjectsSection = () => {
                   align: "start",
                   loop: true,
                 }}
-                plugins={[
-                  {
-                    init: (embla) => {
-                      const autoplay = () => {
-                        if (embla.canScrollNext()) {
-                          embla.scrollNext();
-                        } else {
-                          embla.scrollTo(0);
-                        }
-                      };
-                      
-                      const interval = setInterval(autoplay, 3000);
-                      
-                      embla.on('pointerDown', () => clearInterval(interval));
-                      embla.on('destroy', () => clearInterval(interval));
-                    }
-                  }
-                ]}
+                plugins={[createAutoplayPlugin()]}
                 className="w-full"
               >
                 <CarouselContent className="-ml-2 md:-ml-4">
