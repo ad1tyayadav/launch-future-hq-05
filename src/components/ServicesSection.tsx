@@ -150,9 +150,9 @@ const ServicesSection = () => {
   };
 
   return (
-    <section id="services" className="py-20 relative overflow-hidden">
+    <section id="services" className="py-12 relative overflow-hidden">
       {/* Minimal background overlay to show main site background */}
-      <div className="absolute inset-0 bg-black/10 backdrop-blur-sm" />
+      <div className="absolute inset-0 bg-black/5 backdrop-blur-sm" />
 
       <div className="container mx-auto px-6 relative z-10">
         <motion.div

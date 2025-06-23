@@ -358,7 +358,7 @@ const ProjectsSection: React.FC = () => {
         </div>
       </motion.div>
     </motion.div>;
-  return <section id="projects" className="py-20 relative overflow-hidden">
+  return <section id="projects" className="py-12 relative overflow-hidden">
       {/* Reduced Background opacity - matching main site */}
       <div className="absolute inset-0">
         {/* Minimal background blend */}
