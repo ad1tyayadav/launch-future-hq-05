@@ -48,25 +48,43 @@ const ServicesSection = () => {
     }
   ];
 
-  const duplicatedServices = [...services, ...services];
+  // Create seamless loop by duplicating services multiple times
+  const duplicatedServices = [...services, ...services, ...services];
 
   useEffect(() => {
     const startAnimation = () => {
-      if (animationRef.current.isPaused || isManualScrolling) return;
+      if (animationRef.current.isPaused || isManualScrolling || duplicatedServices.length === 0) return;
       
-      const totalWidth = duplicatedServices.length * 360;
-      const endX = -(totalWidth - 200);
-      const remainingDistance = animationRef.current.currentX - endX;
-      const totalDistance = 200 - endX;
-      const duration = 80 * (remainingDistance / totalDistance);
+      const cardWidth = 360;
+      const gap = 24; // 6 * 4 = 24px gap
+      const totalCardWidth = cardWidth + gap;
+      const singleSetWidth = services.length * totalCardWidth;
+      
+      // Start from current position and animate to one full set width to the left
+      const startX = animationRef.current.currentX;
+      const endX = startX - singleSetWidth;
+      
+      // Calculate duration based on remaining distance
+      const distance = Math.abs(startX - endX);
+      const duration = (distance / singleSetWidth) * 40; // 40 seconds for one full cycle
       
       controls.start({
-        x: [animationRef.current.currentX, endX],
+        x: endX,
         transition: {
           duration,
-          ease: "linear",
-          repeat: Infinity,
-          repeatType: "loop"
+          ease: "linear"
+        }
+      }).then(() => {
+        // Reset position seamlessly when animation completes
+        if (!animationRef.current.isPaused && !isManualScrolling) {
+          animationRef.current.currentX = startX;
+          controls.set({ x: startX });
+          // Restart animation
+          setTimeout(() => {
+            if (!animationRef.current.isPaused && !isManualScrolling) {
+              startAnimation();
+            }
+          }, 0);
         }
       });
     };
@@ -115,8 +133,11 @@ const ServicesSection = () => {
 
   const scrollRight = () => {
     setIsManualScrolling(true);
-    const totalWidth = duplicatedServices.length * 360;
-    const minX = -(totalWidth - 200);
+    const cardWidth = 360;
+    const gap = 24;
+    const totalCardWidth = cardWidth + gap;
+    const singleSetWidth = services.length * totalCardWidth;
+    const minX = -(singleSetWidth * 2); // Allow scrolling through two sets
     const newX = Math.max(animationRef.current.currentX - 400, minX);
     animationRef.current.currentX = newX;
     
@@ -130,6 +151,17 @@ const ServicesSection = () => {
 
   return (
     <section id="services" className="py-20 relative overflow-hidden">
+      {/* Blended Background - matching main site */}
+      <div className="absolute inset-0">
+        {/* Seamless background blend */}
+        <div 
+          className="absolute inset-0"
+          style={{
+            background: `radial-gradient(ellipse at center, #1a1a2e 0%, #0a0a0f 100%)`
+          }}
+        />
+      </div>
+
       <div className="container mx-auto px-6 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -181,7 +213,7 @@ const ServicesSection = () => {
               className="flex gap-6 absolute left-0"
               animate={controls}
               style={{
-                width: `${(duplicatedServices.length * 360) + 400}px`
+                width: `${(duplicatedServices.length * 360) + (duplicatedServices.length * 24) + 400}px`
               }}
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}

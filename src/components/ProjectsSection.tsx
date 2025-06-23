@@ -102,26 +102,43 @@ const ProjectsSection: React.FC = () => {
   };
 
   const filteredProjects = getFilteredProjects();
-  // Duplicate projects for infinite scroll effect
-  const duplicatedProjects = [...filteredProjects, ...filteredProjects];
+  // Create seamless loop by duplicating projects multiple times
+  const duplicatedProjects = [...filteredProjects, ...filteredProjects, ...filteredProjects];
 
   React.useEffect(() => {
     const startAnimation = () => {
-      if (animationRef.current.isPaused || isManualScrolling) return;
+      if (animationRef.current.isPaused || isManualScrolling || duplicatedProjects.length === 0) return;
       
-      const totalWidth = duplicatedProjects.length * 480;
-      const endX = -(totalWidth - 200);
-      const remainingDistance = animationRef.current.currentX - endX;
-      const totalDistance = 200 - endX;
-      const duration = 60 * (remainingDistance / totalDistance);
+      const cardWidth = 480;
+      const gap = 48; // 12 * 4 = 48px gap
+      const totalCardWidth = cardWidth + gap;
+      const singleSetWidth = filteredProjects.length * totalCardWidth;
+      
+      // Start from current position and animate to one full set width to the left
+      const startX = animationRef.current.currentX;
+      const endX = startX - singleSetWidth;
+      
+      // Calculate duration based on remaining distance
+      const distance = Math.abs(startX - endX);
+      const duration = (distance / singleSetWidth) * 30; // 30 seconds for one full cycle
       
       controls.start({
-        x: [animationRef.current.currentX, endX],
+        x: endX,
         transition: {
           duration,
-          ease: "linear",
-          repeat: Infinity,
-          repeatType: "loop"
+          ease: "linear"
+        }
+      }).then(() => {
+        // Reset position seamlessly when animation completes
+        if (!animationRef.current.isPaused && !isManualScrolling) {
+          animationRef.current.currentX = startX;
+          controls.set({ x: startX });
+          // Restart animation
+          setTimeout(() => {
+            if (!animationRef.current.isPaused && !isManualScrolling) {
+              startAnimation();
+            }
+          }, 0);
         }
       });
     };
@@ -133,7 +150,7 @@ const ProjectsSection: React.FC = () => {
       animationRef.current.isPaused = true;
       controls.stop();
     }
-  }, [isHovered, isManualScrolling, controls, duplicatedProjects.length]);
+  }, [isHovered, isManualScrolling, controls, duplicatedProjects.length, filteredProjects.length]);
 
   const handleMouseEnter = () => {
     // Get current position from the actual transform
@@ -180,8 +197,11 @@ const ProjectsSection: React.FC = () => {
 
   const scrollRight = () => {
     setIsManualScrolling(true);
-    const totalWidth = duplicatedProjects.length * 480;
-    const minX = -(totalWidth - 200);
+    const cardWidth = 480;
+    const gap = 48;
+    const totalCardWidth = cardWidth + gap;
+    const singleSetWidth = filteredProjects.length * totalCardWidth;
+    const minX = -(singleSetWidth * 2); // Allow scrolling through two sets
     const newX = Math.max(animationRef.current.currentX - 500, minX);
     animationRef.current.currentX = newX;
     
@@ -390,38 +410,29 @@ const ProjectsSection: React.FC = () => {
 
   return (
     <section id="projects" className="py-20 relative overflow-hidden">
-      {/* Enhanced Space Background */}
+      {/* Blended Background - matching main site */}
       <div className="absolute inset-0">
-        {/* Base gradient */}
+        {/* Seamless background blend */}
         <div 
           className="absolute inset-0"
           style={{
-            background: `
-              radial-gradient(ellipse at 30% 20%, rgba(6,182,212,0.1) 0%, transparent 50%),
-              radial-gradient(ellipse at 70% 80%, rgba(139,92,246,0.1) 0%, transparent 50%),
-              radial-gradient(ellipse at 90% 10%, rgba(255,0,128,0.05) 0%, transparent 40%),
-              linear-gradient(180deg, #0a0a0f 0%, #1a1a2e 50%, #0a0a0f 100%)
-            `
+            background: `radial-gradient(ellipse at center, #1a1a2e 0%, #0a0a0f 100%)`
           }}
         />
         
-        {/* Carbon fiber texture */}
+        {/* Subtle accent gradients */}
         <div 
-          className="absolute inset-0 opacity-[0.03]"
+          className="absolute inset-0 opacity-30"
           style={{
-            backgroundImage: `
-              linear-gradient(45deg, #000 25%, transparent 25%),
-              linear-gradient(-45deg, #000 25%, transparent 25%),
-              linear-gradient(45deg, transparent 75%, #000 75%),
-              linear-gradient(-45deg, transparent 75%, #000 75%)
-            `,
-            backgroundSize: '4px 4px',
-            backgroundPosition: '0 0, 0 2px, 2px -2px, -2px 0px'
+            background: `
+              radial-gradient(ellipse at 20% 30%, rgba(0,245,255,0.05) 0%, transparent 50%),
+              radial-gradient(ellipse at 80% 70%, rgba(139,92,246,0.05) 0%, transparent 50%)
+            `
           }}
         />
 
-        {/* Enhanced Starfield */}
-        {[...Array(200)].map((_, i) => (
+        {/* Starfield matching main site */}
+        {[...Array(100)].map((_, i) => (
           <motion.div
             key={i}
             className="absolute rounded-full bg-white"
@@ -432,13 +443,12 @@ const ProjectsSection: React.FC = () => {
               height: Math.random() > 0.8 ? '2px' : '1px',
             }}
             animate={{
-              opacity: [0.1, 1, 0.1],
-              scale: [0.5, 1, 0.5],
+              opacity: [0.1, 0.8, 0.1],
             }}
             transition={{
-              duration: 4 + Math.random() * 8,
+              duration: 3 + Math.random() * 4,
               repeat: Infinity,
-              delay: Math.random() * 5,
+              delay: Math.random() * 3,
               ease: "easeInOut",
             }}
           />
@@ -528,7 +538,7 @@ const ProjectsSection: React.FC = () => {
                     className="flex gap-12 absolute left-0"
                     animate={controls}
                     style={{
-                      width: `${(duplicatedProjects.length * 480) + 400}px`
+                      width: `${(duplicatedProjects.length * 480) + (duplicatedProjects.length * 48) + 400}px`
                     }}
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
