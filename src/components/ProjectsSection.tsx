@@ -1,3 +1,4 @@
+
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence, useAnimation } from 'framer-motion';
 import { ExternalLink, Github, X, Eye, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -196,7 +197,7 @@ const ProjectsSection: React.FC = () => {
   const renderSpacePodCard = (project: Project, index: number) => (
     <motion.div
       key={`${project.id}-${project.type}-${index}`}
-      className="flex-shrink-0 w-96 relative group cursor-pointer"
+      className="flex-shrink-0 w-96 relative group cursor-pointer perspective-1000"
       animate={{
         y: [0, -15, 0]
       }}
@@ -206,12 +207,6 @@ const ProjectsSection: React.FC = () => {
         ease: "easeInOut",
         delay: index * 0.3
       }}
-      whileHover={{ 
-        scale: 1.05,
-        rotateY: 15,
-        rotateX: 5,
-      }}
-      style={{ perspective: 1000 }}
       onClick={() => openModal(project)}
     >
       {/* Floating Animation Container */}
@@ -230,118 +225,170 @@ const ProjectsSection: React.FC = () => {
       >
         {/* Space Pod Frame */}
         <div className="relative w-80 h-96 mx-auto">
-          {/* Outer Glow Ring */}
+          {/* Holographic Card Container */}
           <motion.div
-            className="absolute inset-0 rounded-full border-2 border-cyan-500/30 shadow-[0_0_50px_rgba(6,182,212,0.3)]"
-            animate={{
-              boxShadow: [
-                "0 0 50px rgba(6,182,212,0.3)",
-                "0 0 80px rgba(139,92,246,0.4)",
-                "0 0 50px rgba(6,182,212,0.3)"
-              ]
+            className="relative w-full h-full rounded-3xl overflow-hidden"
+            style={{
+              background: 'linear-gradient(135deg, rgba(6,182,212,0.1) 0%, rgba(139,92,246,0.05) 50%, rgba(255,0,128,0.1) 100%)',
+              backdropFilter: 'blur(20px)',
+              border: '1px solid rgba(255,255,255,0.1)',
+              boxShadow: `
+                0 8px 32px rgba(0,0,0,0.3),
+                inset 0 1px 0 rgba(255,255,255,0.1),
+                0 0 40px rgba(6,182,212,0.1)
+              `
             }}
-            transition={{ duration: 3, repeat: Infinity }}
-          />
-          
-          {/* Pod Viewport - Circular Image Container */}
-          <div className="absolute top-4 left-1/2 transform -translate-x-1/2 w-64 h-64 rounded-full overflow-hidden border-4 border-gray-800 shadow-inner">
-            {/* Inner Glow */}
-            <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/20 via-transparent to-purple-400/20 rounded-full" />
-            
-            {/* Project Image */}
-            <motion.img
-              src={project.image}
-              alt={project.title}
-              className="w-full h-full object-cover"
-              whileHover={{ scale: 1.1 }}
-              transition={{ duration: 0.3 }}
-            />
-            
-            {/* Holographic Overlay */}
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-tr from-cyan-400/10 via-transparent to-purple-400/10 rounded-full"
-              animate={{
-                background: [
-                  "linear-gradient(45deg, rgba(6,182,212,0.1) 0%, transparent 50%, rgba(139,92,246,0.1) 100%)",
-                  "linear-gradient(135deg, rgba(139,92,246,0.1) 0%, transparent 50%, rgba(6,182,212,0.1) 100%)",
-                  "linear-gradient(45deg, rgba(6,182,212,0.1) 0%, transparent 50%, rgba(139,92,246,0.1) 100%)"
-                ]
-              }}
-              transition={{ duration: 4, repeat: Infinity }}
-            />
-          </div>
-
-          {/* Orbiting Tech Stack Icons */}
-          {project.tags.slice(0, 4).map((tag, tagIndex) => {
-            const angle = (tagIndex * 90) + (index * 45);
-            return (
-              <motion.div
-                key={tagIndex}
-                className="absolute w-8 h-8 bg-gradient-to-r from-cyan-400 to-purple-500 rounded-full flex items-center justify-center text-xs font-bold text-white shadow-lg"
-                style={{
-                  top: '50%',
-                  left: '50%',
-                  transformOrigin: '0 0',
-                }}
-                animate={{
-                  rotate: 360,
-                  x: Math.cos((angle * Math.PI) / 180) * 140 - 16,
-                  y: Math.sin((angle * Math.PI) / 180) * 140 - 16,
-                }}
-                transition={{
-                  rotate: { duration: 20, repeat: Infinity, ease: "linear" },
-                  x: { duration: 0 },
-                  y: { duration: 0 }
-                }}
-              >
-                {tag.slice(0, 2)}
-              </motion.div>
-            );
-          })}
-
-          {/* Project Title - Only show title, no buttons */}
-          <motion.div
-            className="absolute bottom-16 left-1/2 transform -translate-x-1/2 text-center"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
+            whileHover={{ 
+              rotateY: 15,
+              rotateX: 5,
+              scale: 1.05,
+              boxShadow: `
+                0 20px 60px rgba(0,0,0,0.4),
+                inset 0 1px 0 rgba(255,255,255,0.2),
+                0 0 60px rgba(6,182,212,0.2),
+                0 0 80px rgba(139,92,246,0.1)
+              `
+            }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
           >
-            <h3 className="text-xl font-bold text-white mb-2 font-orbitron glow-text">
-              {project.title}
-            </h3>
-            
-            {/* Hover indicator */}
-            <motion.div
-              className="text-cyan-400 text-sm font-sora"
-              animate={{ opacity: [0.5, 1, 0.5] }}
-              transition={{ duration: 2, repeat: Infinity }}
-            >
-              Click to explore
-            </motion.div>
-          </motion.div>
-
-          {/* Particle Effects */}
-          <div className="absolute inset-0 pointer-events-none">
-            {[...Array(8)].map((_, i) => (
-              <motion.div
-                key={i}
-                className="absolute w-1 h-1 bg-cyan-400 rounded-full"
+            {/* Diagonal Light Rays */}
+            <div className="absolute inset-0 opacity-30">
+              <div 
+                className="absolute top-0 left-0 w-full h-full"
                 style={{
-                  left: `${20 + Math.random() * 60}%`,
-                  top: `${20 + Math.random() * 60}%`,
-                }}
-                animate={{
-                  opacity: [0, 1, 0],
-                  scale: [0, 1, 0],
-                }}
-                transition={{
-                  duration: 2 + Math.random() * 2,
-                  delay: Math.random() * 2,
-                  repeat: Infinity,
+                  background: `
+                    linear-gradient(
+                      -45deg,
+                      transparent 0%,
+                      rgba(0,245,255,0.1) 30%,
+                      transparent 35%,
+                      transparent 65%,
+                      rgba(139,92,246,0.1) 70%,
+                      transparent 100%
+                    )
+                  `
                 }}
               />
-            ))}
-          </div>
+            </div>
+
+            {/* Card Content - Front Side */}
+            <motion.div 
+              className="relative w-full h-full p-6 flex flex-col"
+              initial={{ rotateY: 0 }}
+              whileHover={{ rotateY: 0 }}
+            >
+              {/* Project Image with Holographic Overlay */}
+              <div className="relative w-full h-48 rounded-2xl overflow-hidden mb-4">
+                <motion.img
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-full object-cover"
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ duration: 0.6 }}
+                />
+                
+                {/* Holographic Glass Overlay */}
+                <motion.div
+                  className="absolute inset-0"
+                  style={{
+                    background: `
+                      linear-gradient(
+                        135deg,
+                        rgba(0,245,255,0.1) 0%,
+                        transparent 30%,
+                        rgba(139,92,246,0.1) 70%,
+                        transparent 100%
+                      )
+                    `,
+                  }}
+                  animate={{
+                    background: [
+                      "linear-gradient(135deg, rgba(0,245,255,0.1) 0%, transparent 30%, rgba(139,92,246,0.1) 70%, transparent 100%)",
+                      "linear-gradient(225deg, rgba(139,92,246,0.1) 0%, transparent 30%, rgba(0,245,255,0.1) 70%, transparent 100%)",
+                      "linear-gradient(135deg, rgba(0,245,255,0.1) 0%, transparent 30%, rgba(139,92,246,0.1) 70%, transparent 100%)"
+                    ]
+                  }}
+                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                />
+
+                {/* Gloss Effect */}
+                <div 
+                  className="absolute inset-0 opacity-20"
+                  style={{
+                    background: 'linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%)',
+                    transform: 'translateX(-100%)',
+                    animation: 'shine 3s ease-in-out infinite'
+                  }}
+                />
+              </div>
+
+              {/* Project Info */}
+              <div className="flex-1 flex flex-col justify-between">
+                <div>
+                  <h3 className="text-xl font-bold text-white mb-2 font-orbitron glow-text">
+                    {project.title}
+                  </h3>
+                  <p className="text-gray-300 text-sm font-sora line-clamp-3">
+                    {project.description}
+                  </p>
+                </div>
+
+                {/* Tech Stack Tags */}
+                <div className="flex flex-wrap gap-2 mt-4">
+                  {project.tags.slice(0, 3).map((tag, tagIndex) => (
+                    <Badge 
+                      key={tagIndex} 
+                      className="bg-gradient-to-r from-cyan-500/20 to-purple-500/20 border border-cyan-400/30 text-cyan-300 text-xs px-2 py-1"
+                    >
+                      {tag}
+                    </Badge>
+                  ))}
+                  {project.tags.length > 3 && (
+                    <Badge className="bg-gray-700/50 border border-gray-600 text-gray-300 text-xs px-2 py-1">
+                      +{project.tags.length - 3}
+                    </Badge>
+                  )}
+                </div>
+
+                {/* Hover Indicator */}
+                <motion.div
+                  className="text-center mt-4"
+                  animate={{ opacity: [0.5, 1, 0.5] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
+                  <span className="text-cyan-400 text-sm font-sora">
+                    Click to explore details
+                  </span>
+                </motion.div>
+              </div>
+            </motion.div>
+
+            {/* Ambient Particles */}
+            <div className="absolute inset-0 pointer-events-none overflow-hidden">
+              {[...Array(12)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  className="absolute w-1 h-1 bg-cyan-400/60 rounded-full"
+                  style={{
+                    left: `${20 + Math.random() * 60}%`,
+                    top: `${20 + Math.random() * 60}%`,
+                  }}
+                  animate={{
+                    opacity: [0, 1, 0],
+                    scale: [0, 1.5, 0],
+                    x: [0, Math.random() * 40 - 20],
+                    y: [0, Math.random() * 40 - 20],
+                  }}
+                  transition={{
+                    duration: 3 + Math.random() * 2,
+                    delay: Math.random() * 3,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
+              ))}
+            </div>
+          </motion.div>
         </div>
       </motion.div>
     </motion.div>
@@ -349,46 +396,62 @@ const ProjectsSection: React.FC = () => {
 
   return (
     <section id="projects" className="py-20 relative overflow-hidden">
-      {/* Seamless Space Background - matching site theme */}
-      <div className="absolute inset-0 bg-gradient-to-b from-dark-space via-space-gray/50 to-dark-space">
-        {/* Enhanced Starfield to match site */}
-        {[...Array(150)].map((_, i) => (
+      {/* Enhanced Space Background */}
+      <div className="absolute inset-0">
+        {/* Base gradient */}
+        <div 
+          className="absolute inset-0"
+          style={{
+            background: `
+              radial-gradient(ellipse at 30% 20%, rgba(6,182,212,0.1) 0%, transparent 50%),
+              radial-gradient(ellipse at 70% 80%, rgba(139,92,246,0.1) 0%, transparent 50%),
+              radial-gradient(ellipse at 90% 10%, rgba(255,0,128,0.05) 0%, transparent 40%),
+              linear-gradient(180deg, #0a0a0f 0%, #1a1a2e 50%, #0a0a0f 100%)
+            `
+          }}
+        />
+        
+        {/* Carbon fiber texture */}
+        <div 
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage: `
+              linear-gradient(45deg, #000 25%, transparent 25%),
+              linear-gradient(-45deg, #000 25%, transparent 25%),
+              linear-gradient(45deg, transparent 75%, #000 75%),
+              linear-gradient(-45deg, transparent 75%, #000 75%)
+            `,
+            backgroundSize: '4px 4px',
+            backgroundPosition: '0 0, 0 2px, 2px -2px, -2px 0px'
+          }}
+        />
+
+        {/* Enhanced Starfield */}
+        {[...Array(200)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-0.5 h-0.5 bg-white rounded-full"
+            className="absolute rounded-full bg-white"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
+              width: Math.random() > 0.8 ? '2px' : '1px',
+              height: Math.random() > 0.8 ? '2px' : '1px',
             }}
             animate={{
-              opacity: [0.1, 0.8, 0.1],
-              scale: [0.3, 1, 0.3],
+              opacity: [0.1, 1, 0.1],
+              scale: [0.5, 1, 0.5],
             }}
             transition={{
-              duration: 4 + Math.random() * 6,
+              duration: 4 + Math.random() * 8,
               repeat: Infinity,
               delay: Math.random() * 5,
               ease: "easeInOut",
             }}
           />
         ))}
-        
-        {/* Cosmic Gradient Overlays */}
-        <div className="absolute top-0 left-1/3 w-96 h-96 bg-gradient-radial from-cyan-500/5 via-cyan-500/2 to-transparent rounded-full filter blur-3xl" />
-        <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-gradient-radial from-purple-500/5 via-purple-500/2 to-transparent rounded-full filter blur-3xl" />
-        <div className="absolute top-1/2 left-1/4 w-64 h-64 bg-gradient-radial from-pink-500/3 via-pink-500/1 to-transparent rounded-full filter blur-3xl" />
-        
-        {/* Subtle Grid Pattern */}
-        <div className="absolute inset-0 opacity-[0.02]" style={{
-          backgroundImage: `
-            linear-gradient(rgba(0, 245, 255, 0.1) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(0, 245, 255, 0.1) 1px, transparent 1px)
-          `,
-          backgroundSize: '50px 50px'
-        }} />
       </div>
 
-      {/* Content with proper z-index */}
+      {/* Content */}
       <div className="relative z-10">
         {/* Title and description */}
         <div className="container mx-auto text-center mb-16">
@@ -464,7 +527,7 @@ const ProjectsSection: React.FC = () => {
                   <ChevronRight size={20} className="group-hover:text-cyan-400 transition-colors duration-300" />
                 </motion.button>
 
-                {/* Horizontal scrolling container with proper spacing */}
+                {/* Horizontal scrolling container */}
                 <div className="relative h-[520px] w-full">
                   <motion.div
                     ref={scrollContainerRef}
@@ -487,73 +550,135 @@ const ProjectsSection: React.FC = () => {
         </div>
       </div>
       
-      {/* Project Modal */}
+      {/* Enhanced Project Modal */}
       <AnimatePresence>
         {isModalOpen && selectedProject && (
           <motion.div
-            className="fixed inset-0 bg-dark-space bg-opacity-75 flex justify-center items-center z-50"
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm flex justify-center items-center z-50 p-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
           >
             <motion.div
-              className="bg-gray-900 rounded-lg p-8 max-w-2xl w-full mx-4 relative"
-              initial={{ y: 50, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: 50, opacity: 0 }}
-              transition={{ duration: 0.3 }}
+              className="relative max-w-4xl w-full rounded-3xl overflow-hidden"
+              style={{
+                background: `
+                  linear-gradient(135deg, 
+                    rgba(6,182,212,0.1) 0%, 
+                    rgba(139,92,246,0.05) 50%, 
+                    rgba(255,0,128,0.1) 100%
+                  )
+                `,
+                backdropFilter: 'blur(20px)',
+                border: '1px solid rgba(255,255,255,0.1)',
+                boxShadow: `
+                  0 20px 60px rgba(0,0,0,0.4),
+                  inset 0 1px 0 rgba(255,255,255,0.1),
+                  0 0 60px rgba(6,182,212,0.2)
+                `
+              }}
+              initial={{ y: 100, opacity: 0, scale: 0.9 }}
+              animate={{ y: 0, opacity: 1, scale: 1 }}
+              exit={{ y: 100, opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
             >
+              {/* Close Button */}
               <Button
                 variant="ghost"
                 size="icon"
-                className="absolute top-4 right-4 text-gray-400 hover:text-gray-100"
+                className="absolute top-6 right-6 z-30 text-gray-400 hover:text-white hover:bg-white/10 rounded-full"
                 onClick={closeModal}
               >
                 <X className="h-6 w-6" />
                 <span className="sr-only">Close</span>
               </Button>
 
-              <h2 className="text-3xl font-bold text-white mb-4">{selectedProject.title}</h2>
-              <img
-                src={selectedProject.image}
-                alt={selectedProject.title}
-                className="rounded-md mb-4 w-full h-64 object-cover"
-              />
-              <p className="text-gray-300 mb-6">{selectedProject.description}</p>
+              <div className="p-8">
+                {/* Project Image */}
+                <div className="relative w-full h-80 rounded-2xl overflow-hidden mb-8">
+                  <img
+                    src={selectedProject.image}
+                    alt={selectedProject.title}
+                    className="w-full h-full object-cover"
+                  />
+                  <div 
+                    className="absolute inset-0"
+                    style={{
+                      background: 'linear-gradient(45deg, rgba(0,245,255,0.1) 0%, transparent 30%, rgba(139,92,246,0.1) 70%, transparent 100%)'
+                    }}
+                  />
+                </div>
 
-              <div className="flex flex-wrap mb-6">
-                {selectedProject.tags.map((tag, index) => (
-                  <Badge key={index} className="mr-2 mb-2 bg-gray-700 text-gray-200 border-none">
-                    {tag}
-                  </Badge>
-                ))}
-              </div>
+                {/* Project Details */}
+                <div className="space-y-6">
+                  <h2 className="text-4xl font-bold text-white font-orbitron glow-text">
+                    {selectedProject.title}
+                  </h2>
+                  
+                  <p className="text-gray-300 text-lg font-sora leading-relaxed">
+                    {selectedProject.description}
+                  </p>
 
-              <div className="flex justify-start items-center gap-4">
-                {selectedProject.liveLink && (
-                  <Button variant="secondary" asChild>
-                    <a href={selectedProject.liveLink} target="_blank" rel="noopener noreferrer" className="flex items-center">
-                      <Eye className="mr-2 h-4 w-4" />
-                      Live Demo
-                      <ExternalLink className="ml-2 h-4 w-4" />
-                    </a>
-                  </Button>
-                )}
-                {selectedProject.githubLink && (
-                  <Button variant="secondary" asChild>
-                    <a href={selectedProject.githubLink} target="_blank" rel="noopener noreferrer" className="flex items-center">
-                      <Github className="mr-2 h-4 w-4" />
-                      GitHub
-                      <ExternalLink className="ml-2 h-4 w-4" />
-                    </a>
-                  </Button>
-                )}
+                  {/* Tech Stack */}
+                  <div>
+                    <h3 className="text-xl font-semibold text-cyan-400 mb-4 font-orbitron">
+                      Technology Stack
+                    </h3>
+                    <div className="flex flex-wrap gap-3">
+                      {selectedProject.tags.map((tag, index) => (
+                        <Badge 
+                          key={index} 
+                          className="bg-gradient-to-r from-cyan-500/20 to-purple-500/20 border border-cyan-400/30 text-cyan-300 px-4 py-2 text-sm"
+                        >
+                          {tag}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex justify-start items-center gap-6 pt-4">
+                    {selectedProject.liveLink && (
+                      <Button 
+                        className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white px-6 py-3 rounded-xl transition-all duration-300 transform hover:scale-105"
+                        asChild
+                      >
+                        <a href={selectedProject.liveLink} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+                          <Eye className="w-5 h-5" />
+                          Live Demo
+                          <ExternalLink className="w-4 h-4" />
+                        </a>
+                      </Button>
+                    )}
+                    {selectedProject.githubLink && (
+                      <Button 
+                        variant="outline"
+                        className="border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:border-gray-500 px-6 py-3 rounded-xl transition-all duration-300"
+                        asChild
+                      >
+                        <a href={selectedProject.githubLink} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+                          <Github className="w-5 h-5" />
+                          GitHub
+                          <ExternalLink className="w-4 h-4" />
+                        </a>
+                      </Button>
+                    )}
+                  </div>
+                </div>
               </div>
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Custom CSS for shine effect */}
+      <style jsx>{`
+        @keyframes shine {
+          0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+          100% { transform: translateX(400%) translateY(400%) rotate(45deg); }
+        }
+      `}</style>
     </section>
   );
 };
