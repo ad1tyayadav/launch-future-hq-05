@@ -39,14 +39,14 @@ export const ProjectCarousel: React.FC<ProjectCarouselProps> = ({
   });
   const [isManualScrolling, setIsManualScrolling] = React.useState(false);
 
-  // Reduced duplications for better performance
-  const duplicatedProjects = [...projects, ...projects];
+  // Create seamless loop by duplicating projects multiple times
+  const duplicatedProjects = [...projects, ...projects, ...projects];
 
   useEffect(() => {
     const startAnimation = () => {
       if (animationRef.current.isPaused || isManualScrolling || duplicatedProjects.length === 0) return;
       
-      const cardWidth = 380;
+      const cardWidth = 450;
       const gap = 32;
       const totalCardWidth = cardWidth + gap;
       const singleSetWidth = projects.length * totalCardWidth;
@@ -55,8 +55,7 @@ export const ProjectCarousel: React.FC<ProjectCarouselProps> = ({
       const endX = startX - singleSetWidth;
 
       const distance = Math.abs(startX - endX);
-      // Slower animation for smoother performance
-      const duration = distance / singleSetWidth * 40;
+      const duration = distance / singleSetWidth * 30;
 
       controls.start({
         x: endX,
@@ -72,7 +71,7 @@ export const ProjectCarousel: React.FC<ProjectCarouselProps> = ({
             if (!animationRef.current.isPaused && !isManualScrolling) {
               startAnimation();
             }
-          }, 50); // Small delay to prevent frame drops
+          }, 0);
         }
       });
     };
@@ -103,30 +102,30 @@ export const ProjectCarousel: React.FC<ProjectCarouselProps> = ({
 
   const scrollLeft = () => {
     setIsManualScrolling(true);
-    const newX = Math.min(animationRef.current.currentX + 400, 200);
+    const newX = Math.min(animationRef.current.currentX + 500, 200);
     animationRef.current.currentX = newX;
     controls.start({
       x: newX,
-      transition: { duration: 0.4, ease: "easeOut" }
+      transition: { duration: 0.5, ease: "easeOut" }
     }).then(() => {
-      setTimeout(() => setIsManualScrolling(false), 800);
+      setTimeout(() => setIsManualScrolling(false), 1000);
     });
   };
 
   const scrollRight = () => {
     setIsManualScrolling(true);
-    const cardWidth = 380;
+    const cardWidth = 450;
     const gap = 32;
     const totalCardWidth = cardWidth + gap;
     const singleSetWidth = projects.length * totalCardWidth;
-    const minX = -(singleSetWidth);
-    const newX = Math.max(animationRef.current.currentX - 400, minX);
+    const minX = -(singleSetWidth * 2);
+    const newX = Math.max(animationRef.current.currentX - 500, minX);
     animationRef.current.currentX = newX;
     controls.start({
       x: newX,
-      transition: { duration: 0.4, ease: "easeOut" }
+      transition: { duration: 0.5, ease: "easeOut" }
     }).then(() => {
-      setTimeout(() => setIsManualScrolling(false), 800);
+      setTimeout(() => setIsManualScrolling(false), 1000);
     });
   };
 
@@ -152,13 +151,13 @@ export const ProjectCarousel: React.FC<ProjectCarouselProps> = ({
       </motion.button>
 
       {/* Horizontal scrolling container */}
-      <div className="relative h-[480px] w-full overflow-hidden">
+      <div className="relative h-[520px] w-full overflow-hidden">
         <motion.div 
           ref={scrollContainerRef} 
           className="flex gap-8 absolute left-0" 
           animate={controls} 
           style={{
-            width: `${duplicatedProjects.length * 380 + duplicatedProjects.length * 32 + 400}px`
+            width: `${duplicatedProjects.length * 450 + duplicatedProjects.length * 32 + 400}px`
           }} 
           onMouseEnter={handleMouseEnter} 
           onMouseLeave={onMouseLeave}

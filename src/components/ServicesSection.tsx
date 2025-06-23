@@ -1,4 +1,3 @@
-
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { Check, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -49,24 +48,25 @@ const ServicesSection = () => {
     }
   ];
 
-  // Reduced duplications for better performance
-  const duplicatedServices = [...services, ...services];
+  // Create seamless loop by duplicating services multiple times
+  const duplicatedServices = [...services, ...services, ...services];
 
   useEffect(() => {
     const startAnimation = () => {
       if (animationRef.current.isPaused || isManualScrolling || duplicatedServices.length === 0) return;
       
       const cardWidth = 360;
-      const gap = 24;
+      const gap = 24; // 6 * 4 = 24px gap
       const totalCardWidth = cardWidth + gap;
       const singleSetWidth = services.length * totalCardWidth;
       
+      // Start from current position and animate to one full set width to the left
       const startX = animationRef.current.currentX;
       const endX = startX - singleSetWidth;
       
+      // Calculate duration based on remaining distance
       const distance = Math.abs(startX - endX);
-      // Slower animation for smoother performance
-      const duration = (distance / singleSetWidth) * 50;
+      const duration = (distance / singleSetWidth) * 40; // 40 seconds for one full cycle
       
       controls.start({
         x: endX,
@@ -75,14 +75,16 @@ const ServicesSection = () => {
           ease: "linear"
         }
       }).then(() => {
+        // Reset position seamlessly when animation completes
         if (!animationRef.current.isPaused && !isManualScrolling) {
           animationRef.current.currentX = startX;
           controls.set({ x: startX });
+          // Restart animation
           setTimeout(() => {
             if (!animationRef.current.isPaused && !isManualScrolling) {
               startAnimation();
             }
-          }, 50);
+          }, 0);
         }
       });
     };
@@ -97,6 +99,7 @@ const ServicesSection = () => {
   }, [isHovered, isManualScrolling, controls, duplicatedServices.length]);
 
   const handleMouseEnter = () => {
+    // Get current position from the actual transform
     const element = scrollContainerRef.current;
     if (element) {
       const transform = window.getComputedStyle(element).transform;
@@ -122,9 +125,9 @@ const ServicesSection = () => {
     
     controls.start({
       x: newX,
-      transition: { duration: 0.4, ease: "easeOut" }
+      transition: { duration: 0.5, ease: "easeOut" }
     }).then(() => {
-      setTimeout(() => setIsManualScrolling(false), 800);
+      setTimeout(() => setIsManualScrolling(false), 1000);
     });
   };
 
@@ -134,15 +137,15 @@ const ServicesSection = () => {
     const gap = 24;
     const totalCardWidth = cardWidth + gap;
     const singleSetWidth = services.length * totalCardWidth;
-    const minX = -(singleSetWidth);
+    const minX = -(singleSetWidth * 2); // Allow scrolling through two sets
     const newX = Math.max(animationRef.current.currentX - 400, minX);
     animationRef.current.currentX = newX;
     
     controls.start({
       x: newX,
-      transition: { duration: 0.4, ease: "easeOut" }
+      transition: { duration: 0.5, ease: "easeOut" }
     }).then(() => {
-      setTimeout(() => setIsManualScrolling(false), 800);
+      setTimeout(() => setIsManualScrolling(false), 1000);
     });
   };
 
@@ -167,7 +170,7 @@ const ServicesSection = () => {
                 '0 0 10px rgba(0, 245, 255, 0.5)'
               ]
             }}
-            transition={{ duration: 3, repeat: Infinity }}
+            transition={{ duration: 2, repeat: Infinity }}
           >
             Services
           </motion.h2>
@@ -197,7 +200,7 @@ const ServicesSection = () => {
             <ChevronRight size={16} className="sm:w-5 sm:h-5 group-hover:text-cyan-400 transition-colors duration-300" />
           </motion.button>
 
-          <div className="relative h-[480px] w-full overflow-hidden">
+          <div className="relative h-[500px] w-full overflow-hidden">
             <motion.div
               ref={scrollContainerRef}
               className="flex gap-6 absolute left-0"
@@ -211,19 +214,19 @@ const ServicesSection = () => {
               {duplicatedServices.map((service, index) => (
                 <motion.div
                   key={`${service.title}-${index}`}
-                  className="flex-shrink-0 w-80 h-[460px] relative group cursor-pointer"
+                  className="flex-shrink-0 w-80 h-[480px] relative group cursor-pointer"
                   animate={{
-                    y: [0, -8, 0]
+                    y: [0, -10, 0]
                   }}
                   transition={{
-                    duration: 8 + (index % 3),
+                    duration: 6 + (index % 3),
                     repeat: Infinity,
                     ease: "easeInOut",
-                    delay: index * 0.8
+                    delay: index * 0.5
                   }}
                   whileHover={{
-                    scale: 1.03,
-                    y: -15
+                    scale: 1.05,
+                    y: -20
                   }}
                 >
                   <div className="absolute inset-0 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl group-hover:bg-white/10 group-hover:border-cyan-400/30 transition-all duration-500">
@@ -233,10 +236,10 @@ const ServicesSection = () => {
                       <motion.div 
                         className="mb-6 relative flex justify-center"
                         whileHover={{ 
-                          scale: 1.15,
-                          rotate: [0, -3, 3, 0]
+                          scale: 1.2,
+                          rotate: [0, -5, 5, 0]
                         }}
-                        transition={{ duration: 0.5 }}
+                        transition={{ duration: 0.6 }}
                       >
                         <div className="w-16 h-16 bg-white/10 backdrop-blur-md rounded-xl flex items-center justify-center border border-white/20 group-hover:border-cyan-400/50 transition-all duration-300">
                           <span className="text-3xl">{service.icon}</span>
@@ -295,8 +298,7 @@ const ServicesSection = () => {
                     <div className="absolute bottom-1/4 right-1/4 w-24 h-24 bg-purple-400/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000 delay-200" />
                   </div>
 
-                  {/* Reduced floating particles from 5 to 3 */}
-                  {[...Array(3)].map((_, i) => (
+                  {[...Array(5)].map((_, i) => (
                     <motion.div
                       key={i}
                       className="absolute w-1 h-1 bg-cyan-400/60 rounded-full opacity-0 group-hover:opacity-100"
@@ -310,9 +312,9 @@ const ServicesSection = () => {
                         y: [0, -20, -40],
                       }}
                       transition={{
-                        duration: 4,
+                        duration: 3,
                         repeat: Infinity,
-                        delay: i * 0.8,
+                        delay: i * 0.5,
                       }}
                     />
                   ))}
