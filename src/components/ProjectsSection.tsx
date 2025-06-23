@@ -1,4 +1,3 @@
-
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence, useAnimation } from 'framer-motion';
 import { ExternalLink, Github, X, Eye, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -23,7 +22,7 @@ const projectsData: Project[] = [
     id: 1,
     title: "AI-Powered Job Search Platform",
     description: "Revolutionizing job searching with AI to match candidates with ideal opportunities.",
-    image: "/lovable-uploads/06f8542e-bc54-4459-aa62-5b5b60514c86.png",
+    image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=600&h=400&fit=crop",
     tags: ["AI", "React", "Node.js", "Machine Learning"],
     featured: true,
     type: 'client',
@@ -34,7 +33,7 @@ const projectsData: Project[] = [
     id: 2,
     title: "Decentralized Finance (DeFi) App",
     description: "A secure and transparent DeFi application built on blockchain technology.",
-    image: "/lovable-uploads/1d096f38-f3f1-4826-89c4-c8055775fc92.png",
+    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&h=400&fit=crop",
     tags: ["Blockchain", "DeFi", "Solidity", "Web3"],
     featured: true,
     type: 'devlaunch',
@@ -45,7 +44,7 @@ const projectsData: Project[] = [
     id: 3,
     title: "Sustainable Energy Management System",
     description: "Optimizing energy consumption using IoT and data analytics for a sustainable future.",
-    image: "/lovable-uploads/540b6631-0fad-4216-aa1e-c068807441ed.png",
+    image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600&h=400&fit=crop",
     tags: ["IoT", "Data Analytics", "Python", "Sustainability"],
     featured: false,
     type: 'client',
@@ -56,7 +55,7 @@ const projectsData: Project[] = [
     id: 4,
     title: "AI-Driven Healthcare Diagnostics",
     description: "Improving healthcare outcomes with AI-powered diagnostic tools.",
-    image: "/lovable-uploads/06f8542e-bc54-4459-aa62-5b5b60514c86.png",
+    image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=600&h=400&fit=crop",
     tags: ["AI", "Healthcare", "Machine Learning", "Python"],
     featured: false,
     type: 'devlaunch',
@@ -67,7 +66,7 @@ const projectsData: Project[] = [
     id: 5,
     title: "Smart City Traffic Management",
     description: "Reducing traffic congestion and improving urban mobility with intelligent systems.",
-    image: "/lovable-uploads/1d096f38-f3f1-4826-89c4-c8055775fc92.png",
+    image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=400&fit=crop",
     tags: ["Smart City", "IoT", "Data Analytics", "C++"],
     featured: false,
     type: 'client',
@@ -78,7 +77,7 @@ const projectsData: Project[] = [
     id: 6,
     title: "Personalized Education Platform",
     description: "Enhancing learning experiences with personalized education paths.",
-    image: "/lovable-uploads/540b6631-0fad-4216-aa1e-c068807441ed.png",
+    image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=600&h=400&fit=crop",
     tags: ["Education", "AI", "React", "Node.js"],
     featured: false,
     type: 'devlaunch',
@@ -278,7 +277,7 @@ const ProjectsSection: React.FC = () => {
             );
           })}
 
-          {/* Project Title */}
+          {/* Project Title - Only show title, no buttons */}
           <motion.div
             className="absolute bottom-16 left-1/2 transform -translate-x-1/2 text-center"
             initial={{ opacity: 0 }}
@@ -289,44 +288,14 @@ const ProjectsSection: React.FC = () => {
               {project.title}
             </h3>
             
-            {/* Action Buttons */}
-            <div className="flex gap-3 justify-center">
-              {project.liveLink && (
-                <motion.button
-                  className="px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-sm font-semibold rounded-full border border-cyan-400/50 hover:border-cyan-300 transition-all duration-300 flex items-center gap-2"
-                  whileHover={{ 
-                    scale: 1.05,
-                    boxShadow: "0 0 20px rgba(6,182,212,0.5)"
-                  }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    window.open(project.liveLink, '_blank');
-                  }}
-                >
-                  <Eye size={16} />
-                  Live Demo
-                </motion.button>
-              )}
-              
-              {project.githubLink && (
-                <motion.button
-                  className="px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-600 text-white text-sm font-semibold rounded-full border border-purple-400/50 hover:border-purple-300 transition-all duration-300 flex items-center gap-2"
-                  whileHover={{ 
-                    scale: 1.05,
-                    boxShadow: "0 0 20px rgba(139,92,246,0.5)"
-                  }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    window.open(project.githubLink, '_blank');
-                  }}
-                >
-                  <Github size={16} />
-                  GitHub
-                </motion.button>
-              )}
-            </div>
+            {/* Hover indicator */}
+            <motion.div
+              className="text-cyan-400 text-sm font-sora"
+              animate={{ opacity: [0.5, 1, 0.5] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            >
+              Click to explore
+            </motion.div>
           </motion.div>
 
           {/* Particle Effects */}
@@ -533,7 +502,7 @@ const ProjectsSection: React.FC = () => {
               />
               <p className="text-gray-300 mb-6">{selectedProject.description}</p>
 
-              <div className="flex flex-wrap mb-4">
+              <div className="flex flex-wrap mb-6">
                 {selectedProject.tags.map((tag, index) => (
                   <Badge key={index} className="mr-2 mb-2 bg-gray-700 text-gray-200 border-none">
                     {tag}
@@ -541,10 +510,11 @@ const ProjectsSection: React.FC = () => {
                 ))}
               </div>
 
-              <div className="flex justify-start items-center">
+              <div className="flex justify-start items-center gap-4">
                 {selectedProject.liveLink && (
-                  <Button variant="secondary" asChild className="mr-4">
+                  <Button variant="secondary" asChild>
                     <a href={selectedProject.liveLink} target="_blank" rel="noopener noreferrer" className="flex items-center">
+                      <Eye className="mr-2 h-4 w-4" />
                       Live Demo
                       <ExternalLink className="ml-2 h-4 w-4" />
                     </a>
@@ -553,8 +523,9 @@ const ProjectsSection: React.FC = () => {
                 {selectedProject.githubLink && (
                   <Button variant="secondary" asChild>
                     <a href={selectedProject.githubLink} target="_blank" rel="noopener noreferrer" className="flex items-center">
+                      <Github className="mr-2 h-4 w-4" />
                       GitHub
-                      <Github className="ml-2 h-4 w-4" />
+                      <ExternalLink className="ml-2 h-4 w-4" />
                     </a>
                   </Button>
                 )}
