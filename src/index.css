@@ -45,8 +45,11 @@
   }
 
   body {
-    @apply bg-dark-space text-foreground font-sora overflow-x-hidden;
+    @apply bg-dark-space text-foreground font-sans overflow-x-hidden;
     background: radial-gradient(ellipse at center, #1a1a2e 0%, #0a0a0f 100%);
+    font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   html {
@@ -95,7 +98,7 @@
   }
   
   .typewriter {
-    @apply font-orbitron;
+    @apply font-mono;
     overflow: hidden;
     white-space: nowrap;
     margin: 0 auto;
@@ -126,6 +129,26 @@
   
   .cyber-button span {
     @apply relative z-10;
+  }
+
+  .animated-border {
+    position: relative;
+    background: linear-gradient(135deg, rgba(0, 245, 255, 0.1), rgba(139, 92, 246, 0.1), rgba(255, 0, 128, 0.1));
+    background-size: 300% 300%;
+    animation: border-flow 3s ease-in-out infinite;
+  }
+
+  .animated-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 2px;
+    background: linear-gradient(135deg, #00f5ff, #8b5cf6, #ff0080, #00f5ff);
+    background-size: 300% 300%;
+    border-radius: inherit;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    animation: border-flow 3s ease-in-out infinite;
   }
 
   /* Enhanced Calendar Styles */

@@ -20,8 +20,8 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				'sora': ['Sora', 'sans-serif'],
-				'orbitron': ['Orbitron', 'monospace'],
+				'sans': ['-apple-system', 'BlinkMacSystemFont', 'Inter', 'system-ui', 'sans-serif'],
+				'mono': ['SF Mono', 'Monaco', 'Cascadia Code', 'Roboto Mono', 'Consolas', 'Courier New', 'monospace'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
@@ -143,6 +143,17 @@ export default {
 					'51%, 100%': {
 						opacity: '0',
 					}
+				},
+				'border-flow': {
+					'0%': {
+						backgroundPosition: '0% 50%'
+					},
+					'50%': {
+						backgroundPosition: '100% 50%'
+					},
+					'100%': {
+						backgroundPosition: '0% 50%'
+					}
 				}
 			},
 			animation: {
@@ -153,6 +164,7 @@ export default {
 				'rotate-slow': 'rotate-slow 10s linear infinite',
 				'typewriter': 'typewriter 3s steps(40) 1s 1 normal both',
 				'blink': 'blink 1s step-end infinite',
+				'border-flow': 'border-flow 3s ease-in-out infinite',
 			},
 			backdropBlur: {
 				'xs': '2px',
