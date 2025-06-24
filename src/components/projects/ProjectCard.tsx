@@ -76,7 +76,11 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, onClic
                 0 25px 80px rgba(0,0,0,0.4),
                 inset 0 1px 0 rgba(255,255,255,0.2),
                 0 0 60px rgba(6,182,212,0.2),
-                0 0 80px rgba(139,92,246,0.1)
+                0 0 80px rgba(139,92,246,0.1),
+                0 0 0 2px rgba(0,245,255,0.6),
+                0 0 20px rgba(0,245,255,0.4),
+                0 0 40px rgba(139,92,246,0.3),
+                0 0 60px rgba(255,0,128,0.2)
               `
             }}
             transition={{
@@ -84,6 +88,29 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, onClic
               ease: "easeOut"
             }}
           >
+            {/* Neon Edge Glow Effect */}
+            <motion.div 
+              className="absolute inset-0 rounded-2xl pointer-events-none"
+              style={{
+                background: 'transparent',
+                border: '2px solid transparent',
+                backgroundImage: 'linear-gradient(rgba(255,255,255,0), rgba(255,255,255,0)), linear-gradient(135deg, #00f5ff, #8b5cf6, #ff0080, #00f5ff)',
+                backgroundOrigin: 'border-box',
+                backgroundClip: 'content-box, border-box',
+                opacity: 0
+              }}
+              whileHover={{
+                opacity: 1,
+                background: 'transparent',
+                backgroundImage: 'linear-gradient(rgba(255,255,255,0), rgba(255,255,255,0)), linear-gradient(135deg, #00f5ff, #8b5cf6, #ff0080, #00f5ff)',
+                filter: 'blur(0.5px)'
+              }}
+              transition={{
+                duration: 0.3,
+                ease: "easeOut"
+              }}
+            />
+
             {/* Diagonal Light Rays */}
             <div className="absolute inset-0 opacity-30">
               <div className="absolute top-0 left-0 w-full h-full" style={{
