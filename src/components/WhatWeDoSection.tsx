@@ -191,7 +191,8 @@ const WhatWeDoSection = () => {
               return (
                 <motion.div
                   key={cardIndex}
-                  className={`relative ${isMobile ? 'min-w-[300px]' : 'w-80'} h-96 cursor-pointer perspective-1000`}
+                  className={`relative ${isMobile ? 'min-w-[300px]' : 'w-80'} h-96 cursor-pointer`}
+                  style={{ perspective: '1000px' }}
                   initial={{ opacity: 0, x: 50 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.6, delay: cardIndex * 0.1 }}
@@ -204,7 +205,7 @@ const WhatWeDoSection = () => {
                 >
                   {/* Card Container with 3D transform */}
                   <motion.div
-                    className="relative w-full h-full preserve-3d"
+                    className="relative w-full h-full"
                     animate={{ rotateY: isFlipped ? 180 : 0 }}
                     transition={{ 
                       duration: 0.8, 
@@ -214,7 +215,7 @@ const WhatWeDoSection = () => {
                   >
                     {/* Front Face */}
                     <div 
-                      className={`absolute inset-0 w-full h-full backface-hidden rounded-3xl bg-gradient-to-br ${service.gradient} backdrop-blur-xl border-2 border-white/10 hover:border-white/30 transition-all duration-500 overflow-hidden ${getGlowClass(service.glowColor)}`}
+                      className={`absolute inset-0 w-full h-full rounded-3xl bg-gradient-to-br ${service.gradient} backdrop-blur-xl border-2 border-white/10 hover:border-white/30 transition-all duration-500 overflow-hidden ${getGlowClass(service.glowColor)}`}
                       style={{ backfaceVisibility: 'hidden' }}
                     >
                       {/* Animated background pattern */}
@@ -282,7 +283,7 @@ const WhatWeDoSection = () => {
 
                     {/* Back Face */}
                     <div 
-                      className={`absolute inset-0 w-full h-full backface-hidden rounded-3xl bg-gradient-to-br ${service.gradient} backdrop-blur-xl border-2 border-white/10 overflow-hidden ${getGlowClass(service.glowColor)}`}
+                      className={`absolute inset-0 w-full h-full rounded-3xl bg-gradient-to-br ${service.gradient} backdrop-blur-xl border-2 border-white/10 overflow-hidden ${getGlowClass(service.glowColor)}`}
                       style={{ 
                         backfaceVisibility: 'hidden',
                         transform: 'rotateY(180deg)'
@@ -348,25 +349,6 @@ const WhatWeDoSection = () => {
           </div>
         )}
       </div>
-
-      <style jsx>{`
-        .perspective-1000 {
-          perspective: 1000px;
-        }
-        .preserve-3d {
-          transform-style: preserve-3d;
-        }
-        .backface-hidden {
-          backface-visibility: hidden;
-        }
-        .scrollbar-hide {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-        .scrollbar-hide::-webkit-scrollbar {
-          display: none;
-        }
-      `}</style>
     </section>
   );
 };
