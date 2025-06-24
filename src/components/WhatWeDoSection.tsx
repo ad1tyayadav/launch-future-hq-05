@@ -1,6 +1,6 @@
 
 import React, { useRef, useEffect, useState } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { Rocket, Zap, Lightbulb, Target, Users, TrendingUp, Star, Sparkles, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from './ui/button';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from './ui/carousel';
@@ -8,6 +8,7 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 const WhatWeDoSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [currentStage, setCurrentStage] = useState(0);
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   
   const journeySteps = [
     {
@@ -15,6 +16,8 @@ const WhatWeDoSection = () => {
       title: "Idea Genesis",
       subtitle: "Your Vision Sparks",
       description: "Every great company starts with a brilliant idea floating in space",
+      detailedDescription: "We help you refine and validate your initial concept through market research, competitive analysis, and feasibility studies. Our team transforms your vision into a concrete business strategy with clear objectives and measurable goals.",
+      features: ["Market Research", "Competitive Analysis", "Feasibility Studies", "Business Strategy"],
       image: "https://images.unsplash.com/photo-1470813740244-df37b8c1edcb?w=800&h=600&fit=crop",
       color: "from-cyan-400/20 to-blue-400/20"
     },
@@ -23,6 +26,8 @@ const WhatWeDoSection = () => {
       title: "Team Assembly", 
       subtitle: "Building Your Crew",
       description: "We help assemble the perfect team for your mission to success",
+      detailedDescription: "Our recruitment experts identify and onboard top talent that aligns with your company culture and technical requirements. We build diverse, high-performing teams that can execute your vision effectively.",
+      features: ["Talent Acquisition", "Team Building", "Culture Alignment", "Skills Assessment"],
       image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop",
       color: "from-purple-400/20 to-pink-400/20"
     },
@@ -31,6 +36,8 @@ const WhatWeDoSection = () => {
       title: "Tech Launchpad",
       subtitle: "Power Systems Online", 
       description: "Building robust tech foundations that can handle orbital velocity",
+      detailedDescription: "We architect and implement scalable technology infrastructure using cutting-edge frameworks and cloud solutions. Our tech stack ensures your platform can grow from startup to enterprise scale seamlessly.",
+      features: ["Cloud Architecture", "Scalable Infrastructure", "Modern Frameworks", "DevOps Integration"],
       image: "https://images.unsplash.com/photo-1487887235947-a955ef187fcc?w=800&h=600&fit=crop",
       color: "from-emerald-400/20 to-teal-400/20"
     },
@@ -39,6 +46,8 @@ const WhatWeDoSection = () => {
       title: "Mission Control",
       subtitle: "Strategic Navigation",
       description: "Expert guidance to navigate through asteroid fields of challenges",
+      detailedDescription: "Our strategic advisors provide ongoing mentorship and guidance through every phase of your journey. We help you navigate market challenges, regulatory requirements, and growth opportunities with precision.",
+      features: ["Strategic Planning", "Risk Management", "Regulatory Compliance", "Growth Optimization"],
       image: "https://images.unsplash.com/photo-1500673922987-e212871fec22?w=800&h=600&fit=crop",
       color: "from-orange-400/20 to-red-400/20"
     },
@@ -47,13 +56,15 @@ const WhatWeDoSection = () => {
       title: "Orbital Success",
       subtitle: "Reaching New Heights",
       description: "Watch your startup achieve escape velocity and reach new markets",
+      detailedDescription: "We support your expansion into new markets and revenue streams through data-driven strategies and proven growth methodologies. Our success metrics ensure sustainable long-term growth and market leadership.",
+      features: ["Market Expansion", "Revenue Growth", "Performance Analytics", "Sustainable Scaling"],
       image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&h=600&fit=crop",
       color: "from-yellow-400/20 to-orange-400/20"
     }
   ];
 
   return (
-    <section className="py-20 relative overflow-hidden" style={{ backgroundColor: 'transparent' }}>
+    <section className="py-20 relative overflow-hidden" style={{ backgroundColor: 'transparent', opacity: 0 }}>
       {/* Floating cosmic elements */}
       {[...Array(30)].map((_, i) => (
         <motion.div
@@ -157,107 +168,147 @@ const WhatWeDoSection = () => {
             </motion.div>
           </motion.div>
 
-          {/* Journey Stages Carousel */}
-          <Carousel 
-            className="w-full"
-            opts={{
-              align: "start",
-              loop: true,
-            }}
-          >
-            <CarouselContent className="-ml-2 md:-ml-4">
-              {journeySteps.map((step, index) => (
-                <CarouselItem key={index} className="pl-2 md:pl-4 basis-full md:basis-1/2 lg:basis-1/3">
-                  <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: index * 0.1 }}
-                    className="group relative h-96"
-                    onHoverStart={() => setCurrentStage(index)}
-                  >
-                    {/* Stage Card */}
-                    <div className="glass-morphism h-full p-6 rounded-3xl backdrop-blur-xl bg-white/5 border-2 border-cyan-400/20 hover:border-cyan-400/50 transition-all duration-500 hover:scale-105 relative overflow-hidden">
-                      {/* Animated background pattern */}
-                      <div className={`absolute inset-0 bg-gradient-to-br ${step.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+          {/* Journey Stages Accordion */}
+          <div className="flex gap-4 h-96">
+            {journeySteps.map((step, index) => (
+              <motion.div
+                key={index}
+                className={`group relative cursor-pointer transition-all duration-500 ease-out ${
+                  hoveredCard === index 
+                    ? 'flex-[2] opacity-100' 
+                    : hoveredCard !== null 
+                      ? 'flex-[0.5] opacity-70' 
+                      : 'flex-1 opacity-100'
+                }`}
+                onMouseEnter={() => {
+                  setHoveredCard(index);
+                  setCurrentStage(index);
+                }}
+                onMouseLeave={() => setHoveredCard(null)}
+                initial={{ opacity: 0, x: 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+              >
+                {/* Stage Card */}
+                <div className="glass-morphism h-full w-full p-6 rounded-3xl backdrop-blur-xl bg-white/5 border-2 border-cyan-400/20 hover:border-cyan-400/50 transition-all duration-500 relative overflow-hidden">
+                  {/* Animated background pattern */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${step.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+                  
+                  {/* Floating particles inside card */}
+                  {[...Array(5)].map((_, i) => (
+                    <motion.div
+                      key={i}
+                      className="absolute w-1 h-1 bg-cyan-400/60 rounded-full"
+                      style={{
+                        left: `${20 + Math.random() * 60}%`,
+                        top: `${20 + Math.random() * 60}%`,
+                      }}
+                      animate={{
+                        scale: [0, 1, 0],
+                        opacity: [0, 1, 0],
+                        y: [0, -20, -40],
+                      }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        delay: i * 0.4,
+                      }}
+                    />
+                  ))}
+                  
+                  <div className="relative z-10 h-full flex flex-col">
+                    {/* Icon with orbital ring */}
+                    <div className="relative w-16 h-16 mx-auto mb-6">
+                      <motion.div
+                        className="w-full h-full bg-gradient-to-br from-cyan-400/20 to-purple-400/20 rounded-full flex items-center justify-center border-2 border-cyan-400/40"
+                        whileHover={{ scale: 1.1 }}
+                        animate={{ 
+                          boxShadow: [
+                            '0 0 20px rgba(0, 245, 255, 0.4)',
+                            '0 0 40px rgba(139, 92, 246, 0.4)',
+                            '0 0 20px rgba(0, 245, 255, 0.4)'
+                          ]
+                        }}
+                        transition={{ duration: 2, repeat: Infinity }}
+                      >
+                        <div className="text-cyan-400 group-hover:text-white transition-colors duration-500">
+                          {step.icon}
+                        </div>
+                      </motion.div>
                       
-                      {/* Floating particles inside card */}
-                      {[...Array(5)].map((_, i) => (
-                        <motion.div
-                          key={i}
-                          className="absolute w-1 h-1 bg-cyan-400/60 rounded-full"
-                          style={{
-                            left: `${20 + Math.random() * 60}%`,
-                            top: `${20 + Math.random() * 60}%`,
-                          }}
-                          animate={{
-                            scale: [0, 1, 0],
-                            opacity: [0, 1, 0],
-                            y: [0, -20, -40],
-                          }}
-                          transition={{
-                            duration: 3,
-                            repeat: Infinity,
-                            delay: i * 0.4,
-                          }}
-                        />
-                      ))}
-                      
-                      <div className="relative z-10 h-full flex flex-col">
-                        {/* Icon with orbital ring */}
-                        <div className="relative w-16 h-16 mx-auto mb-6">
-                          <motion.div
-                            className="w-full h-full bg-gradient-to-br from-cyan-400/20 to-purple-400/20 rounded-full flex items-center justify-center border-2 border-cyan-400/40"
-                            whileHover={{ scale: 1.1 }}
-                            animate={{ 
-                              boxShadow: [
-                                '0 0 20px rgba(0, 245, 255, 0.4)',
-                                '0 0 40px rgba(139, 92, 246, 0.4)',
-                                '0 0 20px rgba(0, 245, 255, 0.4)'
-                              ]
-                            }}
-                            transition={{ duration: 2, repeat: Infinity }}
-                          >
-                            <div className="text-cyan-400 group-hover:text-white transition-colors duration-500">
-                              {step.icon}
-                            </div>
-                          </motion.div>
-                          
-                          {/* Orbital ring */}
-                          <motion.div
-                            className="absolute inset-0 border-2 border-purple-400/30 rounded-full"
-                            animate={{ rotate: 360 }}
-                            transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-                          />
-                        </div>
-
-                        <div className="flex-1 flex flex-col text-center">
-                          <h3 className="text-xl font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors duration-500">
-                            {step.title}
-                          </h3>
-                          
-                          <p className="text-cyan-300 text-sm font-semibold mb-4 opacity-80">
-                            {step.subtitle}
-                          </p>
-                          
-                          <p className="text-white/80 leading-relaxed text-sm flex-1">
-                            {step.description}
-                          </p>
-                        </div>
-
-                        {/* Mission number */}
-                        <div className="absolute -top-3 -right-3 w-8 h-8 bg-gradient-to-br from-pink-400 to-purple-400 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-lg">
-                          {index + 1}
-                        </div>
-                      </div>
+                      {/* Orbital ring */}
+                      <motion.div
+                        className="absolute inset-0 border-2 border-purple-400/30 rounded-full"
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                      />
                     </div>
-                  </motion.div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            
-            <CarouselPrevious className="hidden md:flex -left-12 border-cyan-400/30 bg-white/5 hover:bg-cyan-400/20 text-cyan-400" />
-            <CarouselNext className="hidden md:flex -right-12 border-cyan-400/30 bg-white/5 hover:bg-cyan-400/20 text-cyan-400" />
-          </Carousel>
+
+                    <div className="flex-1 flex flex-col text-center">
+                      <h3 className="text-xl font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors duration-500">
+                        {step.title}
+                      </h3>
+                      
+                      <p className="text-cyan-300 text-sm font-semibold mb-4 opacity-80">
+                        {step.subtitle}
+                      </p>
+                      
+                      <p className="text-white/80 leading-relaxed text-sm mb-4">
+                        {step.description}
+                      </p>
+
+                      {/* Expanded Details */}
+                      <AnimatePresence>
+                        {hoveredCard === index && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.4, ease: "easeInOut" }}
+                            className="mt-4 border-t border-cyan-400/20 pt-4"
+                          >
+                            <motion.div
+                              initial={{ y: 20, opacity: 0 }}
+                              animate={{ y: 0, opacity: 1 }}
+                              exit={{ y: 20, opacity: 0 }}
+                              transition={{ duration: 0.3, delay: 0.1 }}
+                            >
+                              <p className="text-white/70 text-xs leading-relaxed mb-4">
+                                {step.detailedDescription}
+                              </p>
+                              
+                              <div className="space-y-2">
+                                <h4 className="text-cyan-300 font-semibold text-xs mb-2">
+                                  Key Features:
+                                </h4>
+                                {step.features.map((feature, featureIndex) => (
+                                  <motion.div
+                                    key={featureIndex}
+                                    initial={{ opacity: 0, x: -10 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    transition={{ duration: 0.2, delay: featureIndex * 0.05 }}
+                                    className="flex items-center text-xs text-white/60"
+                                  >
+                                    <div className="w-1 h-1 bg-cyan-400 rounded-full mr-2" />
+                                    {feature}
+                                  </motion.div>
+                                ))}
+                              </div>
+                            </motion.div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+
+                    {/* Mission number */}
+                    <div className="absolute -top-3 -right-3 w-8 h-8 bg-gradient-to-br from-pink-400 to-purple-400 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-lg">
+                      {index + 1}
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
 
         {/* Launch Sequence CTA */}
