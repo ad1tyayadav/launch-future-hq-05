@@ -1,4 +1,3 @@
-
 import React, { useRef, useMemo, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Environment, Float, Text } from '@react-three/drei';
@@ -163,14 +162,10 @@ function LoadingFallback() {
 
 export default function RotatingPhonesSection() {
   return (
-    <section className="py-24 relative overflow-hidden bg-gradient-to-b from-gray-950 via-black to-gray-950 min-h-screen">
-      {/* Background Elements */}
-      <div className="absolute inset-0">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl" />
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-cyan-400/10 rounded-full blur-2xl" />
-        
-        {/* Grid overlay */}
+    <section className="py-24 relative overflow-hidden min-h-screen">
+      {/* Minimal background elements for depth - no solid background */}
+      <div className="absolute inset-0">        
+        {/* Subtle grid overlay */}
         <div className="absolute inset-0 opacity-[0.02]">
           <div 
             className="h-full w-full"
