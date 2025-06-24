@@ -178,8 +178,8 @@ const ServicesCarousel = () => {
   const currentServiceData = services[currentService];
 
   return (
-    <section className="py-20 relative overflow-hidden min-h-screen bg-transparent">      
-      <div className="container mx-auto px-6 relative z-10 h-full flex flex-col">
+    <section className="py-12 relative overflow-hidden bg-transparent">      
+      <div className="container mx-auto px-6 relative z-10 h-screen flex flex-col">
         {/* Floating Tech Words */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           {currentServiceData.techWords.map((word, index) => (
@@ -212,19 +212,19 @@ const ServicesCarousel = () => {
           ))}
         </div>
 
-        {/* Main Service Display */}
-        <div className="flex-1 flex flex-col justify-center">
+        {/* Main Service Display - Reduced spacing */}
+        <div className="flex-1 flex flex-col justify-center pt-4">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentService}
-              initial={{ opacity: 0, y: 50, scale: 0.95 }}
+              initial={{ opacity: 0, y: 30, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -50, scale: 0.95 }}
-              transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-              className="text-center mb-8"
+              exit={{ opacity: 0, y: -30, scale: 0.95 }}
+              transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+              className="text-center mb-6"
             >
               <motion.div
-                className="inline-block px-8 py-4 bg-white/5 backdrop-blur-xl border border-white/20 rounded-full mb-8"
+                className="inline-block px-6 py-3 bg-white/5 backdrop-blur-xl border border-white/20 rounded-full mb-4"
                 animate={{ 
                   boxShadow: [
                     '0 0 20px rgba(0, 245, 255, 0.2)',
@@ -234,13 +234,13 @@ const ServicesCarousel = () => {
                 }}
                 transition={{ duration: 4, repeat: Infinity }}
               >
-                <span className="text-cyan-300 font-mono font-medium text-lg tracking-wider">
+                <span className="text-cyan-300 font-mono font-medium text-base tracking-wider">
                   {currentServiceData.subtitle}
                 </span>
               </motion.div>
 
               <motion.h2 
-                className="text-4xl md:text-5xl lg:text-6xl font-sans font-bold text-white mb-6 tracking-tight"
+                className="text-3xl md:text-4xl lg:text-5xl font-sans font-bold text-white mb-4 tracking-tight"
                 animate={{
                   textShadow: [
                     '0 0 20px rgba(0, 245, 255, 0.3)',
@@ -253,42 +253,42 @@ const ServicesCarousel = () => {
                 {currentServiceData.title}
               </motion.h2>
               <motion.p 
-                className="text-lg text-white/70 font-sans max-w-4xl mx-auto leading-relaxed"
-                initial={{ opacity: 0, y: 30 }}
+                className="text-base text-white/70 font-sans max-w-3xl mx-auto leading-relaxed"
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3, duration: 0.8 }}
+                transition={{ delay: 0.3, duration: 0.6 }}
               >
                 {currentServiceData.description}
               </motion.p>
             </motion.div>
           </AnimatePresence>
 
-          {/* Enhanced Timeline Cards - Reduced size */}
-          <div className="relative max-w-5xl mx-auto">
+          {/* Timeline Cards - Significantly reduced size */}
+          <div className="relative max-w-4xl mx-auto">
             <AnimatePresence mode="wait">
               <motion.div
                 key={`${currentService}-${currentCard}`}
-                initial={{ opacity: 0, scale: 0.8, rotateY: 20 }}
+                initial={{ opacity: 0, scale: 0.9, rotateY: 15 }}
                 animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-                exit={{ opacity: 0, scale: 0.8, rotateY: -20 }}
-                transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+                exit={{ opacity: 0, scale: 0.9, rotateY: -15 }}
+                transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
                 className="relative"
               >
                 <motion.div 
-                  className="relative bg-black/20 backdrop-blur-2xl border-0 rounded-3xl p-8 md:p-12 shadow-2xl overflow-hidden"
+                  className="relative bg-black/20 backdrop-blur-2xl border-0 rounded-2xl p-6 md:p-8 shadow-2xl overflow-hidden"
                   style={{
                     background: 'linear-gradient(135deg, rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.05))'
                   }}
-                  whileHover={{ scale: 1.02, y: -10 }}
-                  transition={{ duration: 0.4, ease: "easeOut" }}
+                  whileHover={{ scale: 1.01, y: -5 }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
                 >
                   {/* Animated Rainbow Border */}
                   <motion.div
-                    className="absolute inset-0 rounded-3xl"
+                    className="absolute inset-0 rounded-2xl"
                     style={{
                       background: 'linear-gradient(45deg, #ff0080, #00f5ff, #8b5cf6, #39ff14, #ff0080)',
                       backgroundSize: '400% 400%',
-                      padding: '3px',
+                      padding: '2px',
                       WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
                       WebkitMaskComposite: 'xor',
                       mask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
@@ -304,24 +304,24 @@ const ServicesCarousel = () => {
                     }}
                   />
 
-                  {/* Enhanced Progress indicator */}
-                  <div className="flex justify-center mb-8">
-                    <div className="flex space-x-4">
+                  {/* Progress indicator - Smaller */}
+                  <div className="flex justify-center mb-4">
+                    <div className="flex space-x-2">
                       {currentServiceData.timeline.map((_, index) => (
                         <motion.div
                           key={index}
-                          className={`h-3 rounded-full transition-all duration-1000 ${
+                          className={`h-2 rounded-full transition-all duration-1000 ${
                             index === currentCard
-                              ? 'w-20 bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500'
+                              ? 'w-12 bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500'
                               : index < currentCard
-                              ? 'w-10 bg-gradient-to-r from-cyan-400 to-purple-400'
-                              : 'w-10 bg-white/20'
+                              ? 'w-6 bg-gradient-to-r from-cyan-400 to-purple-400'
+                              : 'w-6 bg-white/20'
                           }`}
                           animate={index === currentCard ? {
                             boxShadow: [
-                              '0 0 15px rgba(0, 245, 255, 0.5)',
-                              '0 0 25px rgba(139, 92, 246, 0.7)',
-                              '0 0 15px rgba(0, 245, 255, 0.5)'
+                              '0 0 10px rgba(0, 245, 255, 0.5)',
+                              '0 0 20px rgba(139, 92, 246, 0.7)',
+                              '0 0 10px rgba(0, 245, 255, 0.5)'
                             ]
                           } : {}}
                           transition={{ duration: 2, repeat: Infinity }}
@@ -332,29 +332,29 @@ const ServicesCarousel = () => {
 
                   <div className="text-center">
                     <motion.div
-                      className="inline-flex items-center space-x-6 px-8 py-3 bg-gradient-to-r from-cyan-500/20 via-purple-500/20 to-pink-500/20 border border-cyan-400/30 rounded-full mb-8"
+                      className="inline-flex items-center space-x-4 px-6 py-2 bg-gradient-to-r from-cyan-500/20 via-purple-500/20 to-pink-500/20 border border-cyan-400/30 rounded-full mb-4"
                       animate={{ 
-                        scale: [1, 1.05, 1],
+                        scale: [1, 1.02, 1],
                         boxShadow: [
-                          '0 0 25px rgba(0, 245, 255, 0.3)',
-                          '0 0 35px rgba(139, 92, 246, 0.5)',
-                          '0 0 25px rgba(0, 245, 255, 0.3)'
+                          '0 0 20px rgba(0, 245, 255, 0.3)',
+                          '0 0 30px rgba(139, 92, 246, 0.5)',
+                          '0 0 20px rgba(0, 245, 255, 0.3)'
                         ]
                       }}
                       transition={{ duration: 3, repeat: Infinity }}
                     >
-                      <span className="text-cyan-300 font-mono font-semibold text-base tracking-wider">
+                      <span className="text-cyan-300 font-mono font-semibold text-sm tracking-wider">
                         PHASE {currentCard + 1}
                       </span>
-                      <div className="w-px h-6 bg-white/30" />
-                      <span className="text-purple-300 font-sans text-base">
+                      <div className="w-px h-4 bg-white/30" />
+                      <span className="text-purple-300 font-sans text-sm">
                         {currentServiceData.timeline[currentCard].duration}
                       </span>
                     </motion.div>
 
                     <motion.h3 
-                      className="text-2xl md:text-3xl lg:text-4xl font-sans font-bold text-white mb-6"
-                      initial={{ opacity: 0, y: 30 }}
+                      className="text-xl md:text-2xl lg:text-3xl font-sans font-bold text-white mb-4"
+                      initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.1 }}
                     >
@@ -362,8 +362,8 @@ const ServicesCarousel = () => {
                     </motion.h3>
                     
                     <motion.p 
-                      className="text-lg md:text-xl text-white/80 font-sans mb-8 max-w-3xl mx-auto"
-                      initial={{ opacity: 0, y: 30 }}
+                      className="text-base md:text-lg text-white/80 font-sans mb-4 max-w-2xl mx-auto"
+                      initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.2 }}
                     >
@@ -371,28 +371,28 @@ const ServicesCarousel = () => {
                     </motion.p>
                     
                     <motion.p 
-                      className="text-base text-white/60 font-sans max-w-4xl mx-auto leading-relaxed mb-8"
-                      initial={{ opacity: 0, y: 30 }}
+                      className="text-sm text-white/60 font-sans max-w-3xl mx-auto leading-relaxed mb-4"
+                      initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.3 }}
                     >
                       {currentServiceData.timeline[currentCard].details}
                     </motion.p>
 
-                    {/* Deliverables Section */}
+                    {/* Deliverables Section - Smaller */}
                     <motion.div
-                      className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 max-w-4xl mx-auto"
+                      className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-4 max-w-3xl mx-auto"
                       initial={{ opacity: 0, scale: 0.95 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: 0.4, duration: 0.4 }}
                     >
-                      <h4 className="text-lg font-mono font-semibold text-cyan-300 mb-4">Key Deliverables</h4>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      <h4 className="text-base font-mono font-semibold text-cyan-300 mb-3">Key Deliverables</h4>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                         {currentServiceData.timeline[currentCard].deliverables.map((deliverable, index) => (
                           <motion.div
                             key={index}
-                            className="flex items-center space-x-3 p-3 bg-white/5 rounded-lg border border-white/10"
-                            initial={{ opacity: 0, x: -30 }}
+                            className="flex items-center space-x-2 p-2 bg-white/5 rounded-lg border border-white/10"
+                            initial={{ opacity: 0, x: -20 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ delay: 0.5 + index * 0.1 }}
                           >
@@ -406,20 +406,20 @@ const ServicesCarousel = () => {
 
                   {/* Enhanced decorative elements */}
                   <motion.div 
-                    className="absolute top-6 left-6 w-24 h-24 bg-gradient-to-br from-cyan-500/10 to-purple-500/10 rounded-full blur-2xl"
+                    className="absolute top-4 left-4 w-16 h-16 bg-gradient-to-br from-cyan-500/10 to-purple-500/10 rounded-full blur-xl"
                     animate={{ 
-                      scale: [1, 1.3, 1],
+                      scale: [1, 1.2, 1],
                       rotate: [0, 180, 360]
                     }}
-                    transition={{ duration: 10, repeat: Infinity }}
+                    transition={{ duration: 8, repeat: Infinity }}
                   />
                   <motion.div 
-                    className="absolute bottom-6 right-6 w-20 h-20 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-full blur-xl"
+                    className="absolute bottom-4 right-4 w-12 h-12 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-full blur-lg"
                     animate={{ 
-                      scale: [1.3, 1, 1.3],
+                      scale: [1.2, 1, 1.2],
                       rotate: [360, 180, 0]
                     }}
-                    transition={{ duration: 8, repeat: Infinity }}
+                    transition={{ duration: 6, repeat: Infinity }}
                   />
                 </motion.div>
               </motion.div>
@@ -427,18 +427,18 @@ const ServicesCarousel = () => {
           </div>
         </div>
 
-        {/* Enhanced Preview Cards - Now clickable to control main display */}
+        {/* Preview Cards - Reduced margin-top */}
         <motion.div 
-          className="flex justify-center mt-12"
-          initial={{ opacity: 0, y: 50 }}
+          className="flex justify-center mt-6"
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.2 }}
+          transition={{ delay: 1.0 }}
         >
-          <div className="flex space-x-6 max-w-6xl overflow-hidden">
+          <div className="flex space-x-4 max-w-5xl overflow-hidden">
             {services.map((service, index) => (
               <motion.div
                 key={index}
-                className={`relative cursor-pointer transition-all duration-1000 ${
+                className={`relative cursor-pointer transition-all duration-700 ${
                   index === currentService
                     ? 'opacity-100 scale-100 ring-2 ring-cyan-400/40'
                     : 'opacity-70 hover:opacity-100 scale-90 hover:scale-95'
@@ -447,21 +447,21 @@ const ServicesCarousel = () => {
                   setCurrentService(index);
                   setCurrentCard(0);
                 }}
-                whileHover={{ y: -8, rotateY: 8 }}
-                transition={{ duration: 0.4 }}
+                whileHover={{ y: -6, rotateY: 6 }}
+                transition={{ duration: 0.3 }}
               >
-                <div className="bg-white/5 backdrop-blur-2xl border border-white/20 rounded-2xl p-6 w-56">
-                  <h4 className="text-base font-mono font-semibold text-white mb-3 truncate">
+                <div className="bg-white/5 backdrop-blur-2xl border border-white/20 rounded-xl p-4 w-48">
+                  <h4 className="text-sm font-mono font-semibold text-white mb-2 truncate">
                     {service.title}
                   </h4>
-                  <p className="text-sm text-white/60 mb-4 line-clamp-2">
+                  <p className="text-xs text-white/60 mb-3 line-clamp-2">
                     {service.subtitle}
                   </p>
-                  <div className="flex space-x-2">
+                  <div className="flex space-x-1">
                     {service.timeline.map((_, cardIndex) => (
                       <div
                         key={cardIndex}
-                        className={`h-2 flex-1 rounded-full ${
+                        className={`h-1.5 flex-1 rounded-full ${
                           index === currentService && cardIndex <= currentCard
                             ? 'bg-gradient-to-r from-cyan-400 to-purple-500'
                             : 'bg-white/20'
