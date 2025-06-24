@@ -199,10 +199,11 @@ function Scene() {
 
 // Loading fallback
 function LoadingFallback() {
-  return <div className="flex items-center justify-center h-[900px]">
+  return <div className="flex items-center justify-center h-[800px]">
       <div className="text-white text-xl">Loading 3D Experience...</div>
     </div>;
 }
+
 export default function RotatingPhonesSection() {
   return <section className="py-32 relative overflow-hidden min-h-screen">
       {/* Background elements for depth */}
@@ -259,9 +260,11 @@ export default function RotatingPhonesSection() {
         </motion.div>
 
         {/* 3D Animation Container - Reduced height to match smaller radius */}
-        <div className="relative w-full h-[900px] mb-12">
+        <div className="relative w-full h-[800px] mb-12">
           <Suspense fallback={<LoadingFallback />}>
-            
+            <Canvas shadows camera={{ position: [0, 0, 35], fov: 60 }}>
+              <Scene />
+            </Canvas>
           </Suspense>
         </div>
 
@@ -301,7 +304,18 @@ export default function RotatingPhonesSection() {
           desc: "Scalable, resilient infrastructure",
           color: "from-red-500/20 to-rose-500/20",
           accent: "border-red-400/30"
-        }].map((service, index) => {})}
+        }].map((service, index) => (
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: index * 0.1 }}
+            className={`relative p-6 rounded-2xl bg-gradient-to-br ${service.color} backdrop-blur-sm border ${service.accent} hover:scale-105 transition-all duration-300`}
+          >
+            <h3 className="text-xl font-bold text-white mb-3">{service.title}</h3>
+            <p className="text-gray-300 text-sm leading-relaxed">{service.desc}</p>
+          </motion.div>
+        ))}
         </motion.div>
       </div>
     </section>;
