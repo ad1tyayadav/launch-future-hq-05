@@ -267,56 +267,6 @@ export default function RotatingPhonesSection() {
             </Canvas>
           </Suspense>
         </div>
-
-        {/* Service Descriptions with glassmorphism */}
-        <motion.div initial={{
-        opacity: 0,
-        y: 30
-      }} whileInView={{
-        opacity: 1,
-        y: 0
-      }} transition={{
-        duration: 0.8,
-        delay: 0.4
-      }} className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
-          {[{
-          title: "AI-Powered Apps",
-          desc: "Intelligent applications that adapt and learn",
-          color: "from-cyan-500/20 to-blue-500/20",
-          accent: "border-cyan-400/30"
-        }, {
-          title: "3D Web Experiences",
-          desc: "Immersive interfaces and visualizations",
-          color: "from-purple-500/20 to-pink-500/20",
-          accent: "border-purple-400/30"
-        }, {
-          title: "Blockchain Solutions",
-          desc: "Secure, decentralized applications",
-          color: "from-emerald-500/20 to-teal-500/20",
-          accent: "border-emerald-400/30"
-        }, {
-          title: "AR/VR Development",
-          desc: "Next-generation reality experiences",
-          color: "from-amber-500/20 to-orange-500/20",
-          accent: "border-amber-400/30"
-        }, {
-          title: "Cloud Architecture",
-          desc: "Scalable, resilient infrastructure",
-          color: "from-red-500/20 to-rose-500/20",
-          accent: "border-red-400/30"
-        }].map((service, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: index * 0.1 }}
-            className={`relative p-6 rounded-2xl bg-gradient-to-br ${service.color} backdrop-blur-sm border ${service.accent} hover:scale-105 transition-all duration-300`}
-          >
-            <h3 className="text-xl font-bold text-white mb-3">{service.title}</h3>
-            <p className="text-gray-300 text-sm leading-relaxed">{service.desc}</p>
-          </motion.div>
-        ))}
-        </motion.div>
       </div>
     </section>;
 }
