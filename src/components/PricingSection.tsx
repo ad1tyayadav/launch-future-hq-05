@@ -24,7 +24,9 @@ const PricingSection = () => {
       ],
       price: "Starting from $999",
       tag: "NEURAL",
-      cardNumber: "4127 8394 5621 7890"
+      cardNumber: "4127 8394 5621 7890",
+      gradient: "from-slate-800 via-slate-700 to-slate-900",
+      accentColor: "from-blue-400 to-cyan-500"
     },
     {
       title: "Blockchain Development",
@@ -45,7 +47,9 @@ const PricingSection = () => {
       ],
       price: "Starting from $1,499",
       tag: "CRYPTO",
-      cardNumber: "5532 1047 8293 4567"
+      cardNumber: "5532 1047 8293 4567",
+      gradient: "from-amber-900 via-yellow-800 to-amber-950",
+      accentColor: "from-amber-400 to-yellow-500"
     },
     {
       title: "App & Website Development",
@@ -66,7 +70,9 @@ const PricingSection = () => {
       ],
       price: "Starting from $799",
       tag: "MOBILE",
-      cardNumber: "3784 5629 1037 842"
+      cardNumber: "3784 5629 1037 842",
+      gradient: "from-emerald-900 via-green-800 to-emerald-950",
+      accentColor: "from-emerald-400 to-green-500"
     },
     {
       title: "UI/UX Designing",
@@ -87,7 +93,9 @@ const PricingSection = () => {
       ],
       price: "Starting from $599",
       tag: "DESIGN",
-      cardNumber: "6011 4578 9321 0456"
+      cardNumber: "6011 4578 9321 0456",
+      gradient: "from-purple-900 via-violet-800 to-purple-950",
+      accentColor: "from-purple-400 to-violet-500"
     }
   ];
 
@@ -135,8 +143,8 @@ const PricingSection = () => {
           </p>
         </motion.div>
 
-        {/* 2x2 Bento Grid Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        {/* Premium Card Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
           {services.map((service, index) => {
             const IconComponent = service.icon;
             return (
@@ -146,131 +154,142 @@ const PricingSection = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="group relative h-80 [perspective:1000px]"
+                className="group relative h-96 [perspective:1000px]"
               >
                 {/* Card Container with Flip Effect */}
                 <div className="relative w-full h-full [transform-style:preserve-3d] transition-transform duration-700 group-hover:[transform:rotateY(180deg)]">
                   
                   {/* Front of Card */}
-                  <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] bg-gradient-to-br from-gray-900 via-gray-800 to-black rounded-2xl overflow-hidden border border-cyan-500/30 group-hover:border-cyan-400/60 transition-all duration-500 group-hover:shadow-[0_0_40px_rgba(6,182,212,0.4)]">
-                    {/* Holographic overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/5 via-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className={`absolute inset-0 w-full h-full [backface-visibility:hidden] bg-gradient-to-br ${service.gradient} rounded-3xl overflow-hidden shadow-[0_20px_40px_rgba(0,0,0,0.8),0_0_60px_rgba(255,255,255,0.1)_inset] border border-white/20 group-hover:shadow-[0_30px_60px_rgba(0,0,0,0.9),0_0_80px_rgba(255,255,255,0.15)_inset] transition-all duration-500`}>
                     
-                    {/* Circuit pattern background */}
-                    <div className="absolute inset-0 opacity-10"
+                    {/* Metallic reflection overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent opacity-60" />
+                    
+                    {/* Embossed border effect */}
+                    <div className="absolute inset-[1px] rounded-3xl border border-white/10 shadow-[0_0_20px_rgba(255,255,255,0.1)_inset]" />
+                    
+                    {/* Premium texture pattern */}
+                    <div className="absolute inset-0 opacity-30"
                       style={{
-                        backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%2306b6d4' fill-opacity='0.3'%3E%3Cpath d='M20 20.5V18H18v2.5h2zm0-2.5v-2.5h-2V18h2zM18 18H15.5v2H18v-2zm-2.5 0h-2.5v2h2.5v-2z'/%3E%3C/g%3E%3C/svg%3E")`,
+                        backgroundImage: `url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M10 1L5 6l5 5 5-5-5-5zM0 11l5-5 5 5-5 5-5-5z'/%3E%3C/g%3E%3C/svg%3E")`,
                       }}
                     />
 
-                    {/* Card Header */}
-                    <div className="absolute top-6 left-6 right-6 flex justify-between items-start">
-                      <div className="flex items-center space-x-3">
+                    {/* Card Header with Premium Styling */}
+                    <div className="absolute top-8 left-8 right-8 flex justify-between items-start">
+                      <div className="flex items-center space-x-4">
                         <motion.div 
-                          className="w-12 h-12 rounded-xl bg-gradient-to-r from-cyan-400 to-blue-500 flex items-center justify-center"
-                          whileHover={{ rotate: 360 }}
-                          transition={{ duration: 0.8 }}
+                          className={`w-16 h-16 rounded-2xl bg-gradient-to-r ${service.accentColor} flex items-center justify-center shadow-[0_8px_16px_rgba(0,0,0,0.4),0_0_20px_rgba(255,255,255,0.1)_inset] border border-white/20`}
+                          whileHover={{ scale: 1.1, rotateY: 180 }}
+                          transition={{ duration: 0.6 }}
                         >
-                          <IconComponent size={24} className="text-white" />
+                          <IconComponent size={28} className="text-white drop-shadow-lg" />
                         </motion.div>
                         <div>
-                          <div className="text-cyan-400 text-xs font-mono tracking-wider">SERVICE MODULE</div>
-                          <div className="text-white font-orbitron font-bold text-sm">{service.tag}</div>
+                          <div className="text-white/80 text-xs font-mono tracking-[0.2em] uppercase">Premium Service</div>
+                          <div className="text-white font-orbitron font-bold text-lg tracking-wider">{service.tag}</div>
                         </div>
                       </div>
                       
-                      {/* Security chip */}
-                      <div className="w-8 h-6 bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-sm flex items-center justify-center">
-                        <div className="w-4 h-3 bg-yellow-300 rounded-xs opacity-80" />
+                      {/* Security chip with metallic finish */}
+                      <div className={`w-12 h-8 bg-gradient-to-r ${service.accentColor} rounded-lg flex items-center justify-center shadow-[0_4px_8px_rgba(0,0,0,0.4),0_0_10px_rgba(255,255,255,0.2)_inset] border border-white/30`}>
+                        <div className="w-8 h-4 bg-white/90 rounded-sm opacity-90 shadow-inner" />
                       </div>
                     </div>
 
-                    {/* Card Number */}
-                    <div className="absolute top-20 left-6 right-6">
-                      <div className="text-cyan-300 font-mono text-lg tracking-[0.2em] mb-2">
+                    {/* Card Number with Embossed Effect */}
+                    <div className="absolute top-32 left-8 right-8">
+                      <div className="text-white/90 font-mono text-xl tracking-[0.3em] mb-2 drop-shadow-lg text-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">
                         {service.cardNumber}
                       </div>
                     </div>
 
-                    {/* Card Content */}
-                    <div className="absolute bottom-16 left-6 right-6">
-                      <h3 className="text-white font-orbitron font-bold text-lg mb-3 leading-tight">
+                    {/* Service Title and Features */}
+                    <div className="absolute bottom-24 left-8 right-8">
+                      <h3 className="text-white font-orbitron font-bold text-xl mb-4 leading-tight drop-shadow-lg">
                         {service.title}
                       </h3>
                       
-                      <div className="space-y-1 mb-4">
+                      <div className="space-y-2 mb-6">
                         {service.features.slice(0, 3).map((feature, featureIndex) => (
                           <motion.div
                             key={featureIndex}
                             initial={{ opacity: 0, x: -20 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.3, delay: featureIndex * 0.1 + 0.3 }}
-                            className="text-cyan-100 text-xs flex items-center"
+                            className="text-white/90 text-sm flex items-center"
                           >
-                            <div className="w-1 h-1 bg-cyan-400 rounded-full mr-2" />
+                            <div className={`w-2 h-2 bg-gradient-to-r ${service.accentColor} rounded-full mr-3 shadow-lg`} />
                             {feature}
                           </motion.div>
                         ))}
                       </div>
                       
-                      <div className="text-cyan-400 font-orbitron font-bold text-lg glow-text">
+                      <div className={`text-transparent bg-gradient-to-r ${service.accentColor} bg-clip-text font-orbitron font-bold text-xl`}>
                         {service.price}
                       </div>
                     </div>
 
                     {/* Card Footer */}
-                    <div className="absolute bottom-6 right-6">
-                      <div className="text-xs text-cyan-300 font-mono">HOVER TO FLIP →</div>
+                    <div className="absolute bottom-8 right-8">
+                      <div className="text-xs text-white/60 font-mono uppercase tracking-wider">Hover to Explore →</div>
                     </div>
 
-                    {/* Holographic stripe */}
+                    {/* Metallic shine effect */}
                     <motion.div 
-                      className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent"
-                      initial={{ x: '-100%' }}
-                      animate={{ x: '100%' }}
-                      transition={{ duration: 3, repeat: Infinity, repeatDelay: 2 }}
+                      className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent"
+                      initial={{ x: '-100%', skewX: -20 }}
+                      animate={{ x: '200%' }}
+                      transition={{ duration: 3, repeat: Infinity, repeatDelay: 5, ease: "easeInOut" }}
                     />
 
-                    {/* Corner accents */}
-                    <div className="absolute top-0 left-0 w-6 h-6 border-l-2 border-t-2 border-cyan-400/60 rounded-tl-2xl" />
-                    <div className="absolute top-0 right-0 w-6 h-6 border-r-2 border-t-2 border-cyan-400/60 rounded-tr-2xl" />
-                    <div className="absolute bottom-0 left-0 w-6 h-6 border-l-2 border-b-2 border-cyan-400/60 rounded-bl-2xl" />
-                    <div className="absolute bottom-0 right-0 w-6 h-6 border-r-2 border-b-2 border-cyan-400/60 rounded-br-2xl" />
+                    {/* Premium corner accents */}
+                    <div className="absolute top-4 left-4 w-8 h-8 border-l-2 border-t-2 border-white/40 rounded-tl-3xl" />
+                    <div className="absolute top-4 right-4 w-8 h-8 border-r-2 border-t-2 border-white/40 rounded-tr-3xl" />
+                    <div className="absolute bottom-4 left-4 w-8 h-8 border-l-2 border-b-2 border-white/40 rounded-bl-3xl" />
+                    <div className="absolute bottom-4 right-4 w-8 h-8 border-r-2 border-b-2 border-white/40 rounded-br-3xl" />
                   </div>
 
                   {/* Back of Card */}
-                  <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] [transform:rotateY(180deg)] bg-gradient-to-br from-gray-900 via-gray-800 to-black rounded-2xl overflow-hidden border border-cyan-500/30 shadow-[0_0_40px_rgba(6,182,212,0.4)]">
-                    {/* Circuit pattern background */}
-                    <div className="absolute inset-0 opacity-10"
+                  <div className={`absolute inset-0 w-full h-full [backface-visibility:hidden] [transform:rotateY(180deg)] bg-gradient-to-br ${service.gradient} rounded-3xl overflow-hidden shadow-[0_30px_60px_rgba(0,0,0,0.9),0_0_80px_rgba(255,255,255,0.15)_inset] border border-white/20`}>
+                    
+                    {/* Metallic reflection overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-bl from-transparent via-white/5 to-transparent opacity-60" />
+                    
+                    {/* Embossed border effect */}
+                    <div className="absolute inset-[1px] rounded-3xl border border-white/10 shadow-[0_0_20px_rgba(255,255,255,0.1)_inset]" />
+                    
+                    {/* Premium texture pattern */}
+                    <div className="absolute inset-0 opacity-30"
                       style={{
-                        backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%2306b6d4' fill-opacity='0.3'%3E%3Cpath d='M20 20.5V18H18v2.5h2zm0-2.5v-2.5h-2V18h2zM18 18H15.5v2H18v-2zm-2.5 0h-2.5v2h2.5v-2z'/%3E%3C/g%3E%3C/svg%3E")`,
+                        backgroundImage: `url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M10 1L5 6l5 5 5-5-5-5zM0 11l5-5 5 5-5 5-5-5z'/%3E%3C/g%3E%3C/svg%3E")`,
                       }}
                     />
 
                     {/* Back Card Header */}
-                    <div className="absolute top-6 left-6 right-6">
-                      <div className="flex items-center space-x-3 mb-4">
-                        <IconComponent size={20} className="text-cyan-400" />
+                    <div className="absolute top-8 left-8 right-8">
+                      <div className="flex items-center space-x-4 mb-6">
+                        <IconComponent size={24} className={`text-transparent bg-gradient-to-r ${service.accentColor} bg-clip-text`} />
                         <div>
-                          <div className="text-cyan-400 text-xs font-mono tracking-wider">EXTENDED FEATURES</div>
-                          <div className="text-white font-orbitron font-bold text-sm">{service.tag}</div>
+                          <div className="text-white/80 text-xs font-mono tracking-[0.2em] uppercase">Extended Features</div>
+                          <div className="text-white font-orbitron font-bold text-lg">{service.tag}</div>
                         </div>
                       </div>
                     </div>
 
                     {/* Extended Features */}
-                    <div className="absolute top-20 left-6 right-6 bottom-20">
-                      <h3 className="text-white font-orbitron font-bold text-lg mb-4">
+                    <div className="absolute top-24 left-8 right-8 bottom-24">
+                      <h3 className="text-white font-orbitron font-bold text-xl mb-6 drop-shadow-lg">
                         {service.title}
                       </h3>
                       
-                      <div className="space-y-2 mb-4">
+                      <div className="space-y-3 mb-6 max-h-48 overflow-y-auto custom-scrollbar">
                         {service.moreFeatures.map((feature, featureIndex) => (
                           <div
                             key={featureIndex}
-                            className="text-cyan-100 text-xs flex items-center"
+                            className="text-white/90 text-sm flex items-center"
                           >
-                            <div className="w-1 h-1 bg-cyan-400 rounded-full mr-2 flex-shrink-0" />
+                            <div className={`w-2 h-2 bg-gradient-to-r ${service.accentColor} rounded-full mr-3 flex-shrink-0 shadow-lg`} />
                             {feature}
                           </div>
                         ))}
@@ -278,25 +297,25 @@ const PricingSection = () => {
                     </div>
 
                     {/* Back Card Footer */}
-                    <div className="absolute bottom-6 left-6 right-6 flex justify-between items-end">
-                      <div className="text-cyan-400 font-orbitron font-bold text-lg glow-text">
+                    <div className="absolute bottom-8 left-8 right-8 flex justify-between items-end">
+                      <div className={`text-transparent bg-gradient-to-r ${service.accentColor} bg-clip-text font-orbitron font-bold text-xl`}>
                         {service.price}
                       </div>
                       
                       <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        className="px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-mono text-xs rounded-lg border border-cyan-400/50 hover:border-cyan-300 transition-all duration-300"
+                        className={`px-6 py-3 bg-gradient-to-r ${service.accentColor} text-white font-mono text-sm rounded-xl shadow-[0_8px_16px_rgba(0,0,0,0.4),0_0_20px_rgba(255,255,255,0.1)_inset] border border-white/20 hover:shadow-[0_12px_24px_rgba(0,0,0,0.5),0_0_30px_rgba(255,255,255,0.15)_inset] transition-all duration-300`}
                       >
-                        ACTIVATE →
+                        ACTIVATE PREMIUM →
                       </motion.button>
                     </div>
 
-                    {/* Corner accents */}
-                    <div className="absolute top-0 left-0 w-6 h-6 border-l-2 border-t-2 border-cyan-400/60 rounded-tl-2xl" />
-                    <div className="absolute top-0 right-0 w-6 h-6 border-r-2 border-t-2 border-cyan-400/60 rounded-tr-2xl" />
-                    <div className="absolute bottom-0 left-0 w-6 h-6 border-l-2 border-b-2 border-cyan-400/60 rounded-bl-2xl" />
-                    <div className="absolute bottom-0 right-0 w-6 h-6 border-r-2 border-b-2 border-cyan-400/60 rounded-br-2xl" />
+                    {/* Premium corner accents */}
+                    <div className="absolute top-4 left-4 w-8 h-8 border-l-2 border-t-2 border-white/40 rounded-tl-3xl" />
+                    <div className="absolute top-4 right-4 w-8 h-8 border-r-2 border-t-2 border-white/40 rounded-tr-3xl" />
+                    <div className="absolute bottom-4 left-4 w-8 h-8 border-l-2 border-b-2 border-white/40 rounded-bl-3xl" />
+                    <div className="absolute bottom-4 right-4 w-8 h-8 border-r-2 border-b-2 border-white/40 rounded-br-3xl" />
                   </div>
                 </div>
               </motion.div>
@@ -304,6 +323,23 @@ const PricingSection = () => {
           })}
         </div>
       </div>
+
+      <style jsx>{`
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: rgba(255, 255, 255, 0.1);
+          border-radius: 2px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: rgba(255, 255, 255, 0.3);
+          border-radius: 2px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+          background: rgba(255, 255, 255, 0.5);
+        }
+      `}</style>
     </section>
   );
 };
