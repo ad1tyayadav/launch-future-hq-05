@@ -1,4 +1,3 @@
-
 import React, { useRef, useEffect, useState } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { Rocket, Zap, Lightbulb, Target, Users, TrendingUp, Star, Sparkles, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -64,7 +63,7 @@ const WhatWeDoSection = () => {
   ];
 
   return (
-    <section className="py-20 relative overflow-hidden" style={{ backgroundColor: 'transparent', opacity: 0 }}>
+    <section className="py-20 relative overflow-hidden" style={{ backgroundColor: 'transparent', opacity: 1 }}>
       {/* Floating cosmic elements */}
       {[...Array(30)].map((_, i) => (
         <motion.div
