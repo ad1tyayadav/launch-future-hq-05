@@ -76,7 +76,7 @@ function PhoneModel({ position, rotation, title, color }: {
 }
 
 // Circular Orbit Animation
-function CircularOrbit({ radius = 5, count = 5 }: { radius?: number; count?: number }) {
+function CircularOrbit({ radius = 3, count = 5 }: { radius?: number; count?: number }) {
   const groupRef = useRef<THREE.Group>(null);
   
   const services = [
@@ -140,7 +140,7 @@ function Scene() {
       <Environment preset="night" />
       
       {/* Phones Orbit */}
-      <CircularOrbit radius={4} count={5} />
+      <CircularOrbit radius={3} count={5} />
       
       {/* Invisible floor for shadows */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -4, 0]} receiveShadow>
@@ -225,13 +225,11 @@ export default function RotatingPhonesSection() {
               <Scene />
               <OrbitControls
                 enablePan={false}
-                enableZoom={true}
+                enableZoom={false}
                 enableRotate={true}
                 autoRotate={false}
                 maxPolarAngle={Math.PI / 2.2}
                 minPolarAngle={Math.PI / 3}
-                minDistance={5}
-                maxDistance={15}
               />
             </Canvas>
           </Suspense>
