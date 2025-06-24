@@ -1,4 +1,3 @@
-
 import React, { useRef, useMemo, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Environment, Float, Text } from '@react-three/drei';
@@ -185,7 +184,6 @@ function PhoneModel({ position, rotation, title, color, content, subtitle }: {
                   '#ffffff'}
             anchorX="left"
             anchorY="middle"
-            fontFamily="monospace"
             maxWidth={8.5}
             lineHeight={1}
           >
@@ -237,7 +235,6 @@ function PhoneModel({ position, rotation, title, color, content, subtitle }: {
           color={color}
           anchorX="left"
           anchorY="middle"
-          fontFamily="monospace"
           fontWeight="bold"
         >
           user@{title.toLowerCase().replace(/[^a-z]/g, '')}:~$
