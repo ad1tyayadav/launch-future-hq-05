@@ -1,3 +1,4 @@
+
 import React, { useRef, useMemo, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Environment, Float, Text } from '@react-three/drei';
@@ -13,8 +14,8 @@ function PhoneModel({ position, rotation, title, color }: {
   color: string;
 }) {
   const meshRef = useRef<THREE.Group>(null);
-  const roundedBoxGeometry = useMemo(() => createRoundedBoxGeometry(1.2, 2.4, 0.08, 0.1, 4), []);
-  const screenGeometry = useMemo(() => createRoundedBoxGeometry(1.1, 2.2, 0.02, 0.05, 4), []);
+  const roundedBoxGeometry = useMemo(() => createRoundedBoxGeometry(1.5, 3.2, 0.08, 0.1, 4), []);
+  const screenGeometry = useMemo(() => createRoundedBoxGeometry(1.4, 3.0, 0.02, 0.05, 4), []);
   
   useFrame((state) => {
     if (meshRef.current) {
@@ -50,7 +51,7 @@ function PhoneModel({ position, rotation, title, color }: {
 
         {/* Content Overlay */}
         <mesh position={[0, 0, 0.06]}>
-          <planeGeometry args={[1, 2]} />
+          <planeGeometry args={[1.3, 2.8]} />
           <meshPhysicalMaterial
             color={color}
             transparent
@@ -62,8 +63,8 @@ function PhoneModel({ position, rotation, title, color }: {
 
         {/* Title Text */}
         <Text
-          position={[0, 0.8, 0.07]}
-          fontSize={0.1}
+          position={[0, 1.0, 0.07]}
+          fontSize={0.12}
           color="#ffffff"
           anchorX="center"
           anchorY="middle"
@@ -76,7 +77,7 @@ function PhoneModel({ position, rotation, title, color }: {
 }
 
 // Circular Orbit Animation
-function CircularOrbit({ radius = 3, count = 5 }: { radius?: number; count?: number }) {
+function CircularOrbit({ radius = 2.2, count = 5 }: { radius?: number; count?: number }) {
   const groupRef = useRef<THREE.Group>(null);
   
   const services = [
@@ -140,7 +141,7 @@ function Scene() {
       <Environment preset="night" />
       
       {/* Phones Orbit */}
-      <CircularOrbit radius={3} count={5} />
+      <CircularOrbit radius={2.2} count={5} />
       
       {/* Invisible floor for shadows */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -4, 0]} receiveShadow>
