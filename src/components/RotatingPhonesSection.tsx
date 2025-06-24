@@ -1,5 +1,5 @@
 
-import React, { useRef, useMemo } from 'react';
+import React, { useRef, useMemo, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Environment, Float, Text } from '@react-three/drei';
 import * as THREE from 'three';
@@ -68,7 +68,6 @@ function PhoneModel({ position, rotation, title, color }: {
           color="#ffffff"
           anchorX="center"
           anchorY="middle"
-          font="/fonts/inter-bold.woff"
         >
           {title}
         </Text>
@@ -91,7 +90,7 @@ function CircularOrbit({ radius = 5, count = 5 }: { radius?: number; count?: num
 
   useFrame((state) => {
     if (groupRef.current) {
-      groupRef.current.rotation.y += 0.002; // Slow orbit rotation
+      groupRef.current.rotation.y += 0.005; // Slightly faster rotation to make it more visible
     }
   });
 
@@ -126,30 +125,23 @@ function Scene() {
   return (
     <>
       {/* Lighting Setup */}
-      <ambientLight intensity={0.2} />
-      <pointLight position={[10, 10, 10]} intensity={0.8} castShadow color="#ffffff" />
-      <pointLight position={[-10, -10, -10]} intensity={0.4} color="#0066ff" />
+      <ambientLight intensity={0.4} />
+      <pointLight position={[10, 10, 10]} intensity={1} castShadow color="#ffffff" />
+      <pointLight position={[-10, -10, -10]} intensity={0.6} color="#0066ff" />
       <spotLight
         position={[0, 15, 0]}
         angle={0.4}
         penumbra={1}
-        intensity={0.8}
+        intensity={1}
         castShadow
         color="#ffffff"
-      />
-      <spotLight
-        position={[0, -5, 10]}
-        angle={0.3}
-        penumbra={1}
-        intensity={0.5}
-        color="#00f5ff"
       />
       
       {/* Environment */}
       <Environment preset="night" />
       
       {/* Phones Orbit */}
-      <CircularOrbit radius={6} count={5} />
+      <CircularOrbit radius={4} count={5} />
       
       {/* Invisible floor for shadows */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -4, 0]} receiveShadow>
@@ -160,6 +152,15 @@ function Scene() {
   );
 }
 
+// Loading fallback
+function LoadingFallback() {
+  return (
+    <div className="flex items-center justify-center h-[600px]">
+      <div className="text-white text-xl">Loading 3D Scene...</div>
+    </div>
+  );
+}
+
 export default function RotatingPhonesSection() {
   return (
     <section className="py-24 relative overflow-hidden bg-gradient-to-b from-gray-950 via-black to-gray-950 min-h-screen">
@@ -167,7 +168,7 @@ export default function RotatingPhonesSection() {
       <div className="absolute inset-0">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl" />
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl" />
-        <div className="absolute center-1/2 top-1/2 w-64 h-64 bg-cyan-400/10 rounded-full blur-2xl" />
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-cyan-400/10 rounded-full blur-2xl" />
         
         {/* Grid overlay */}
         <div className="absolute inset-0 opacity-[0.02]">
@@ -216,24 +217,29 @@ export default function RotatingPhonesSection() {
         </motion.div>
 
         {/* 3D Animation Container */}
-        <div className="relative w-full h-[70vh] min-h-[600px] mb-8">
-          <Canvas
-            camera={{ position: [0, 3, 10], fov: 60 }}
-            shadows
-            dpr={[1, 2]}
-            performance={{ min: 0.5 }}
-            className="w-full h-full"
-          >
-            <Scene />
-            <OrbitControls
-              enablePan={false}
-              enableZoom={false}
-              enableRotate={true}
-              autoRotate={false}
-              maxPolarAngle={Math.PI / 2.2}
-              minPolarAngle={Math.PI / 3}
-            />
-          </Canvas>
+        <div className="relative w-full h-[600px] mb-8 border-2 border-cyan-400/20 rounded-xl bg-black/20">
+          <Suspense fallback={<LoadingFallback />}>
+            <Canvas
+              camera={{ position: [0, 2, 8], fov: 75 }}
+              shadows
+              dpr={[1, 2]}
+              performance={{ min: 0.5 }}
+              className="w-full h-full rounded-xl"
+              gl={{ antialias: true, alpha: true }}
+            >
+              <Scene />
+              <OrbitControls
+                enablePan={false}
+                enableZoom={true}
+                enableRotate={true}
+                autoRotate={false}
+                maxPolarAngle={Math.PI / 2.2}
+                minPolarAngle={Math.PI / 3}
+                minDistance={5}
+                maxDistance={15}
+              />
+            </Canvas>
+          </Suspense>
         </div>
 
         {/* Service Descriptions */}
