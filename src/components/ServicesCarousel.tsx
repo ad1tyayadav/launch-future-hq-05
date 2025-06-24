@@ -1,7 +1,5 @@
-
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const ServicesCarousel = () => {
   const [currentService, setCurrentService] = useState(0);
@@ -177,16 +175,6 @@ const ServicesCarousel = () => {
     return () => clearInterval(cardInterval);
   }, [currentService, services]);
 
-  const nextService = () => {
-    setCurrentService(prev => (prev + 1) % services.length);
-    setCurrentCard(0);
-  };
-
-  const prevService = () => {
-    setCurrentService(prev => prev === 0 ? services.length - 1 : prev - 1);
-    setCurrentCard(0);
-  };
-
   const currentServiceData = services[currentService];
 
   return (
@@ -233,7 +221,7 @@ const ServicesCarousel = () => {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -50, scale: 0.95 }}
               transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-              className="text-center mb-12"
+              className="text-center mb-8"
             >
               <motion.div
                 className="inline-block px-8 py-4 bg-white/5 backdrop-blur-xl border border-white/20 rounded-full mb-8"
@@ -252,7 +240,7 @@ const ServicesCarousel = () => {
               </motion.div>
 
               <motion.h2 
-                className="text-5xl md:text-6xl lg:text-7xl font-sans font-bold text-white mb-8 tracking-tight"
+                className="text-4xl md:text-5xl lg:text-6xl font-sans font-bold text-white mb-6 tracking-tight"
                 animate={{
                   textShadow: [
                     '0 0 20px rgba(0, 245, 255, 0.3)',
@@ -265,7 +253,7 @@ const ServicesCarousel = () => {
                 {currentServiceData.title}
               </motion.h2>
               <motion.p 
-                className="text-xl text-white/70 font-sans max-w-4xl mx-auto leading-relaxed"
+                className="text-lg text-white/70 font-sans max-w-4xl mx-auto leading-relaxed"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.8 }}
@@ -275,8 +263,8 @@ const ServicesCarousel = () => {
             </motion.div>
           </AnimatePresence>
 
-          {/* Enhanced Timeline Cards */}
-          <div className="relative max-w-7xl mx-auto">
+          {/* Enhanced Timeline Cards - Reduced size */}
+          <div className="relative max-w-5xl mx-auto">
             <AnimatePresence mode="wait">
               <motion.div
                 key={`${currentService}-${currentCard}`}
@@ -287,7 +275,7 @@ const ServicesCarousel = () => {
                 className="relative"
               >
                 <motion.div 
-                  className="relative bg-black/20 backdrop-blur-2xl border-0 rounded-3xl p-10 md:p-16 shadow-2xl overflow-hidden"
+                  className="relative bg-black/20 backdrop-blur-2xl border-0 rounded-3xl p-8 md:p-12 shadow-2xl overflow-hidden"
                   style={{
                     background: 'linear-gradient(135deg, rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.05))'
                   }}
@@ -317,7 +305,7 @@ const ServicesCarousel = () => {
                   />
 
                   {/* Enhanced Progress indicator */}
-                  <div className="flex justify-center mb-12">
+                  <div className="flex justify-center mb-8">
                     <div className="flex space-x-4">
                       {currentServiceData.timeline.map((_, index) => (
                         <motion.div
@@ -344,7 +332,7 @@ const ServicesCarousel = () => {
 
                   <div className="text-center">
                     <motion.div
-                      className="inline-flex items-center space-x-6 px-10 py-4 bg-gradient-to-r from-cyan-500/20 via-purple-500/20 to-pink-500/20 border border-cyan-400/30 rounded-full mb-10"
+                      className="inline-flex items-center space-x-6 px-8 py-3 bg-gradient-to-r from-cyan-500/20 via-purple-500/20 to-pink-500/20 border border-cyan-400/30 rounded-full mb-8"
                       animate={{ 
                         scale: [1, 1.05, 1],
                         boxShadow: [
@@ -355,17 +343,17 @@ const ServicesCarousel = () => {
                       }}
                       transition={{ duration: 3, repeat: Infinity }}
                     >
-                      <span className="text-cyan-300 font-mono font-semibold text-lg tracking-wider">
+                      <span className="text-cyan-300 font-mono font-semibold text-base tracking-wider">
                         PHASE {currentCard + 1}
                       </span>
                       <div className="w-px h-6 bg-white/30" />
-                      <span className="text-purple-300 font-sans text-lg">
+                      <span className="text-purple-300 font-sans text-base">
                         {currentServiceData.timeline[currentCard].duration}
                       </span>
                     </motion.div>
 
                     <motion.h3 
-                      className="text-3xl md:text-4xl lg:text-5xl font-sans font-bold text-white mb-8"
+                      className="text-2xl md:text-3xl lg:text-4xl font-sans font-bold text-white mb-6"
                       initial={{ opacity: 0, y: 30 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.1 }}
@@ -374,7 +362,7 @@ const ServicesCarousel = () => {
                     </motion.h3>
                     
                     <motion.p 
-                      className="text-xl md:text-2xl text-white/80 font-sans mb-10 max-w-4xl mx-auto"
+                      className="text-lg md:text-xl text-white/80 font-sans mb-8 max-w-3xl mx-auto"
                       initial={{ opacity: 0, y: 30 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.2 }}
@@ -383,7 +371,7 @@ const ServicesCarousel = () => {
                     </motion.p>
                     
                     <motion.p 
-                      className="text-lg text-white/60 font-sans max-w-5xl mx-auto leading-relaxed mb-10"
+                      className="text-base text-white/60 font-sans max-w-4xl mx-auto leading-relaxed mb-8"
                       initial={{ opacity: 0, y: 30 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.3 }}
@@ -393,23 +381,23 @@ const ServicesCarousel = () => {
 
                     {/* Deliverables Section */}
                     <motion.div
-                      className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 max-w-5xl mx-auto"
+                      className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 max-w-4xl mx-auto"
                       initial={{ opacity: 0, scale: 0.95 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: 0.4, duration: 0.4 }}
                     >
-                      <h4 className="text-xl font-mono font-semibold text-cyan-300 mb-6">Key Deliverables</h4>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <h4 className="text-lg font-mono font-semibold text-cyan-300 mb-4">Key Deliverables</h4>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                         {currentServiceData.timeline[currentCard].deliverables.map((deliverable, index) => (
                           <motion.div
                             key={index}
-                            className="flex items-center space-x-4 p-4 bg-white/5 rounded-lg border border-white/10"
+                            className="flex items-center space-x-3 p-3 bg-white/5 rounded-lg border border-white/10"
                             initial={{ opacity: 0, x: -30 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ delay: 0.5 + index * 0.1 }}
                           >
-                            <div className="w-3 h-3 bg-gradient-to-r from-cyan-400 to-purple-500 rounded-full flex-shrink-0" />
-                            <span className="text-white/80 font-sans text-base">{deliverable}</span>
+                            <div className="w-2 h-2 bg-gradient-to-r from-cyan-400 to-purple-500 rounded-full flex-shrink-0" />
+                            <span className="text-white/80 font-sans text-sm">{deliverable}</span>
                           </motion.div>
                         ))}
                       </div>
@@ -418,7 +406,7 @@ const ServicesCarousel = () => {
 
                   {/* Enhanced decorative elements */}
                   <motion.div 
-                    className="absolute top-8 left-8 w-32 h-32 bg-gradient-to-br from-cyan-500/10 to-purple-500/10 rounded-full blur-2xl"
+                    className="absolute top-6 left-6 w-24 h-24 bg-gradient-to-br from-cyan-500/10 to-purple-500/10 rounded-full blur-2xl"
                     animate={{ 
                       scale: [1, 1.3, 1],
                       rotate: [0, 180, 360]
@@ -426,7 +414,7 @@ const ServicesCarousel = () => {
                     transition={{ duration: 10, repeat: Infinity }}
                   />
                   <motion.div 
-                    className="absolute bottom-8 right-8 w-28 h-28 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-full blur-xl"
+                    className="absolute bottom-6 right-6 w-20 h-20 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-full blur-xl"
                     animate={{ 
                       scale: [1.3, 1, 1.3],
                       rotate: [360, 180, 0]
@@ -439,75 +427,21 @@ const ServicesCarousel = () => {
           </div>
         </div>
 
-        {/* Enhanced Navigation Controls */}
-        <motion.div 
-          className="flex justify-between items-center mt-16"
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1 }}
-        >
-          <motion.button
-            onClick={prevService}
-            className="group flex items-center space-x-2 bg-white/5 backdrop-blur-2xl border border-white/20 rounded-full p-5 hover:bg-white/10 transition-all duration-500"
-            whileHover={{ scale: 1.15, x: -8 }}
-            whileTap={{ scale: 0.9 }}
-          >
-            <ChevronLeft className="w-7 h-7 text-white group-hover:text-cyan-400 transition-colors duration-300" />
-          </motion.button>
-
-          {/* Enhanced Service indicators */}
-          <div className="flex space-x-5">
-            {services.map((_, index) => (
-              <motion.button
-                key={index}
-                onClick={() => {
-                  setCurrentService(index);
-                  setCurrentCard(0);
-                }}
-                className={`relative w-5 h-5 rounded-full transition-all duration-500 ${
-                  index === currentService
-                    ? 'bg-gradient-to-r from-cyan-400 to-purple-500 scale-150'
-                    : 'bg-white/20 hover:bg-white/40'
-                }`}
-                whileHover={{ scale: 1.3 }}
-                whileTap={{ scale: 0.8 }}
-                animate={index === currentService ? {
-                  boxShadow: [
-                    '0 0 15px rgba(0, 245, 255, 0.5)',
-                    '0 0 25px rgba(139, 92, 246, 0.7)',
-                    '0 0 15px rgba(0, 245, 255, 0.5)'
-                  ]
-                } : {}}
-                transition={{ duration: 2, repeat: Infinity }}
-              />
-            ))}
-          </div>
-
-          <motion.button
-            onClick={nextService}
-            className="group flex items-center space-x-2 bg-white/5 backdrop-blur-2xl border border-white/20 rounded-full p-5 hover:bg-white/10 transition-all duration-500"
-            whileHover={{ scale: 1.15, x: 8 }}
-            whileTap={{ scale: 0.9 }}
-          >
-            <ChevronRight className="w-7 h-7 text-white group-hover:text-cyan-400 transition-colors duration-300" />
-          </motion.button>
-        </motion.div>
-
-        {/* Enhanced Preview Cards */}
+        {/* Enhanced Preview Cards - Now clickable to control main display */}
         <motion.div 
           className="flex justify-center mt-12"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.2 }}
         >
-          <div className="flex space-x-8 max-w-6xl overflow-hidden">
+          <div className="flex space-x-6 max-w-6xl overflow-hidden">
             {services.map((service, index) => (
               <motion.div
                 key={index}
                 className={`relative cursor-pointer transition-all duration-1000 ${
                   index === currentService
-                    ? 'opacity-0 scale-0'
-                    : 'opacity-60 hover:opacity-100 scale-80 hover:scale-90'
+                    ? 'opacity-100 scale-100 ring-2 ring-cyan-400/40'
+                    : 'opacity-70 hover:opacity-100 scale-90 hover:scale-95'
                 }`}
                 onClick={() => {
                   setCurrentService(index);
@@ -516,18 +450,22 @@ const ServicesCarousel = () => {
                 whileHover={{ y: -8, rotateY: 8 }}
                 transition={{ duration: 0.4 }}
               >
-                <div className="bg-white/5 backdrop-blur-2xl border border-white/20 rounded-2xl p-8 w-64">
-                  <h4 className="text-lg font-mono font-semibold text-white mb-4 truncate">
+                <div className="bg-white/5 backdrop-blur-2xl border border-white/20 rounded-2xl p-6 w-56">
+                  <h4 className="text-base font-mono font-semibold text-white mb-3 truncate">
                     {service.title}
                   </h4>
-                  <p className="text-sm text-white/60 mb-6 line-clamp-2">
+                  <p className="text-sm text-white/60 mb-4 line-clamp-2">
                     {service.subtitle}
                   </p>
                   <div className="flex space-x-2">
                     {service.timeline.map((_, cardIndex) => (
                       <div
                         key={cardIndex}
-                        className="h-2 flex-1 bg-white/20 rounded-full"
+                        className={`h-2 flex-1 rounded-full ${
+                          index === currentService && cardIndex <= currentCard
+                            ? 'bg-gradient-to-r from-cyan-400 to-purple-500'
+                            : 'bg-white/20'
+                        }`}
                       />
                     ))}
                   </div>
