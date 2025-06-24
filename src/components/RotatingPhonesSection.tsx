@@ -116,42 +116,42 @@ function PhoneModel({ position, rotation, title, color, content, subtitle }: {
         {/* Screen Base - Dark but not black */}
         <mesh position={[0, 0, 0.61]} castShadow geometry={screenGeometry}>
           <meshPhysicalMaterial
-            color="#0f0f23"
+            color="#000000"
             metalness={0.1}
             roughness={0.05}
-            emissive="#0a0a1a"
+            emissive="#111111"
+            emissiveIntensity={0.5}
+          />
+        </mesh>
+
+        {/* App Background - Much brighter for visibility */}
+        <mesh position={[0, 0, 0.62]}>
+          <planeGeometry args={[9, 18.4]} />
+          <meshPhysicalMaterial
+            color="#1a1a2e"
+            transparent
+            opacity={0.98}
+            emissive="#16213e"
             emissiveIntensity={0.3}
           />
         </mesh>
 
-        {/* App Background - Dark terminal style */}
-        <mesh position={[0, 0, 0.62]}>
-          <planeGeometry args={[9, 18.4]} />
-          <meshPhysicalMaterial
-            color="#0d1117"
-            transparent
-            opacity={0.95}
-            emissive="#0d1117"
-            emissiveIntensity={0.1}
-          />
-        </mesh>
-
-        {/* Status Bar */}
+        {/* Status Bar - Brighter */}
         <mesh position={[0, 8.5, 0.63]}>
           <planeGeometry args={[8.8, 0.8]} />
           <meshPhysicalMaterial
             color={color}
             transparent
-            opacity={0.3}
+            opacity={0.6}
             emissive={color}
-            emissiveIntensity={0.2}
+            emissiveIntensity={0.4}
           />
         </mesh>
 
-        {/* Status Bar Text */}
+        {/* Status Bar Text - Larger and brighter */}
         <Text
           position={[-3.8, 8.5, 0.64]}
-          fontSize={0.25}
+          fontSize={0.35}
           color="#ffffff"
           anchorX="left"
           anchorY="middle"
@@ -162,7 +162,7 @@ function PhoneModel({ position, rotation, title, color, content, subtitle }: {
 
         <Text
           position={[3.8, 8.5, 0.64]}
-          fontSize={0.25}
+          fontSize={0.35}
           color="#00ff00"
           anchorX="right"
           anchorY="middle"
@@ -171,67 +171,67 @@ function PhoneModel({ position, rotation, title, color, content, subtitle }: {
           ●
         </Text>
 
-        {/* Code Content */}
+        {/* Code Content - Larger text and better contrast */}
         {appContent.map((line, index) => (
           <Text
             key={index}
-            position={[-4.2, 7.5 - (index * 0.45), 0.64]}
-            fontSize={0.22}
-            color={line.startsWith('//') ? '#6b7280' : 
-                  line.includes('=') || line.includes(':') ? '#10b981' :
-                  line.includes('function') || line.includes('const') || line.includes('def') ? '#8b5cf6' :
-                  line.includes('accuracy') || line.includes('loss') ? '#f59e0b' :
-                  '#ffffff'}
+            position={[-4.2, 7.5 - (index * 0.5), 0.64]}
+            fontSize={0.28}
+            color={line.startsWith('//') ? '#9ca3af' : 
+                  line.includes('=') || line.includes(':') ? '#22d3ee' :
+                  line.includes('function') || line.includes('const') || line.includes('def') ? '#a855f7' :
+                  line.includes('accuracy') || line.includes('loss') ? '#fbbf24' :
+                  '#f3f4f6'}
             anchorX="left"
             anchorY="middle"
             maxWidth={8.5}
-            lineHeight={1}
+            lineHeight={1.1}
           >
             {line}
           </Text>
         ))}
 
-        {/* Terminal Cursor */}
-        <mesh position={[-4.2 + (appContent[appContent.length - 1]?.length * 0.13 || 0), 
-                         7.5 - ((appContent.length - 1) * 0.45), 0.64]}>
-          <planeGeometry args={[0.15, 0.35]} />
+        {/* Terminal Cursor - Brighter and bigger */}
+        <mesh position={[-4.2 + (appContent[appContent.length - 1]?.length * 0.15 || 0), 
+                         7.5 - ((appContent.length - 1) * 0.5), 0.64]}>
+          <planeGeometry args={[0.2, 0.4]} />
           <meshPhysicalMaterial
             color={color}
             emissive={color}
-            emissiveIntensity={1}
+            emissiveIntensity={1.5}
             transparent
-            opacity={0.8}
+            opacity={0.9}
           />
         </mesh>
 
-        {/* Side Accent Light */}
+        {/* Side Accent Light - Brighter */}
         <mesh position={[-4.3, 0, 0.63]}>
           <planeGeometry args={[0.2, 16]} />
           <meshPhysicalMaterial
             color={color}
             emissive={color}
-            emissiveIntensity={0.5}
+            emissiveIntensity={0.8}
             transparent
-            opacity={0.6}
+            opacity={0.8}
           />
         </mesh>
 
-        {/* Bottom Terminal Bar */}
+        {/* Bottom Terminal Bar - Brighter */}
         <mesh position={[0, -8.2, 0.63]}>
           <planeGeometry args={[8.8, 1]} />
           <meshPhysicalMaterial
-            color="#21262d"
+            color="#2d3748"
             transparent
-            opacity={0.9}
-            emissive="#21262d"
-            emissiveIntensity={0.1}
+            opacity={0.95}
+            emissive="#374151"
+            emissiveIntensity={0.2}
           />
         </mesh>
 
-        {/* Terminal Prompt */}
+        {/* Terminal Prompt - Larger and brighter */}
         <Text
           position={[-4.2, -8.2, 0.64]}
-          fontSize={0.25}
+          fontSize={0.3}
           color={color}
           anchorX="left"
           anchorY="middle"
@@ -244,10 +244,11 @@ function PhoneModel({ position, rotation, title, color, content, subtitle }: {
   );
 }
 
-// Circular Orbit Animation with increased radius
-function CircularOrbit({ radius = 28, count = 5 }: { radius?: number; count?: number }) {
+// Circular Orbit Animation with reduced radius
+function CircularOrbit({ radius = 22, count = 5 }: { radius?: number; count?: number }) {
   const groupRef = useRef<THREE.Group>(null);
   
+  // ... keep existing code (services array definition)
   const services = [
     { 
       title: "AI Development", 
@@ -340,21 +341,21 @@ function CircularOrbit({ radius = 28, count = 5 }: { radius?: number; count?: nu
   );
 }
 
-// Main 3D Scene with adjusted camera and lighting
+// Main 3D Scene with enhanced lighting for better screen visibility
 function Scene() {
   return (
     <>
-      {/* Enhanced Lighting Setup for better visibility */}
-      <ambientLight intensity={1.5} color="#ffffff" />
-      <pointLight position={[40, 40, 40]} intensity={4} castShadow color="#00f5ff" />
-      <pointLight position={[-40, -40, -40]} intensity={3.5} color="#8b5cf6" />
-      <pointLight position={[40, -40, 40]} intensity={3} color="#10b981" />
-      <pointLight position={[0, 0, 60]} intensity={3} color="#ffffff" />
+      {/* Enhanced Lighting Setup for better screen visibility */}
+      <ambientLight intensity={2} color="#ffffff" />
+      <pointLight position={[40, 40, 40]} intensity={5} castShadow color="#00f5ff" />
+      <pointLight position={[-40, -40, -40]} intensity={4.5} color="#8b5cf6" />
+      <pointLight position={[40, -40, 40]} intensity={4} color="#10b981" />
+      <pointLight position={[0, 0, 60]} intensity={4} color="#ffffff" />
       <spotLight
         position={[0, 60, 0]}
         angle={0.8}
         penumbra={1}
-        intensity={4}
+        intensity={5}
         castShadow
         color="#ffffff"
         shadow-mapSize-width={2048}
@@ -362,10 +363,10 @@ function Scene() {
       />
       
       {/* Environment for reflections */}
-      <Environment preset="night" environmentIntensity={1.5} />
+      <Environment preset="night" environmentIntensity={2} />
       
-      {/* Phones Orbit */}
-      <CircularOrbit radius={28} count={5} />
+      {/* Phones Orbit with reduced radius */}
+      <CircularOrbit radius={22} count={5} />
       
       {/* Invisible floor for shadows */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -25, 0]} receiveShadow>
@@ -379,7 +380,7 @@ function Scene() {
 // Loading fallback
 function LoadingFallback() {
   return (
-    <div className="flex items-center justify-center h-[1000px]">
+    <div className="flex items-center justify-center h-[900px]">
       <div className="text-white text-xl">Loading 3D Experience...</div>
     </div>
   );
@@ -436,11 +437,11 @@ export default function RotatingPhonesSection() {
           </motion.p>
         </motion.div>
 
-        {/* 3D Animation Container - Increased height to prevent cutoff */}
-        <div className="relative w-full h-[1000px] mb-12">
+        {/* 3D Animation Container - Reduced height to match smaller radius */}
+        <div className="relative w-full h-[900px] mb-12">
           <Suspense fallback={<LoadingFallback />}>
             <Canvas
-              camera={{ position: [0, 8, 45], fov: 60 }}
+              camera={{ position: [0, 8, 40], fov: 60 }}
               shadows
               dpr={[1, 2]}
               performance={{ min: 0.5 }}
