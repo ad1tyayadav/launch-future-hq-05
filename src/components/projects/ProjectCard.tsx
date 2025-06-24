@@ -24,7 +24,8 @@ interface ProjectCardProps {
 export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, onClick }) => {
   return (
     <motion.div
-      className="flex-shrink-0 w-[400px] relative group cursor-pointer perspective-1000 p-4"
+      className="flex-shrink-0 w-[420px] relative group cursor-pointer p-8"
+      style={{ perspective: '1000px' }}
       animate={{
         y: [0, -15, 0]
       }}
@@ -51,7 +52,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, onClic
         className="relative w-full"
       >
         {/* Space Pod Frame */}
-        <div className="relative w-full h-[360px] mx-auto">
+        <div className="relative w-full h-[400px] mx-auto">
           {/* Holographic Card Container */}
           <motion.div
             className="relative w-full h-full rounded-2xl overflow-hidden mx-auto"
@@ -63,14 +64,16 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, onClic
                 0 8px 32px rgba(0,0,0,0.3),
                 inset 0 1px 0 rgba(255,255,255,0.1),
                 0 0 40px rgba(6,182,212,0.1)
-              `
+              `,
+              transformStyle: 'preserve-3d'
             }}
             whileHover={{
-              rotateY: 10,
-              rotateX: 5,
-              scale: 1.02,
+              rotateY: 8,
+              rotateX: 4,
+              scale: 1.03,
+              z: 50,
               boxShadow: `
-                0 20px 60px rgba(0,0,0,0.4),
+                0 25px 80px rgba(0,0,0,0.4),
                 inset 0 1px 0 rgba(255,255,255,0.2),
                 0 0 60px rgba(6,182,212,0.2),
                 0 0 80px rgba(139,92,246,0.1)

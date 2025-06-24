@@ -46,8 +46,8 @@ export const ProjectCarousel: React.FC<ProjectCarouselProps> = ({
     const startAnimation = () => {
       if (animationRef.current.isPaused || isManualScrolling || duplicatedProjects.length === 0) return;
       
-      const cardWidth = 400;
-      const gap = 24;
+      const cardWidth = 420;
+      const gap = 32;
       const totalCardWidth = cardWidth + gap;
       const singleSetWidth = projects.length * totalCardWidth;
 
@@ -114,8 +114,8 @@ export const ProjectCarousel: React.FC<ProjectCarouselProps> = ({
 
   const scrollRight = () => {
     setIsManualScrolling(true);
-    const cardWidth = 400;
-    const gap = 24;
+    const cardWidth = 420;
+    const gap = 32;
     const totalCardWidth = cardWidth + gap;
     const singleSetWidth = projects.length * totalCardWidth;
     const minX = -(singleSetWidth * 2);
@@ -130,10 +130,10 @@ export const ProjectCarousel: React.FC<ProjectCarouselProps> = ({
   };
 
   return (
-    <div className="relative px-8 py-4">
+    <div className="relative px-16 py-16">
       {/* Navigation Buttons */}
       <motion.button 
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-30 w-12 h-12 bg-gray-900/80 backdrop-blur-md border border-cyan-500/30 rounded-full flex items-center justify-center text-white hover:bg-gray-800/90 hover:border-cyan-400/50 transition-all duration-300 group shadow-lg" 
+        className="absolute left-8 top-1/2 -translate-y-1/2 z-30 w-12 h-12 bg-gray-900/80 backdrop-blur-md border border-cyan-500/30 rounded-full flex items-center justify-center text-white hover:bg-gray-800/90 hover:border-cyan-400/50 transition-all duration-300 group shadow-lg" 
         onClick={scrollLeft} 
         whileHover={{ scale: 1.1 }} 
         whileTap={{ scale: 0.95 }}
@@ -142,7 +142,7 @@ export const ProjectCarousel: React.FC<ProjectCarouselProps> = ({
       </motion.button>
 
       <motion.button 
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-30 w-12 h-12 bg-gray-900/80 backdrop-blur-md border border-cyan-500/30 rounded-full flex items-center justify-center text-white hover:bg-gray-800/90 hover:border-cyan-400/50 transition-all duration-300 group shadow-lg" 
+        className="absolute right-8 top-1/2 -translate-y-1/2 z-30 w-12 h-12 bg-gray-900/80 backdrop-blur-md border border-cyan-500/30 rounded-full flex items-center justify-center text-white hover:bg-gray-800/90 hover:border-cyan-400/50 transition-all duration-300 group shadow-lg" 
         onClick={scrollRight} 
         whileHover={{ scale: 1.1 }} 
         whileTap={{ scale: 0.95 }}
@@ -150,14 +150,14 @@ export const ProjectCarousel: React.FC<ProjectCarouselProps> = ({
         <ChevronRight className="w-6 h-6" />
       </motion.button>
 
-      {/* Horizontal scrolling container */}
-      <div className="relative h-[440px] w-full overflow-hidden">
+      {/* Horizontal scrolling container with extra space for hover effects */}
+      <div className="relative h-[500px] w-full" style={{ overflow: 'visible' }}>
         <motion.div 
           ref={scrollContainerRef} 
-          className="flex gap-6 absolute left-0" 
+          className="flex gap-8 absolute left-0" 
           animate={controls} 
           style={{
-            width: `${duplicatedProjects.length * 400 + duplicatedProjects.length * 24 + 400}px`
+            width: `${duplicatedProjects.length * 420 + duplicatedProjects.length * 32 + 420}px`
           }} 
           onMouseEnter={handleMouseEnter} 
           onMouseLeave={onMouseLeave}
