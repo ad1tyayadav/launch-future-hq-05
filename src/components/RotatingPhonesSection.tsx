@@ -1,4 +1,3 @@
-
 import React, { useRef, useMemo, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Environment, Float, Text } from '@react-three/drei';
@@ -14,8 +13,8 @@ function PhoneModel({ position, rotation, title, color }: {
   color: string;
 }) {
   const meshRef = useRef<THREE.Group>(null);
-  const roundedBoxGeometry = useMemo(() => createRoundedBoxGeometry(1.5, 3.2, 0.08, 0.1, 4), []);
-  const screenGeometry = useMemo(() => createRoundedBoxGeometry(1.4, 3.0, 0.02, 0.05, 4), []);
+  const roundedBoxGeometry = useMemo(() => createRoundedBoxGeometry(2.2, 4.5, 0.12, 0.15, 4), []);
+  const screenGeometry = useMemo(() => createRoundedBoxGeometry(2.0, 4.2, 0.03, 0.08, 4), []);
   
   useFrame((state) => {
     if (meshRef.current) {
@@ -39,7 +38,7 @@ function PhoneModel({ position, rotation, title, color }: {
         </mesh>
         
         {/* Screen */}
-        <mesh position={[0, 0, 0.05]} castShadow geometry={screenGeometry}>
+        <mesh position={[0, 0, 0.07]} castShadow geometry={screenGeometry}>
           <meshPhysicalMaterial
             color="#000000"
             metalness={0.1}
@@ -50,8 +49,8 @@ function PhoneModel({ position, rotation, title, color }: {
         </mesh>
 
         {/* Content Overlay */}
-        <mesh position={[0, 0, 0.06]}>
-          <planeGeometry args={[1.3, 2.8]} />
+        <mesh position={[0, 0, 0.08]}>
+          <planeGeometry args={[1.8, 3.8]} />
           <meshPhysicalMaterial
             color={color}
             transparent
@@ -63,8 +62,8 @@ function PhoneModel({ position, rotation, title, color }: {
 
         {/* Title Text */}
         <Text
-          position={[0, 1.0, 0.07]}
-          fontSize={0.12}
+          position={[0, 1.4, 0.09]}
+          fontSize={0.16}
           color="#ffffff"
           anchorX="center"
           anchorY="middle"
