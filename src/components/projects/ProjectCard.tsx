@@ -24,7 +24,7 @@ interface ProjectCardProps {
 export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, onClick }) => {
   return (
     <motion.div
-      className="flex-shrink-0 w-[430px] relative group cursor-pointer perspective-1000"
+      className="flex-shrink-0 w-[400px] relative group cursor-pointer perspective-1000 p-4"
       animate={{
         y: [0, -15, 0]
       }}
@@ -48,13 +48,13 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, onClic
           ease: "easeInOut",
           delay: index * 0.5
         }}
-        className="relative"
+        className="relative w-full"
       >
         {/* Space Pod Frame */}
-        <div className="relative w-[420px] h-96 mx-auto">
+        <div className="relative w-full h-[360px] mx-auto">
           {/* Holographic Card Container */}
           <motion.div
-            className="relative w-full h-full rounded-3xl overflow-hidden"
+            className="relative w-full h-full rounded-2xl overflow-hidden mx-auto"
             style={{
               background: 'linear-gradient(135deg, rgba(6,182,212,0.1) 0%, rgba(139,92,246,0.05) 50%, rgba(255,0,128,0.1) 100%)',
               backdropFilter: 'blur(20px)',
@@ -66,9 +66,9 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, onClic
               `
             }}
             whileHover={{
-              rotateY: 15,
+              rotateY: 10,
               rotateX: 5,
-              scale: 1.05,
+              scale: 1.02,
               boxShadow: `
                 0 20px 60px rgba(0,0,0,0.4),
                 inset 0 1px 0 rgba(255,255,255,0.2),
@@ -99,9 +99,9 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, onClic
             </div>
 
             {/* Card Content */}
-            <div className="relative w-full h-full p-5 flex flex-col">
+            <div className="relative w-full h-full p-4 flex flex-col">
               {/* Project Image with Holographic Overlay */}
-              <div className="relative w-full h-44 rounded-2xl overflow-hidden mb-4">
+              <div className="relative w-full h-40 rounded-xl overflow-hidden mb-3">
                 <motion.img 
                   src={project.image} 
                   alt={project.title} 
@@ -149,7 +149,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, onClic
               {/* Project Info */}
               <div className="flex-1 flex flex-col justify-between">
                 <div>
-                  <h3 className="text-lg font-bold text-white mb-2 font-orbitron glow-text">
+                  <h3 className="text-lg font-bold text-white mb-2 font-orbitron glow-text line-clamp-2">
                     {project.title}
                   </h3>
                   <p className="text-gray-300 text-sm font-sora line-clamp-3">
@@ -158,7 +158,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, onClic
                 </div>
 
                 {/* Tech Stack Tags */}
-                <div className="flex flex-wrap gap-2 mt-3">
+                <div className="flex flex-wrap gap-1.5 mt-3">
                   {project.tags.slice(0, 3).map((tag, tagIndex) => (
                     <Badge key={tagIndex} className="bg-gradient-to-r from-cyan-500/20 to-purple-500/20 border border-cyan-400/30 text-cyan-300 text-xs px-2 py-1">
                       {tag}
@@ -173,7 +173,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, onClic
 
                 {/* Hover Indicator */}
                 <motion.div 
-                  className="text-center mt-3" 
+                  className="text-center mt-2" 
                   animate={{
                     opacity: [0.5, 1, 0.5]
                   }} 
@@ -182,7 +182,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, onClic
                     repeat: Infinity
                   }}
                 >
-                  <span className="text-cyan-400 text-sm font-sora">
+                  <span className="text-cyan-400 text-xs font-sora">
                     Click to explore details
                   </span>
                 </motion.div>
@@ -191,7 +191,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, onClic
 
             {/* Ambient Particles */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden">
-              {[...Array(12)].map((_, i) => (
+              {[...Array(8)].map((_, i) => (
                 <motion.div 
                   key={i} 
                   className="absolute w-1 h-1 bg-cyan-400/60 rounded-full" 
@@ -202,8 +202,8 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, onClic
                   animate={{
                     opacity: [0, 1, 0],
                     scale: [0, 1.5, 0],
-                    x: [0, Math.random() * 40 - 20],
-                    y: [0, Math.random() * 40 - 20]
+                    x: [0, Math.random() * 30 - 15],
+                    y: [0, Math.random() * 30 - 15]
                   }} 
                   transition={{
                     duration: 3 + Math.random() * 2,
