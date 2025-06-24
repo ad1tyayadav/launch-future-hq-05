@@ -1,7 +1,7 @@
 
 import Navigation from "../components/Navigation";
 import HeroSection from "../components/HeroSection";
-import WhatWeDoSection from "../components/WhatWeDoSection";
+import RotatingPhonesSection from "../components/RotatingPhonesSection";
 import InvestorSection from "../components/InvestorSection";
 import ServicesCarousel from "../components/ServicesCarousel";
 import TestimonialSection from "../components/TestimonialSection";
@@ -17,7 +17,7 @@ const Index = () => {
       <Navigation />
       <div className="relative z-10">
         <HeroSection />
-        <WhatWeDoSection />
+        <RotatingPhonesSection />
         <ServicesCarousel />
         <ProjectsSection />
         <TestimonialSection />
