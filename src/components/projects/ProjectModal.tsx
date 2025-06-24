@@ -28,7 +28,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ isOpen, project, onC
     <AnimatePresence>
       {isOpen && project && (
         <motion.div 
-          className="fixed inset-0 bg-black/60 backdrop-blur-md flex justify-center items-center z-50 p-6" 
+          className="fixed inset-0 bg-black/80 backdrop-blur-md flex justify-center items-center z-50 p-6" 
           initial={{
             opacity: 0
           }} 
@@ -39,12 +39,23 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ isOpen, project, onC
             opacity: 0
           }} 
           transition={{
-            duration: 0.2
+            duration: 0.3
           }}
           onClick={onClose}
         >
           <motion.div 
-            className="relative max-w-4xl w-full bg-white rounded-2xl overflow-hidden shadow-2xl" 
+            className="relative max-w-4xl w-full glass-morphism overflow-hidden shadow-2xl" 
+            style={{
+              background: 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0.1) 100%)',
+              backdropFilter: 'blur(20px)',
+              border: '1px solid rgba(255,255,255,0.2)',
+              boxShadow: `
+                0 25px 80px rgba(0,0,0,0.4),
+                inset 0 1px 0 rgba(255,255,255,0.2),
+                0 0 60px rgba(6,182,212,0.2),
+                0 0 80px rgba(139,92,246,0.1)
+              `
+            }}
             initial={{
               y: 50,
               opacity: 0,
@@ -61,16 +72,37 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ isOpen, project, onC
               scale: 0.95
             }} 
             transition={{
-              duration: 0.3,
+              duration: 0.4,
               ease: "easeOut"
             }}
             onClick={(e) => e.stopPropagation()}
           >
+            {/* Animated Neon Border */}
+            <motion.div 
+              className="absolute inset-0 rounded-2xl pointer-events-none"
+              style={{
+                background: 'transparent',
+                border: '2px solid transparent',
+                backgroundImage: 'linear-gradient(rgba(255,255,255,0), rgba(255,255,255,0)), linear-gradient(135deg, #00f5ff, #8b5cf6, #ff0080, #00f5ff)',
+                backgroundOrigin: 'border-box',
+                backgroundClip: 'content-box, border-box',
+                backgroundSize: '300% 300%'
+              }}
+              animate={{
+                backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+            />
+
             {/* Close Button */}
             <Button 
               variant="ghost" 
               size="icon" 
-              className="absolute top-4 right-4 z-30 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-full transition-colors" 
+              className="absolute top-4 right-4 z-30 text-white/80 hover:text-white hover:bg-white/10 rounded-full transition-all duration-300 backdrop-blur-sm border border-white/20 hover:border-cyber-blue/50" 
               onClick={onClose}
             >
               <X className="h-5 w-5" />
@@ -78,37 +110,65 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ isOpen, project, onC
             </Button>
 
             {/* Project Image */}
-            <div className="relative w-full h-80 overflow-hidden">
+            <div className="relative w-full h-80 overflow-hidden rounded-t-2xl">
               <img 
                 src={project.image} 
                 alt={project.title} 
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+              
+              {/* Holographic overlay */}
+              <motion.div 
+                className="absolute inset-0" 
+                style={{
+                  background: `
+                    linear-gradient(
+                      135deg,
+                      rgba(0,245,255,0.1) 0%,
+                      transparent 30%,
+                      rgba(139,92,246,0.1) 70%,
+                      transparent 100%
+                    )
+                  `
+                }} 
+                animate={{
+                  background: [
+                    "linear-gradient(135deg, rgba(0,245,255,0.1) 0%, transparent 30%, rgba(139,92,246,0.1) 70%, transparent 100%)", 
+                    "linear-gradient(225deg, rgba(139,92,246,0.1) 0%, transparent 30%, rgba(0,245,255,0.1) 70%, transparent 100%)", 
+                    "linear-gradient(135deg, rgba(0,245,255,0.1) 0%, transparent 30%, rgba(139,92,246,0.1) 70%, transparent 100%)"
+                  ]
+                }} 
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }} 
+              />
             </div>
 
             {/* Content */}
             <div className="p-8 space-y-6">
               {/* Title */}
-              <h2 className="text-3xl font-bold text-gray-900 leading-tight">
+              <h2 className="text-3xl font-bold text-white leading-tight glow-text font-orbitron">
                 {project.title}
               </h2>
               
               {/* Description */}
-              <p className="text-gray-600 text-lg leading-relaxed">
+              <p className="text-gray-300 text-lg leading-relaxed font-sora">
                 {project.description}
               </p>
 
               {/* Tech Stack */}
               <div className="space-y-3">
-                <h3 className="text-lg font-semibold text-gray-800">
+                <h3 className="text-lg font-semibold text-cyan-300 font-orbitron">
                   Technology Stack
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   {project.tags.map((tag, index) => (
                     <Badge 
                       key={index} 
-                      className="bg-gray-100 text-gray-700 border-gray-200 hover:bg-gray-200 transition-colors px-3 py-1"
+                      className="bg-gradient-to-r from-cyan-500/20 to-purple-500/20 border border-cyan-400/30 text-cyan-300 hover:bg-gradient-to-r hover:from-cyan-500/30 hover:to-purple-500/30 transition-all duration-300 px-3 py-1 font-sora"
                     >
                       {tag}
                     </Badge>
@@ -117,15 +177,15 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ isOpen, project, onC
               </div>
 
               {/* Action Buttons */}
-              <div className="flex items-center gap-4 pt-4 border-t border-gray-100">
+              <div className="flex items-center gap-4 pt-4 border-t border-white/20">
                 {project.liveLink && (
                   <Button 
-                    className="bg-gray-900 hover:bg-gray-800 text-white px-6 py-2.5 rounded-lg transition-colors" 
+                    className="cyber-button bg-gradient-to-r from-cyber-blue to-cyber-purple text-white px-6 py-2.5 rounded-lg transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,245,255,0.5)] font-sora" 
                     asChild
                   >
                     <a href={project.liveLink} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
                       <Eye className="w-4 h-4" />
-                      View Live
+                      <span>View Live</span>
                       <ExternalLink className="w-3 h-3" />
                     </a>
                   </Button>
@@ -133,17 +193,43 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ isOpen, project, onC
                 {project.githubLink && (
                   <Button 
                     variant="outline" 
-                    className="border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400 px-6 py-2.5 rounded-lg transition-colors" 
+                    className="border-white/30 text-white hover:bg-white/10 hover:border-cyber-purple/50 px-6 py-2.5 rounded-lg transition-all duration-300 backdrop-blur-sm font-sora" 
                     asChild
                   >
                     <a href={project.githubLink} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
                       <Github className="w-4 h-4" />
-                      Source Code
+                      <span>Source Code</span>
                       <ExternalLink className="w-3 h-3" />
                     </a>
                   </Button>
                 )}
               </div>
+            </div>
+
+            {/* Ambient Particles */}
+            <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-2xl">
+              {[...Array(15)].map((_, i) => (
+                <motion.div 
+                  key={i} 
+                  className="absolute w-1 h-1 bg-cyan-400/60 rounded-full" 
+                  style={{
+                    left: `${10 + Math.random() * 80}%`,
+                    top: `${10 + Math.random() * 80}%`
+                  }} 
+                  animate={{
+                    opacity: [0, 1, 0],
+                    scale: [0, 1.5, 0],
+                    x: [0, Math.random() * 40 - 20],
+                    y: [0, Math.random() * 40 - 20]
+                  }} 
+                  transition={{
+                    duration: 4 + Math.random() * 3,
+                    delay: Math.random() * 4,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }} 
+                />
+              ))}
             </div>
           </motion.div>
         </motion.div>
