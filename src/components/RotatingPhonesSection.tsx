@@ -1,3 +1,4 @@
+
 import React, { useRef, useMemo, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Environment, Float, Text } from '@react-three/drei';
@@ -15,8 +16,8 @@ function PhoneModel({ position, rotation, title, color, content, subtitle }: {
   subtitle: string;
 }) {
   const meshRef = useRef<THREE.Group>(null);
-  const roundedBoxGeometry = useMemo(() => createRoundedBoxGeometry(8, 16, 1, 0.5, 6), []);
-  const screenGeometry = useMemo(() => createRoundedBoxGeometry(7.2, 14.4, 0.1, 0.4, 6), []);
+  const roundedBoxGeometry = useMemo(() => createRoundedBoxGeometry(12, 24, 1.5, 0.5, 6), []);
+  const screenGeometry = useMemo(() => createRoundedBoxGeometry(11.2, 22.4, 0.1, 0.4, 6), []);
   
   useFrame((state) => {
     if (meshRef.current) {
@@ -43,54 +44,52 @@ function PhoneModel({ position, rotation, title, color, content, subtitle }: {
         </mesh>
         
         {/* Screen Base - Dark but not black */}
-        <mesh position={[0, 0, 0.51]} castShadow geometry={screenGeometry}>
+        <mesh position={[0, 0, 0.76]} castShadow geometry={screenGeometry}>
           <meshPhysicalMaterial
             color="#0f0f23"
             metalness={0.1}
             roughness={0.05}
             emissive="#0a0a1a"
-            emissiveIntensity={0.2}
+            emissiveIntensity={0.3}
           />
         </mesh>
 
         {/* Glassmorphism Screen Background */}
-        <mesh position={[0, 0, 0.52]}>
-          <planeGeometry args={[6.8, 14]} />
+        <mesh position={[0, 0, 0.77]}>
+          <planeGeometry args={[10.8, 22]} />
           <meshPhysicalMaterial
-            color="#0f0f23"
+            color="#ffffff"
             transparent
-            opacity={0.3}
-            transmission={0.7}
+            opacity={0.1}
+            transmission={0.9}
             thickness={0.1}
-            roughness={0.1}
+            roughness={0.05}
             clearcoat={1}
-            clearcoatRoughness={0.1}
-            emissive="#1a1a2e"
-            emissiveIntensity={0.1}
+            clearcoatRoughness={0.05}
           />
         </mesh>
 
         {/* Header Section - Glassmorphism */}
-        <mesh position={[0, 5.6, 0.53]}>
-          <planeGeometry args={[6.4, 2.4]} />
+        <mesh position={[0, 8.5, 0.78]}>
+          <planeGeometry args={[10.4, 3.6]} />
           <meshPhysicalMaterial
             color={color}
             transparent
-            opacity={0.4}
-            transmission={0.6}
+            opacity={0.2}
+            transmission={0.8}
             thickness={0.1}
-            roughness={0.1}
+            roughness={0.05}
             clearcoat={1}
-            clearcoatRoughness={0.1}
+            clearcoatRoughness={0.05}
             emissive={color}
-            emissiveIntensity={0.3}
+            emissiveIntensity={0.1}
           />
         </mesh>
 
         {/* Title Text */}
         <Text
-          position={[0, 6, 0.54]}
-          fontSize={0.6}
+          position={[0, 9.2, 0.79]}
+          fontSize={0.9}
           color="#ffffff"
           anchorX="center"
           anchorY="middle"
@@ -103,8 +102,8 @@ function PhoneModel({ position, rotation, title, color, content, subtitle }: {
 
         {/* Subtitle */}
         <Text
-          position={[0, 5.2, 0.54]}
-          fontSize={0.35}
+          position={[0, 7.8, 0.79]}
+          fontSize={0.55}
           color={color}
           anchorX="center"
           anchorY="middle"
@@ -117,41 +116,39 @@ function PhoneModel({ position, rotation, title, color, content, subtitle }: {
         {content.map((item, index) => (
           <group key={index}>
             {/* Glassmorphism Content Card */}
-            <mesh position={[0, 3.5 - (index * 1.8), 0.53]}>
-              <planeGeometry args={[6.2, 1.4]} />
+            <mesh position={[0, 5.5 - (index * 2.7), 0.78]}>
+              <planeGeometry args={[10, 2.2]} />
               <meshPhysicalMaterial
                 color="#ffffff"
                 transparent
-                opacity={0.15}
-                transmission={0.4}
+                opacity={0.08}
+                transmission={0.7}
                 thickness={0.05}
-                roughness={0.1}
+                roughness={0.05}
                 clearcoat={0.8}
-                clearcoatRoughness={0.2}
-                emissive="#ffffff"
-                emissiveIntensity={0.05}
+                clearcoatRoughness={0.1}
               />
             </mesh>
 
             {/* Card border accent */}
-            <mesh position={[-2.8, 3.5 - (index * 1.8), 0.531]}>
-              <planeGeometry args={[0.2, 1.4]} />
-              <meshBasicMaterial
+            <mesh position={[-4.5, 5.5 - (index * 2.7), 0.781]}>
+              <planeGeometry args={[0.3, 2.2]} />
+              <meshPhysicalMaterial
                 transparent
                 opacity={0.8}
                 color={color}
                 emissive={color}
-                emissiveIntensity={0.3}
+                emissiveIntensity={0.5}
               />
             </mesh>
             
             {/* Accent dot */}
-            <mesh position={[-2.6, 3.5 - (index * 1.8), 0.54]}>
-              <circleGeometry args={[0.1, 12]} />
+            <mesh position={[-4.2, 5.5 - (index * 2.7), 0.79]}>
+              <circleGeometry args={[0.15, 12]} />
               <meshPhysicalMaterial
                 color={color}
                 emissive={color}
-                emissiveIntensity={1}
+                emissiveIntensity={1.2}
                 transparent
                 opacity={0.9}
               />
@@ -159,12 +156,12 @@ function PhoneModel({ position, rotation, title, color, content, subtitle }: {
 
             {/* Content Text */}
             <Text
-              position={[-2, 3.5 - (index * 1.8), 0.54]}
-              fontSize={0.24}
+              position={[-3.5, 5.5 - (index * 2.7), 0.79]}
+              fontSize={0.38}
               color="#ffffff"
               anchorX="left"
               anchorY="middle"
-              maxWidth={4.8}
+              maxWidth={7.5}
               lineHeight={1.2}
               fontWeight="500"
               outlineWidth={0.01}
@@ -176,18 +173,18 @@ function PhoneModel({ position, rotation, title, color, content, subtitle }: {
         ))}
 
         {/* Bottom Glassmorphism Accent */}
-        <mesh position={[0, -6, 0.53]}>
-          <planeGeometry args={[6.4, 0.8]} />
+        <mesh position={[0, -9, 0.78]}>
+          <planeGeometry args={[10.4, 1.2]} />
           <meshPhysicalMaterial
             color={color}
             transparent
-            opacity={0.3}
-            transmission={0.5}
+            opacity={0.15}
+            transmission={0.7}
             thickness={0.1}
             emissive={color}
-            emissiveIntensity={0.2}
+            emissiveIntensity={0.1}
             clearcoat={1}
-            clearcoatRoughness={0.1}
+            clearcoatRoughness={0.05}
           />
         </mesh>
       </group>
@@ -196,7 +193,7 @@ function PhoneModel({ position, rotation, title, color, content, subtitle }: {
 }
 
 // Circular Orbit Animation with increased radius
-function CircularOrbit({ radius = 8, count = 5 }: { radius?: number; count?: number }) {
+function CircularOrbit({ radius = 25, count = 5 }: { radius?: number; count?: number }) {
   const groupRef = useRef<THREE.Group>(null);
   
   const services = [
@@ -259,7 +256,7 @@ function CircularOrbit({ radius = 8, count = 5 }: { radius?: number; count?: num
 
   useFrame((state) => {
     if (groupRef.current) {
-      groupRef.current.rotation.y += 0.003;
+      groupRef.current.rotation.y += 0.002;
     }
   });
 
@@ -268,7 +265,7 @@ function CircularOrbit({ radius = 8, count = 5 }: { radius?: number; count?: num
       const angle = (index / count) * Math.PI * 2;
       const x = Math.cos(angle) * radius;
       const z = Math.sin(angle) * radius;
-      const y = Math.sin(angle * 1.5) * 1.5; // More subtle vertical variation
+      const y = Math.sin(angle * 1.2) * 2;
       
       return (
         <PhoneModel
@@ -296,16 +293,16 @@ function Scene() {
   return (
     <>
       {/* Enhanced Lighting Setup for better visibility */}
-      <ambientLight intensity={0.8} color="#ffffff" />
-      <pointLight position={[20, 20, 20]} intensity={3} castShadow color="#00f5ff" />
-      <pointLight position={[-20, -20, -20]} intensity={2.5} color="#8b5cf6" />
-      <pointLight position={[20, -20, 20]} intensity={2} color="#10b981" />
-      <pointLight position={[0, 0, 30]} intensity={2} color="#ffffff" />
+      <ambientLight intensity={1.2} color="#ffffff" />
+      <pointLight position={[30, 30, 30]} intensity={4} castShadow color="#00f5ff" />
+      <pointLight position={[-30, -30, -30]} intensity={3.5} color="#8b5cf6" />
+      <pointLight position={[30, -30, 30]} intensity={3} color="#10b981" />
+      <pointLight position={[0, 0, 50]} intensity={3} color="#ffffff" />
       <spotLight
-        position={[0, 35, 0]}
-        angle={0.6}
+        position={[0, 50, 0]}
+        angle={0.8}
         penumbra={1}
-        intensity={2.5}
+        intensity={4}
         castShadow
         color="#ffffff"
         shadow-mapSize-width={2048}
@@ -313,14 +310,14 @@ function Scene() {
       />
       
       {/* Environment for reflections */}
-      <Environment preset="night" environmentIntensity={1.2} />
+      <Environment preset="night" environmentIntensity={1.5} />
       
       {/* Phones Orbit with larger radius */}
-      <CircularOrbit radius={15} count={5} />
+      <CircularOrbit radius={25} count={5} />
       
       {/* Invisible floor for shadows */}
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -15, 0]} receiveShadow>
-        <planeGeometry args={[200, 200]} />
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -20, 0]} receiveShadow>
+        <planeGeometry args={[300, 300]} />
         <shadowMaterial transparent opacity={0.1} />
       </mesh>
     </>
@@ -391,7 +388,7 @@ export default function RotatingPhonesSection() {
         <div className="relative w-full h-[900px] mb-12">
           <Suspense fallback={<LoadingFallback />}>
             <Canvas
-              camera={{ position: [0, 5, 25], fov: 60 }}
+              camera={{ position: [0, 5, 40], fov: 60 }}
               shadows
               dpr={[1, 2]}
               performance={{ min: 0.5 }}
