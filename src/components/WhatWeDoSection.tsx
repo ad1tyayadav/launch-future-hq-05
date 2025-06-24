@@ -91,19 +91,20 @@ const WhatWeDoSection = () => {
   };
 
   return (
-    <section className="py-24 relative overflow-hidden bg-black/95">
+    <section className="py-24 relative overflow-hidden bg-gradient-to-b from-gray-950 via-black to-gray-950">
       {/* Background Elements */}
       <div className="absolute inset-0">
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/0 via-black/50 to-black/0" />
+        {/* Subtle radial gradients for depth */}
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl" />
         
-        {/* Subtle grid pattern */}
-        <div className="absolute inset-0 opacity-5">
+        {/* Grid overlay */}
+        <div className="absolute inset-0 opacity-[0.02]">
           <div 
             className="h-full w-full"
             style={{
-              backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255,255,255,0.1) 1px, transparent 0)`,
-              backgroundSize: '40px 40px'
+              backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+              backgroundSize: '50px 50px'
             }}
           />
         </div>
@@ -115,10 +116,10 @@ const WhatWeDoSection = () => {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-20"
+          className="text-center mb-16"
         >
           <motion.h2 
-            className="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight"
+            className="text-5xl md:text-7xl font-bold text-white mb-4 tracking-tight"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 1 }}
@@ -126,44 +127,52 @@ const WhatWeDoSection = () => {
             What We Do
           </motion.h2>
           
+          <motion.div
+            className="w-24 h-1 bg-gradient-to-r from-cyan-400 to-purple-400 mx-auto mb-6 rounded-full"
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+          />
+          
           <motion.p 
-            className="text-lg text-white/60 max-w-2xl mx-auto leading-relaxed"
+            className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 1, delay: 0.2 }}
           >
-            Transforming ideas into reality through cutting-edge solutions and strategic expertise
+            Transforming ambitious ideas into extraordinary digital experiences through cutting-edge technology and strategic innovation
           </motion.p>
         </motion.div>
 
-        {/* Navigation Controls */}
-        {!isMobile && (
-          <div className="flex justify-center gap-3 mb-12">
-            <motion.button
-              onClick={prevSlide}
-              disabled={currentIndex === 0}
-              className="w-12 h-12 rounded-full bg-white/5 backdrop-blur-md border border-white/10 flex items-center justify-center text-white/60 hover:bg-white/10 hover:text-white hover:border-white/20 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </motion.button>
-            
-            <motion.button
-              onClick={nextSlide}
-              disabled={currentIndex >= services.length - 3}
-              className="w-12 h-12 rounded-full bg-white/5 backdrop-blur-md border border-white/10 flex items-center justify-center text-white/60 hover:bg-white/10 hover:text-white hover:border-white/20 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <ChevronRight className="w-5 h-5" />
-            </motion.button>
-          </div>
-        )}
-
         {/* Cards Container */}
-        <div className="relative">
-          <div className={`flex ${isMobile ? 'overflow-x-auto snap-x snap-mandatory scrollbar-hide' : 'justify-center'} gap-6 pb-4`}>
+        <div className="relative max-w-7xl mx-auto">
+          {/* Desktop Navigation */}
+          {!isMobile && (
+            <div className="flex justify-between items-center mb-8">
+              <motion.button
+                onClick={prevSlide}
+                disabled={currentIndex === 0}
+                className="w-14 h-14 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 flex items-center justify-center text-white/60 hover:bg-white/10 hover:text-white hover:border-white/20 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed group"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <ChevronLeft className="w-6 h-6 group-hover:-translate-x-0.5 transition-transform duration-200" />
+              </motion.button>
+              
+              <motion.button
+                onClick={nextSlide}
+                disabled={currentIndex >= services.length - 3}
+                className="w-14 h-14 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 flex items-center justify-center text-white/60 hover:bg-white/10 hover:text-white hover:border-white/20 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed group"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <ChevronRight className="w-6 h-6 group-hover:translate-x-0.5 transition-transform duration-200" />
+              </motion.button>
+            </div>
+          )}
+
+          {/* Cards Grid */}
+          <div className={`${isMobile ? 'flex overflow-x-auto snap-x snap-mandatory scrollbar-hide px-6 -mx-6' : 'grid grid-cols-3 gap-8'} pb-4`}>
             {getVisibleCards().map((cardIndex) => {
               if (cardIndex >= services.length) return null;
               
@@ -173,15 +182,15 @@ const WhatWeDoSection = () => {
               return (
                 <motion.div
                   key={cardIndex}
-                  className={`relative ${isMobile ? 'min-w-[320px] snap-center' : 'w-80'} h-[400px] cursor-pointer`}
-                  style={{ perspective: '1200px' }}
-                  initial={{ opacity: 0, y: 20 }}
+                  className={`relative ${isMobile ? 'min-w-[320px] snap-center mr-6 last:mr-0' : 'w-full'} h-[450px] cursor-pointer group`}
+                  style={{ perspective: '1500px' }}
+                  initial={{ opacity: 0, y: 40 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: cardIndex * 0.1 }}
+                  transition={{ duration: 0.8, delay: cardIndex * 0.15 }}
                   onClick={() => handleCardFlip(cardIndex)}
                   whileHover={{ 
-                    y: -8,
-                    transition: { duration: 0.3, ease: "easeOut" }
+                    y: -12,
+                    transition: { duration: 0.4, ease: "easeOut" }
                   }}
                 >
                   {/* Card Container with 3D transform */}
@@ -189,22 +198,25 @@ const WhatWeDoSection = () => {
                     className="relative w-full h-full"
                     animate={{ rotateY: isFlipped ? 180 : 0 }}
                     transition={{ 
-                      duration: 0.7, 
+                      duration: 0.8, 
                       ease: [0.23, 1, 0.32, 1]
                     }}
                     style={{ transformStyle: 'preserve-3d' }}
                   >
                     {/* Front Face */}
                     <div 
-                      className={`absolute inset-0 w-full h-full rounded-2xl bg-gradient-to-br ${service.gradient} backdrop-blur-xl border border-white/10 overflow-hidden shadow-2xl`}
+                      className={`absolute inset-0 w-full h-full rounded-3xl bg-gradient-to-br ${service.gradient} backdrop-blur-xl border border-white/10 overflow-hidden shadow-2xl`}
                       style={{ backfaceVisibility: 'hidden' }}
                     >
-                      {/* Card Header */}
-                      <div className="p-8 h-full flex flex-col">
+                      {/* Glow effect */}
+                      <div className={`absolute inset-0 bg-gradient-to-br from-${service.accentColor}/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+                      
+                      {/* Content */}
+                      <div className="p-8 h-full flex flex-col justify-between relative z-10">
                         {/* Icon Container */}
                         <motion.div
-                          className={`w-16 h-16 rounded-xl bg-${service.accentColor}/10 border border-${service.accentColor}/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}
-                          whileHover={{ scale: 1.1 }}
+                          className={`w-20 h-20 rounded-2xl bg-${service.accentColor}/10 border border-${service.accentColor}/20 flex items-center justify-center mb-8 group-hover:scale-110 transition-all duration-300`}
+                          whileHover={{ scale: 1.15, rotate: 5 }}
                         >
                           <div className={`text-${service.accentColor}`}>
                             {service.icon}
@@ -212,76 +224,80 @@ const WhatWeDoSection = () => {
                         </motion.div>
 
                         {/* Content */}
-                        <div className="flex-1 flex flex-col">
-                          <h3 className="text-2xl font-bold text-white mb-2 tracking-tight">
+                        <div className="flex-1">
+                          <h3 className="text-3xl font-bold text-white mb-3 tracking-tight leading-tight">
                             {service.title}
                           </h3>
                           
-                          <p className={`text-${service.accentColor} text-sm font-medium mb-6`}>
+                          <p className={`text-${service.accentColor} text-sm font-medium mb-6 opacity-80`}>
                             {service.subtitle}
                           </p>
-
-                          <div className="mt-auto">
-                            <motion.div
-                              className="inline-flex items-center gap-2 text-white/40 text-sm group"
-                              whileHover={{ x: 5 }}
-                              transition={{ duration: 0.2 }}
-                            >
-                              Tap to explore
-                              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
-                            </motion.div>
-                          </div>
                         </div>
 
-                        {/* Subtle accent line */}
-                        <div className={`absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-${service.accentColor}/30 to-transparent`} />
+                        {/* Bottom section */}
+                        <div>
+                          <motion.div
+                            className="inline-flex items-center gap-3 text-white/50 text-sm font-medium group-hover:text-white/70 transition-colors duration-300"
+                            whileHover={{ x: 8 }}
+                            transition={{ duration: 0.3 }}
+                          >
+                            <span>Tap to explore</span>
+                            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                          </motion.div>
+                        </div>
+
+                        {/* Bottom accent line */}
+                        <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-${service.accentColor}/40 to-transparent`} />
                       </div>
                     </div>
 
                     {/* Back Face */}
                     <div 
-                      className={`absolute inset-0 w-full h-full rounded-2xl bg-gradient-to-br ${service.gradient} backdrop-blur-xl border border-white/10 overflow-hidden shadow-2xl`}
+                      className={`absolute inset-0 w-full h-full rounded-3xl bg-gradient-to-br ${service.gradient} backdrop-blur-xl border border-white/10 overflow-hidden shadow-2xl`}
                       style={{ 
                         backfaceVisibility: 'hidden',
                         transform: 'rotateY(180deg)'
                       }}
                     >
-                      <div className="p-8 h-full flex flex-col">
+                      {/* Glow effect */}
+                      <div className={`absolute inset-0 bg-gradient-to-br from-${service.accentColor}/10 to-transparent`} />
+                      
+                      <div className="p-8 h-full flex flex-col relative z-10">
                         {/* Header */}
-                        <div className="text-center mb-6">
-                          <h3 className="text-xl font-bold text-white mb-2">
+                        <div className="text-center mb-8">
+                          <h3 className="text-2xl font-bold text-white mb-3">
                             {service.title}
                           </h3>
-                          <div className={`w-12 h-px bg-${service.accentColor}/50 mx-auto`} />
+                          <div className={`w-16 h-0.5 bg-gradient-to-r from-${service.accentColor}/60 to-${service.accentColor}/20 mx-auto rounded-full`} />
                         </div>
 
                         {/* Description */}
-                        <p className="text-white/70 text-sm leading-relaxed mb-8 flex-1">
+                        <p className="text-gray-300 text-base leading-relaxed mb-8 flex-1">
                           {service.description}
                         </p>
 
                         {/* Features */}
-                        <div className="space-y-3 mb-8">
-                          <h4 className={`text-${service.accentColor} font-semibold text-xs uppercase tracking-wider`}>
+                        <div className="space-y-4 mb-8">
+                          <h4 className={`text-${service.accentColor} font-semibold text-sm uppercase tracking-wider opacity-80`}>
                             Key Features
                           </h4>
                           {service.features.map((feature, index) => (
                             <motion.div
                               key={index}
-                              initial={{ opacity: 0, x: -10 }}
+                              initial={{ opacity: 0, x: -20 }}
                               animate={{ opacity: 1, x: 0 }}
-                              transition={{ duration: 0.3, delay: index * 0.1 }}
-                              className="flex items-center gap-3"
+                              transition={{ duration: 0.4, delay: index * 0.1 }}
+                              className="flex items-center gap-4"
                             >
-                              <div className={`w-1.5 h-1.5 bg-${service.accentColor} rounded-full`} />
-                              <span className="text-white/60 text-xs">{feature}</span>
+                              <div className={`w-2 h-2 bg-${service.accentColor} rounded-full flex-shrink-0`} />
+                              <span className="text-gray-400 text-sm font-medium">{feature}</span>
                             </motion.div>
                           ))}
                         </div>
 
                         {/* CTA Button */}
                         <Button
-                          className={`w-full bg-${service.accentColor}/10 border border-${service.accentColor}/20 text-${service.accentColor} hover:bg-${service.accentColor}/20 hover:border-${service.accentColor}/40 transition-all duration-300 rounded-xl py-3`}
+                          className={`w-full bg-${service.accentColor}/10 border border-${service.accentColor}/30 text-${service.accentColor} hover:bg-${service.accentColor}/20 hover:border-${service.accentColor}/50 transition-all duration-300 rounded-2xl py-4 text-sm font-semibold`}
                         >
                           Learn More
                           <ArrowRight className="w-4 h-4 ml-2" />
@@ -293,34 +309,24 @@ const WhatWeDoSection = () => {
               );
             })}
           </div>
+
+          {/* Mobile indicators */}
+          {isMobile && (
+            <div className="flex justify-center mt-8 gap-2">
+              {services.map((_, index) => (
+                <motion.div
+                  key={index}
+                  className={`w-2 h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                    index === currentIndex ? 'bg-white w-8' : 'bg-white/30'
+                  }`}
+                  whileHover={{ scale: 1.3 }}
+                  onClick={() => setCurrentIndex(index)}
+                />
+              ))}
+            </div>
+          )}
         </div>
-
-        {/* Mobile indicators */}
-        {isMobile && (
-          <div className="flex justify-center mt-8 gap-2">
-            {services.map((_, index) => (
-              <motion.div
-                key={index}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                  index === currentIndex ? 'bg-white' : 'bg-white/20'
-                }`}
-                whileHover={{ scale: 1.2 }}
-                onClick={() => setCurrentIndex(index)}
-              />
-            ))}
-          </div>
-        )}
       </div>
-
-      <style jsx>{`
-        .scrollbar-hide {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-        .scrollbar-hide::-webkit-scrollbar {
-          display: none;
-        }
-      `}</style>
     </section>
   );
 };
