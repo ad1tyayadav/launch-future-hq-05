@@ -9,6 +9,9 @@ import ProjectsSection from "../components/ProjectsSection";
 import PricingSection from "../components/PricingSection";
 import ContactSection from "../components/ContactSection";
 import ThreeBackground from "../components/ThreeBackground";
+import TempBooking from "@/components/TempBooking";
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
 
 const Index = () => {
   return (
@@ -16,8 +19,8 @@ const Index = () => {
       <ThreeBackground />
       <Navigation />
       <div className="relative z-10">
+        <Header />
         <HeroSection />
-        <RotatingPhonesSection />
         <ServicesCarousel />
         <ProjectsSection />
         <TestimonialSection />
@@ -25,8 +28,10 @@ const Index = () => {
         <div className="relative">
           <InvestorSection />
         </div>
-        <ContactSection />
+        {/* <ContactSection /> */}
+        <TempBooking />
       </div>
+      <Footer />
     </div>
   );
 };

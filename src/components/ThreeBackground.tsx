@@ -1,4 +1,3 @@
-
 import React, { useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Points, PointMaterial } from '@react-three/drei';
@@ -10,8 +9,8 @@ function Stars(props: any) {
   
   const [sphere] = useMemo(() => {
     // Generate valid sphere positions with proper validation
-    const positions = new Float32Array(5000 * 3); // Ensure proper length
-    const tempSphere = random.inSphere(new Float32Array(5000 * 3), { radius: 1.5 });
+    const positions = new Float32Array(5000 * 2); // Ensure proper length
+    const tempSphere = random.inSphere(new Float32Array(5000 * 2), { radius: 3 });
     
     // Validate and clean positions to prevent NaN values
     for (let i = 0; i < tempSphere.length; i++) {

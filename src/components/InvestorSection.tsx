@@ -38,7 +38,7 @@ const InvestorSection = () => {
       }} transition={{
         duration: 0.8
       }} className="text-center mb-16">
-          <h2 className="text-4xl md:text-6xl font-bold text-white mb-6 font-orbitron">
+          <h2 className="text-4xl md:text-6xl font-aquire text-white mb-6 font-orbitron">
             Investor <span className="text-cyber-blue">Opportunity</span>
           </h2>
           <p className="text-xl text-white/80 font-sora max-w-4xl mx-auto mb-8">

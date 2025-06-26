@@ -22,6 +22,8 @@ export default {
 			fontFamily: {
 				'sans': ['-apple-system', 'BlinkMacSystemFont', 'Inter', 'system-ui', 'sans-serif'],
 				'mono': ['SF Mono', 'Monaco', 'Cascadia Code', 'Roboto Mono', 'Consolas', 'Courier New', 'monospace'],
+				'mars': ['MarsBold', 'sans-serif'],
+				'aquire': ['Aquire', 'sans-serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',

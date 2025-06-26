@@ -71,7 +71,7 @@ const TestimonialSection = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-6xl font-bold text-white mb-6 font-orbitron glow-text">
+          <h2 className="font-aquire text-4xl md:text-6xl text-white mb-6 font-orbitron glow-text">
             Client Success Stories
           </h2>
           <p className="text-xl text-white/80 font-sora max-w-3xl mx-auto">

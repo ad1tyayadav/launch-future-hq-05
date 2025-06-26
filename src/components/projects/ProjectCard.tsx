@@ -190,12 +190,12 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, onClic
                 {/* Tech Stack Tags */}
                 <div className="flex flex-wrap gap-1.5 mt-3">
                   {project.tags.slice(0, 3).map((tag, tagIndex) => (
-                    <Badge key={tagIndex} className="bg-gradient-to-r from-cyan-500/20 to-purple-500/20 border border-cyan-400/30 text-cyan-300 text-xs px-2 py-1">
+                    <Badge key={tagIndex} className="bg-gray-700/50 border border-gray-600 text-gray-300 hover:bg-primary/20 text-xs px-2 py-1">
                       {tag}
                     </Badge>
                   ))}
                   {project.tags.length > 3 && (
-                    <Badge className="bg-gray-700/50 border border-gray-600 text-gray-300 text-xs px-2 py-1">
+                    <Badge className="bg-gray-700/50 border border-gray-600 text-gray-300 hover:bg-primary/20  text-xs px-2 py-1">
                       +{project.tags.length - 3}
                     </Badge>
                   )}
@@ -212,7 +212,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, onClic
                     repeat: Infinity
                   }}
                 >
-                  <span className="text-cyan-400 text-xs font-sora">
+                  <span className="text-cyan-400 text-s font-sora">
                     Click to explore details
                   </span>
                 </motion.div>
