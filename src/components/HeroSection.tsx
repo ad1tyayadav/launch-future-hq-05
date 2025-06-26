@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Button } from './ui/button';
-const HeroSection = () => {
+import { motion, AnimatePresence } from 'framer-motion';
+import  Button from '../components/ui/TakemeBtn'
+
+const HeroSection: React.FC = () => {
   const [mousePosition, setMousePosition] = useState({
     x: 0,
     y: 0
@@ -91,25 +92,23 @@ const HeroSection = () => {
   const letterVariants = {
     hidden: {
       opacity: 0,
-      y: 50,
-      rotateX: -90,
-      scale: 0.5
+      x: -20,
+      scale: 0.8
     },
-    visible: {
+    visible: (i: number) => ({
       opacity: 1,
-      y: 0,
-      rotateX: 0,
+      x: 0,
       scale: 1,
       transition: {
-        duration: 0.8,
+        delay: i * 0.15,
+        duration: 0.5,
         type: "spring" as const,
         stiffness: 100,
         damping: 10
       }
-    },
+    }),
     hover: {
       y: -8,
-      rotateZ: Math.random() * 10 - 5,
       scale: 1.1,
       color: "#00f5ff",
       textShadow: "0 0 20px rgba(0, 245, 255, 0.8)",
@@ -118,165 +117,230 @@ const HeroSection = () => {
         stiffness: 300,
         damping: 10
       }
-    },
-    floating: {
-      y: [-10, 10, -10],
+    }
+  };
+
+  // Blinking cursor animation
+  const cursorVariants = {
+    blink: {
+      opacity: [1, 0, 1],
       transition: {
-        duration: 3,
+        duration: 0.5,
         repeat: Infinity,
-        ease: "easeInOut" as const
+        ease: "easeInOut"
       }
     }
   };
+
+  // Animation variants for words
+  const wordVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+    exit: { opacity: 0, y: -20, transition: { duration: 0.5 } }
+  };
+
+  // State for cycling words
+  const [currentWordIndex, setCurrentWordIndex] = useState(0);
+  const words = ['Innovate', 'Develop', 'Launch'];
+
+  // Cycle through words every 2 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentWordIndex((prevIndex) => (prevIndex + 1) % words.length);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Scroll one screen down
+  const handleScroll = () => {
+    window.scrollBy({
+      top: window.innerHeight,
+      behavior: 'smooth'
+    });
+  };
+
   const devLaunchLetters = "DevLaunch".split("");
-  return <section className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
+
+  return (
+    <section id='home' className="min-h-screen flex items-center justify-center relative overflow-hidden pt-16 sm:pt-20">
+      <style>
+        {`
+          @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
+        `}
+      </style>
+
       {/* Enhanced cursor-following glow effect */}
-      <motion.div className="fixed pointer-events-none z-0" style={{
-      left: mousePosition.x - 300,
-      top: mousePosition.y - 300,
-      width: 600,
-      height: 600,
-      background: 'radial-gradient(circle, rgba(0, 245, 255, 0.2) 0%, rgba(139, 92, 246, 0.15) 25%, rgba(255, 0, 128, 0.1) 50%, transparent 70%)',
-      borderRadius: '50%',
-      filter: 'blur(60px)'
-    }} animate={{
-      scale: [1, 1.2, 1],
-      opacity: [0.4, 0.7, 0.4]
-    }} transition={{
-      duration: 3,
-      repeat: Infinity,
-      ease: "easeInOut"
-    }} />
+      <motion.div
+        className="fixed pointer-events-none z-0"
+        style={{
+          left: mousePosition.x - (window.innerWidth < 640 ? 150 : 300),
+          top: mousePosition.y - (window.innerWidth < 640 ? 150 : 300),
+          width: window.innerWidth < 640 ? 300 : 600,
+          height: window.innerWidth < 640 ? 300 : 600,
+          background: 'radial-gradient(circle, rgba(0, 245, 255, 0.2) 0%, rgba(139, 92, 246, 0.15) 25%, rgba(255, 0, 128, 0.1) 50%, transparent 70%)',
+          borderRadius: '50%',
+          filter: 'blur(60px)'
+        }}
+        animate={{
+          scale: [1, 1.2, 1],
+          opacity: [0.4, 0.7, 0.4]
+        }}
+        transition={{
+          duration: 3,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
 
       {/* Tech-themed UI elements that reveal on proximity */}
       {techElements.map(element => {
-      const elementX = element.x / 100 * window.innerWidth;
-      const elementY = element.y / 100 * window.innerHeight;
-      const distance = getDistance(mousePosition.x, mousePosition.y, elementX, elementY);
-      const isNear = distance < 150;
-      const opacity = isNear ? Math.max(0.1, 1 - distance / 150) : 0;
-      return <motion.div key={element.id} className="fixed pointer-events-none z-5" style={{
-        left: `${element.x}%`,
-        top: `${element.y}%`,
-        transform: 'translate(-50%, -50%)'
-      }} animate={{
-        opacity: opacity,
-        scale: isNear ? 1 : 0.8
-      }} transition={{
-        duration: 0.6,
-        ease: "easeOut"
-      }}>
-            <div className={`
-                ${element.type === 'node' ? 'w-16 h-16 border-2 border-cyber-blue rounded-full flex items-center justify-center' : ''}
-                ${element.type === 'panel' ? 'w-24 h-12 border border-cyber-purple rounded bg-cyber-purple/10' : ''}
-                ${element.type === 'circuit' ? 'w-20 h-8 border border-cyber-pink rounded-sm bg-cyber-pink/5' : ''}
-                ${element.type === 'databox' ? 'w-28 h-10 border border-cyber-blue rounded bg-cyber-blue/10' : ''}
+        const elementX = element.x / 100 * window.innerWidth;
+        const elementY = element.y / 100 * window.innerHeight;
+        const distance = getDistance(mousePosition.x, mousePosition.y, elementX, elementY);
+        const isNear = distance < (window.innerWidth < 640 ? 100 : 150);
+        const opacity = isNear ? Math.max(0.1, 1 - distance / (window.innerWidth < 640 ? 100 : 150)) : 0;
+        return (
+          <motion.div
+            key={element.id}
+            className="fixed pointer-events-none z-5"
+            style={{
+              left: `${element.x}%`,
+              top: `${element.y}%`,
+              transform: 'translate(-50%, -50%)'
+            }}
+            animate={{
+              opacity: opacity,
+              scale: isNear ? 1 : 0.8
+            }}
+            transition={{
+              duration: 0.6,
+              ease: "easeOut"
+            }}
+          >
+            <div
+              className={`
+                ${element.type === 'node' ? 'w-12 h-12 sm:w-16 sm:h-16 border-2 border-cyber-blue rounded-full flex items-center justify-center' : ''}
+                ${element.type === 'panel' ? 'w-20 h-10 sm:w-24 sm:h-12 border border-cyber-purple rounded bg-cyber-purple/10' : ''}
+                ${element.type === 'circuit' ? 'w-16 h-6 sm:w-20 sm:h-8 border border-cyber-pink rounded-sm bg-cyber-pink/5' : ''}
+                ${element.type === 'databox' ? 'w-24 h-8 sm:w-28 sm:h-10 border border-cyber-blue rounded bg-cyber-blue/10' : ''}
                 backdrop-blur-sm
-              `} style={{
-          boxShadow: isNear ? `0 0 20px rgba(0, 245, 255, ${opacity * 0.5})` : 'none'
-        }}>
-              <span className="text-xs font-mono text-white/80 px-2 truncate">
+              `}
+              style={{
+                boxShadow: isNear ? `0 0 20px rgba(0, 245, 255, ${opacity * 0.5})` : 'none'
+              }}
+            >
+              <span className="text-[10px] sm:text-xs font-mono text-white/80 px-2 truncate">
                 {element.content}
               </span>
             </div>
-          </motion.div>;
-    })}
+          </motion.div>
+        );
+      })}
 
       {/* Background effects */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
         {/* Background gradients */}
-        <div className="absolute top-1/4 left-0 w-64 h-64 bg-gradient-to-r from-cyber-blue/20 to-transparent rounded-full filter blur-3xl -translate-y-1/2 -translate-x-1/4" />
-        <div className="absolute bottom-1/4 right-0 w-64 h-64 bg-gradient-to-l from-cyber-purple/20 to-transparent rounded-full filter blur-3xl translate-y-1/2 translate-x-1/4" />
+        <div className="absolute top-1/4 left-0 w-48 h-48 sm:w-64 sm:h-64 bg-gradient-to-r from-cyber-blue/20 to-transparent rounded-full filter blur-3xl -translate-y-1/2 -translate-x-1/4" />
+        <div className="absolute bottom-1/4 right-0 w-48 h-48 sm:w-64 sm:h-64 bg-gradient-to-l from-cyber-purple/20 to-transparent rounded-full filter blur-3xl translate-y-1/2 translate-x-1/4" />
         
         {/* Enhanced starfield background */}
-        {[...Array(150)].map((_, i) => <motion.div key={i} className="absolute rounded-full" style={{
-        left: `${Math.random() * 100}%`,
-        top: `${Math.random() * 100}%`,
-        width: Math.random() > 0.7 ? '2px' : '1px',
-        height: Math.random() > 0.7 ? '2px' : '1px',
-        background: Math.random() > 0.5 ? '#00f5ff' : '#8b5cf6'
-      }} animate={{
-        opacity: [0.2, 1, 0.2],
-        scale: [0.5, 1.5, 0.5]
-      }} transition={{
-        duration: 2 + Math.random() * 4,
-        repeat: Infinity,
-        delay: Math.random() * 3
-      }} />)}
+        {[...Array(150)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute rounded-full"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              width: Math.random() > 0.7 ? '2px' : '1px',
+              height: Math.random() > 0.7 ? '2px' : '1px',
+              background: Math.random() > 0.5 ? '#00f5ff' : '#8b5cf6'
+            }}
+            animate={{
+              opacity: [0.2, 1, 0.2],
+              scale: [0.5, 1.5, 0.5]
+            }}
+            transition={{
+              duration: 2 + Math.random() * 4,
+              repeat: Infinity,
+              delay: Math.random() * 3
+            }}
+          />
+        ))}
       </div>
       
-      <div className="container mx-auto px-6 text-center relative z-10">
-        <motion.div initial={{
-        opacity: 0,
-        y: 50
-      }} animate={{
-        opacity: 1,
-        y: 0
-      }} transition={{
-        duration: 1
-      }}>
-          {/* Animated DevLaunch Typography with floating effect */}
-          <div className="mb-8 px-0 mx-0 my-0 py-0">
-            <motion.h1 className="text-6xl md:text-8xl font-bold text-white inline-flex" style={{
-            fontFamily: "'Space Grotesk', 'Inter', sans-serif"
-          }} animate="floating" variants={letterVariants}>
-              {devLaunchLetters.map((letter, index) => <motion.span key={index} custom={index} variants={letterVariants} initial="hidden" animate={["visible", "floating"]} whileHover="hover" transition={{
-              delay: index * 0.1,
-              duration: 0.8,
-              type: "spring",
-              stiffness: 100,
-              damping: 10
-            }} className="inline-block cursor-pointer" style={{
-              textShadow: "0 0 20px rgba(0, 245, 255, 0.5)",
-              filter: "drop-shadow(0 0 10px rgba(139, 92, 246, 0.3))",
-              animationDelay: `${index * 0.2}s`
-            }}>
+      <div className="container mx-auto px-4 sm:px-6 text-center relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+        >
+          {/* Animated DevLaunch Typography with CLI mask effect */}
+          <div className="mb-6 sm:mb-8 w-full">
+            <motion.h1
+              className="text-3xl xs:text-6xl sm:text-7xl md:text-4xl lg:text-5xl font-bold text-white flex justify-center items-center relative"
+              style={{
+                fontFamily: "'Orbitron', 'Space Grotesk', 'Inter', sans-serif"
+              }}
+            >
+              {devLaunchLetters.map((letter, index) => (
+                <motion.span
+                  key={index}
+                  custom={index}
+                  variants={letterVariants}
+                  initial="hidden"
+                  animate="visible"
+                  whileHover="hover"
+                  className="font-mars inline-block cursor-pointer"
+                  style={{
+                    textShadow: "0 0 20px rgba(0, 245, 255, 0.5)",
+                    filter: "drop-shadow(0 0 10px rgba(139, 92, 246, 0.3))"
+                  }}
+                >
                   {letter}
-                </motion.span>)}
+                </motion.span>
+              ))}
+              <motion.span
+                variants={cursorVariants}
+                animate="blink"
+                className="inline-block w-1 h-8 sm:h-10 md:h-12 lg:h-14 bg-cyan-500 ml-2"
+              />
             </motion.h1>
           </div>
 
-          {/* Enhanced subtitle */}
-          <motion.p initial={{
-          opacity: 0,
-          y: 30
-        }} animate={{
-          opacity: 1,
-          y: 0
-        }} transition={{
-          delay: 0.5,
-          duration: 0.8
-        }} className="text-xl md:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto text-center">Innovate | Develop | Launch</motion.p>
+          {/* Animated Words */}
+          <div className="h-8 sm:h-10 mb-8 sm:mb-12">
+            <AnimatePresence mode="wait">
+              <motion.p
+                key={currentWordIndex}
+                variants={wordVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                className="font-long text-lg xs:text-xl sm:text-2xl text-gray-300 max-w-3xl mx-auto text-center"
+              >
+                {words[currentWordIndex]}
+              </motion.p>
+            </AnimatePresence>
+          </div>
 
-          {/* Enhanced CTA Buttons with glowing hover effect */}
-          <motion.div className="flex flex-col sm:flex-row gap-6 justify-center items-center" initial={{
-          opacity: 0,
-          y: 40
-        }} animate={{
-          opacity: 1,
-          y: 0
-        }} transition={{
-          delay: 0.8,
-          duration: 0.8
-        }}>
-            <motion.div whileHover={{
-            scale: 1.05
-          }} whileTap={{
-            scale: 0.95
-          }}>
-              
-            </motion.div>
-            
-            <motion.div whileHover={{
-            scale: 1.05
-          }} whileTap={{
-            scale: 0.95
-          }}>
-              
+          {/* Single CTA Button with scroll effect */}
+          <motion.div
+            className="flex justify-center items-center"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8, duration: 0.8 }}
+          >
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Button />
             </motion.div>
           </motion.div>
         </motion.div>
       </div>
-    </section>;
+    </section>
+  );
 };
+
 export default HeroSection;

@@ -18,7 +18,7 @@ const ServicePreviewCards: React.FC<ServicePreviewCardsProps> = ({
 }) => {
   return (
     <motion.div 
-      className="flex justify-center mt-6"
+      className="flex relative -top-10 justify-center mt-6"
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 1.0 }}

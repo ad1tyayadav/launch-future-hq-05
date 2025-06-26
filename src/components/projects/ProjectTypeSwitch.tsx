@@ -1,45 +1,55 @@
-
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Switch } from "@/components/ui/switch";
+import React from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Code, Brain } from "lucide-react";
 
 interface ProjectTypeSwitchProps {
-  projectType: 'client' | 'devlaunch';
-  onProjectTypeChange: (type: 'client' | 'devlaunch') => void;
+  projectType: "client" | "devlaunch";
+  onProjectTypeChange: (type: "client" | "devlaunch") => void;
 }
 
 export const ProjectTypeSwitch: React.FC<ProjectTypeSwitchProps> = ({
   projectType,
-  onProjectTypeChange
+  onProjectTypeChange,
 }) => {
+  const isDev = projectType === "devlaunch";
+
   return (
-    <div className="container mx-auto px-4 mb-12">
-      <motion.div 
-        className="flex justify-center items-center gap-6 bg-gray-900/30 backdrop-blur-md border border-cyan-500/20 rounded-full px-8 py-4 w-fit mx-auto" 
-        initial={{
-          opacity: 0,
-          y: 20
-        }} 
-        whileInView={{
-          opacity: 1,
-          y: 0
-        }} 
-        transition={{
-          duration: 0.6
-        }}
+    <div className="relative w-fit mx-auto mt-10 px-4 py-2 rounded border border-white/10 bg-black/30 backdrop-blur-md">
+      {/* Switch Button Area */}
+      <button
+        onClick={() => onProjectTypeChange(isDev ? "client" : "devlaunch")}
+        className="relative w-48 h-12 overflow-hidden rounded-full"
       >
-        <span className={`font-orbitron text-lg transition-colors ${projectType === 'client' ? 'text-cyan-400 glow-text' : 'text-gray-400'}`}>
-          Client Projects
-        </span>
-        <Switch 
-          checked={projectType === 'devlaunch'} 
-          onCheckedChange={checked => onProjectTypeChange(checked ? 'devlaunch' : 'client')} 
-          className="data-[state=checked]:bg-purple-600 data-[state=unchecked]:bg-cyan-600" 
-        />
-        <span className={`font-orbitron text-lg transition-colors ${projectType === 'devlaunch' ? 'text-purple-400 glow-text' : 'text-gray-400'}`}>
-          DevLaunch Projects
-        </span>
-      </motion.div>
+        {/* Sliding Content */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              key={projectType}
+              className="absolute inset-0 w-full h-full flex items-center justify-center gap-2"
+              initial={{ x: isDev ? 50 : -50, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: isDev ? -50 : 50, opacity: 0 }}
+              transition={{ duration: 0.4, ease: "easeInOut" }}
+            >
+              {isDev ? (
+                <>
+                  <Brain className="h-5 w-5 text-purple-400" />
+                  <span className="text-purple-300 font-mono font-medium">
+                    DevLaunch AI
+                  </span>
+                </>
+              ) : (
+                <>
+                  <span className="text-cyan-300 font-mono font-medium">
+                    Client Projects
+                  </span>
+                  <Code className="h-5 w-5 text-cyan-400" />
+                </>
+              )}
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </button>
     </div>
   );
 };

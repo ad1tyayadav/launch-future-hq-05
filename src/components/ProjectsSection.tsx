@@ -36,7 +36,7 @@ const projectsData: Project[] = [
     id: 2,
     title: "Decentralized Finance (DeFi) App",
     description: "A secure and transparent DeFi application built on blockchain technology.",
-    image: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=600&h=400&fit=crop",
+    image: "https://plus.unsplash.com/premium_photo-1676618539993-defb0cb1447d?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDF8fGRlY2VudHJhbGl6ZWQlMjBkYXRhYmFzZXxlbnwwfHwwfHx8MA%3D%3D",
     tags: ["Blockchain", "DeFi", "Solidity", "Web3"],
     featured: true,
     type: 'devlaunch',
@@ -69,7 +69,7 @@ const projectsData: Project[] = [
     id: 5,
     title: "Smart City Traffic Management",
     description: "Reducing traffic congestion and improving urban mobility with intelligent systems.",
-    image: "https://images.unsplash.com/photo-1573804633927-bfcbcd909acd?w=600&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1662947190722-5d272f82a526?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Z29vZ2xlJTIwbG9nbyUyMGltYWdlfGVufDB8fDB8fHww",
     tags: ["Smart City", "IoT", "Data Analytics", "C++"],
     featured: false,
     type: 'client',
@@ -150,9 +150,9 @@ const ProjectsSection: React.FC = () => {
       {/* Content */}
       <div className="relative z-10">
         {/* Title and description */}
-        <div className="container mx-auto text-center mb-16">
+        <div className="acontainer mx-auto text-center mb-16">
           <motion.h2 
-            className="text-4xl md:text-6xl font-bold text-white mb-6 font-orbitron glow-text" 
+            className="font-aquire text-4xl md:text-6xl text-white mb-6 font-orbitron glow-text" 
             initial={{
               opacity: 0,
               y: 50
@@ -231,21 +231,36 @@ const ProjectsSection: React.FC = () => {
         </div>
 
         {/* View All Projects Button */}
-        <div className="container mx-auto px-4 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <Button 
-              className="bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-600 hover:to-purple-700 text-white px-4 py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 rounded-xl font-orbitron text-sm sm:text-base md:text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-cyan-500/25"
-            >
-              View All Projects
-              <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
-            </Button>
-          </motion.div>
-        </div>
+<div className="container mx-auto px-4 text-center cursor-pointer">
+  <motion.div
+    initial={{ opacity: 0, y: 30 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.6 }}
+    viewport={{ once: true }}
+  >
+    <div className="relative group inline-block">
+      {/* Subtle background glow */}
+      <div className="absolute -inset-1 bg-cyan-400 rounded-full opacity-20 group-hover:opacity-40 blur-sm transition-all duration-300"></div>
+
+      <Button
+        className="relative bg-gray-900 text-white px-8 py-5 sm:px-10 sm:py-6 rounded-full font-orbitron text-lg sm:text-xl inline-flex items-center border-2 border-cyan-400/50 group-hover:border-cyan-400 transition-all duration-300 "
+      >
+        <span className="mr-3">View All Projects</span>
+
+        {/* Magical Arrow Animation */}
+        <div className="relative flex items-center">
+              <span className="text-white text-2xl group-hover:opacity-0 transition-opacity duration-300">›</span>
+              <span className="text-white text-2xl opacity-0 group-hover:opacity-100 absolute left-0 transition-opacity duration-300">→</span>
+            </div>
+      
+      </Button>
+
+      {/* Outer glow ring */}
+      <div className="absolute -inset-4 rounded-full border border-white/50 opacity-0 group-hover:opacity-100 scale-110 group-hover:scale-100 transition-all duration-500"></div>
+    </div>
+  </motion.div>
+</div>
+
       </div>
       
       {/* Project Modal */}

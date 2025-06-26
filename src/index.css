@@ -87,15 +87,15 @@
   .glass-morphism {
     @apply bg-white/5 backdrop-blur-md border border-white/10 rounded-xl;
   }
-  
+
   .neon-border {
-    @apply border border-cyber-blue/50 shadow-[0_0_20px_rgba(0,245,255,0.3)];
+    @apply border border-cyber-blue/50 shadow-[0_0_20px_rgba(0, 245, 255, 0.3)];
   }
-  
+
   .glow-text {
     text-shadow: 0 0 10px rgba(0, 245, 255, 0.5);
   }
-  
+
   .typewriter {
     @apply font-mono;
     overflow: hidden;
@@ -104,28 +104,28 @@
     letter-spacing: 0.15em;
     animation: typewriter 3s steps(40) 1s 1 normal both, blink 1s step-end infinite;
   }
-  
+
   .magnetic-cursor {
     cursor: none;
   }
-  
+
   .floating-card {
     @apply glass-morphism p-6 transform transition-all duration-300 hover:scale-105 hover:rotate-1;
   }
-  
+
   .cyber-button {
     @apply relative px-8 py-4 bg-gradient-to-r from-cyber-blue to-cyber-purple text-white font-semibold rounded-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl;
   }
-  
+
   .cyber-button::before {
     content: '';
     @apply absolute inset-0 bg-gradient-to-r from-cyber-purple to-cyber-pink opacity-0 rounded-lg transition-opacity duration-300;
   }
-  
+
   .cyber-button:hover::before {
     opacity: 1;
   }
-  
+
   .cyber-button span {
     @apply relative z-10;
   }
@@ -193,7 +193,7 @@
     color: white;
     background: rgba(0, 245, 255, 0.15);
     border-color: rgba(0, 245, 255, 0.4);
-    box-shadow: 
+    box-shadow:
       0 0 20px rgba(0, 245, 255, 0.4),
       0 0 40px rgba(139, 92, 246, 0.2),
       inset 0 0 20px rgba(255, 255, 255, 0.1);
@@ -208,8 +208,8 @@
     @apply text-white font-bold;
     background: linear-gradient(135deg, #10b981, #14b8a6) !important;
     border-color: rgba(255, 255, 255, 0.3) !important;
-    box-shadow: 
-      0 0 30px rgba(16, 185, 129, 0.8), 
+    box-shadow:
+      0 0 30px rgba(16, 185, 129, 0.8),
       0 0 50px rgba(20, 184, 166, 0.6),
       inset 0 0 20px rgba(255, 255, 255, 0.2) !important;
     animation: pulse-glow 2s ease-in-out infinite;
@@ -220,8 +220,8 @@
     color: #0a0a0f !important;
     font-weight: bold !important;
     border: 2px solid #00f5ff !important;
-    box-shadow: 
-      0 0 25px rgba(0, 245, 255, 0.9), 
+    box-shadow:
+      0 0 25px rgba(0, 245, 255, 0.9),
       0 0 40px rgba(139, 92, 246, 0.7),
       0 0 60px rgba(255, 255, 255, 0.5),
       inset 0 0 20px rgba(0, 245, 255, 0.3) !important;
@@ -244,6 +244,16 @@
     text-shadow: 0 0 8px rgba(0, 245, 255, 0.4);
     padding: 8px;
   }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
 
   .enhanced-calendar .rdp-nav_button {
     @apply transition-all duration-300 rounded-xl;
@@ -277,26 +287,32 @@
   }
 
   @keyframes pulse-glow {
-    0%, 100% {
+
+    0%,
+    100% {
       box-shadow: 0 0 30px rgba(16, 185, 129, 0.8), 0 0 50px rgba(20, 184, 166, 0.6), inset 0 0 20px rgba(255, 255, 255, 0.2);
     }
+
     50% {
       box-shadow: 0 0 40px rgba(16, 185, 129, 1), 0 0 70px rgba(20, 184, 166, 0.8), 0 0 90px rgba(5, 150, 105, 0.4), inset 0 0 30px rgba(255, 255, 255, 0.3);
     }
   }
 
   @keyframes today-pulse {
-    0%, 100% {
-      box-shadow: 
-        0 0 25px rgba(255, 0, 128, 0.9), 
+
+    0%,
+    100% {
+      box-shadow:
+        0 0 25px rgba(255, 0, 128, 0.9),
         0 0 40px rgba(139, 92, 246, 0.7),
         0 0 60px rgba(0, 245, 255, 0.5),
         inset 0 0 20px rgba(255, 255, 255, 0.3);
       transform: scale(1);
     }
+
     50% {
-      box-shadow: 
-        0 0 35px rgba(255, 0, 128, 1), 
+      box-shadow:
+        0 0 35px rgba(255, 0, 128, 1),
         0 0 60px rgba(139, 92, 246, 0.9),
         0 0 80px rgba(0, 245, 255, 0.7),
         0 0 100px rgba(255, 0, 128, 0.4),
@@ -309,9 +325,11 @@
     0% {
       background-position: 0% 50%;
     }
+
     50% {
       background-position: 100% 50%;
     }
+
     100% {
       background-position: 0% 50%;
     }
@@ -329,14 +347,19 @@
 
   /* Shine effect for space pod cards */
   .shine-effect {
-    background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%);
+    background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.3) 50%, transparent 70%);
     transform: translateX(-100%);
     animation: shine 3s ease-in-out infinite;
   }
 
   @keyframes shine {
-    0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-    100% { transform: translateX(400%) translateY(400%) rotate(45deg); }
+    0% {
+      transform: translateX(-100%) translateY(-100%) rotate(45deg);
+    }
+
+    100% {
+      transform: translateX(400%) translateY(400%) rotate(45deg);
+    }
   }
 }
 

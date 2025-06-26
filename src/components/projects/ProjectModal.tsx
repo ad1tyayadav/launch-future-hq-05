@@ -81,7 +81,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ isOpen, project, onC
               style={{
                 background: 'transparent',
                 border: '2px solid transparent',
-                backgroundImage: 'linear-gradient(rgba(255,255,255,0), rgba(255,255,255,0)), linear-gradient(135deg, #00f5ff, #8b5cf6, #ff0080, #00f5ff)',
+                backgroundColor: 'transparent',
                 backgroundOrigin: 'border-box',
                 backgroundClip: 'content-box, border-box',
                 backgroundSize: '300% 300%'
@@ -165,7 +165,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ isOpen, project, onC
               </div>
 
               {/* Project Overview */}
-              <div className="glass-morphism p-6 rounded-xl border border-white/10">
+              <div className="glass-morphism p-6 rounded-xl border border-white/10 hover:border-white/50">
                 <h3 className="text-xl font-semibold text-cyan-300 font-orbitron mb-3 flex items-center gap-2">
                   <Target className="w-5 h-5" />
                   Project Overview
@@ -175,19 +175,20 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ isOpen, project, onC
                 </p>
               </div>
 
+              
               {/* Project Stats */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="glass-morphism p-4 rounded-xl border border-white/10 text-center">
+                <div className="glass-morphism p-4 rounded-xl border border-white/10 hover:border-white/50 text-center">
                   <Calendar className="w-6 h-6 text-cyan-400 mx-auto mb-2" />
                   <div className="text-sm text-gray-400 font-sora">Timeline</div>
                   <div className="text-white font-semibold font-orbitron">{getProjectDetails(project).timeline}</div>
                 </div>
-                <div className="glass-morphism p-4 rounded-xl border border-white/10 text-center">
+                <div className="glass-morphism p-4 rounded-xl border border-white/10 hover:border-white/50 text-center">
                   <Users className="w-6 h-6 text-purple-400 mx-auto mb-2" />
                   <div className="text-sm text-gray-400 font-sora">Team Size</div>
                   <div className="text-white font-semibold font-orbitron">{getProjectDetails(project).teamSize}</div>
                 </div>
-                <div className="glass-morphism p-4 rounded-xl border border-white/10 text-center">
+                <div className="glass-morphism p-4 rounded-xl border border-white/10 hover:border-white/50 text-center">
                   <Code className="w-6 h-6 text-pink-400 mx-auto mb-2" />
                   <div className="text-sm text-gray-400 font-sora">Type</div>
                   <div className="text-white font-semibold font-orbitron capitalize">{project.type}</div>
@@ -195,7 +196,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ isOpen, project, onC
               </div>
 
               {/* Key Features */}
-              <div className="glass-morphism p-6 rounded-xl border border-white/10">
+              <div className="glass-morphism p-6 rounded-xl border border-white/10 hover:border-white/50">
                 <h3 className="text-xl font-semibold text-cyan-300 font-orbitron mb-4 flex items-center gap-2">
                   <Zap className="w-5 h-5" />
                   Key Features
@@ -208,10 +209,11 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ isOpen, project, onC
                     </li>
                   ))}
                 </ul>
+                
               </div>
 
               {/* Technical Highlights */}
-              <div className="glass-morphism p-6 rounded-xl border border-white/10">
+              <div className="glass-morphism p-6 rounded-xl border border-white/10 hover:border-white/50">
                 <h3 className="text-xl font-semibold text-cyan-300 font-orbitron mb-4">
                   Technical Highlights
                 </h3>
@@ -233,7 +235,8 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ isOpen, project, onC
                   {project.tags.map((tag, index) => (
                     <Badge 
                       key={index} 
-                      className="bg-gradient-to-r from-cyan-500/20 to-purple-500/20 border border-cyan-400/30 text-cyan-300 hover:bg-gradient-to-r hover:from-cyan-500/30 hover:to-purple-500/30 transition-all duration-300 px-3 py-1.5 font-sora"
+                      className="bg-primary/10 border border-primary/20 text-white hover:bg-primary/20 transition-all duration-300 px-3 py-1.5 font-sora"
+
                     >
                       {tag}
                     </Badge>
@@ -242,7 +245,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ isOpen, project, onC
               </div>
 
               {/* Challenges & Solutions */}
-              <div className="glass-morphism p-6 rounded-xl border border-white/10">
+              <div className="glass-morphism p-6 rounded-xl border border-white/10 hover:border-white/50">
                 <h3 className="text-xl font-semibold text-cyan-300 font-orbitron mb-3">
                   Challenges & Solutions
                 </h3>
@@ -255,7 +258,8 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ isOpen, project, onC
               <div className="flex items-center gap-4 pt-6 border-t border-white/20">
                 {project.liveLink && (
                   <Button 
-                    className="cyber-button bg-gradient-to-r from-cyber-blue to-cyber-purple text-white px-6 py-3 rounded-lg transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,245,255,0.5)] font-sora flex-1 md:flex-none" 
+                  className="bg-primary/10 border border-primary/20 text-white hover:bg-primary/20 transition-all duration-300 px-3 py-1.5 font-sora"
+
                     asChild
                   >
                     <a href={project.liveLink} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2">
@@ -268,7 +272,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ isOpen, project, onC
                 {project.githubLink && (
                   <Button 
                     variant="outline" 
-                    className="border-white/30 text-white hover:bg-white/10 hover:border-cyber-purple/50 px-6 py-3 rounded-lg transition-all duration-300 backdrop-blur-sm font-sora flex-1 md:flex-none" 
+                    className="border-white/30 text-white hover:bg-white/10 hover:border-cyber-purple/50  px-6 py-3 rounded-lg transition-all duration-300 backdrop-blur-sm font-sora flex-1 md:flex-none" 
                     asChild
                   >
                     <a href={project.githubLink} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2">

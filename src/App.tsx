@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import LetsTalk from "./pages/LetsTalk";
 import InvestorDeck from "./pages/InvestorDeck";
 import NotFound from "./pages/NotFound";
+import './assets/fonts/fonts.css'
 
 const queryClient = new QueryClient();
 
