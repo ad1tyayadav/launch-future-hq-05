@@ -134,7 +134,7 @@ const PricingSection = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-aquire text-white mb-6 font-orbitron glow-text">
+          <h2 className="text-4xl md:text-5xl font-aquire text-white mb-6 glow-text">
             Premium Service Cards
           </h2>
           <p className="text-xl text-white/80 font-sora max-w-3xl mx-auto">
@@ -153,7 +153,7 @@ const PricingSection = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="group relative h-[24rem] [perspective:1000px]"
+                className="group relative h-[22rem] [perspective:1000px]"
               >
                 {/* Card Container with Flip Effect */}
                 <div className="relative w-full h-full [transform-style:preserve-3d] transition-transform duration-700 group-hover:[transform:rotateY(180deg)]">
@@ -249,7 +249,7 @@ const PricingSection = () => {
 
                     {/* Extended Features */}
                     <div className="px-8">
-                      <h3 className="text-white font-orbitron font-bold text-xl mb-4 drop-shadow-lg text-center">
+                      <h3 className="text-white font-long font-bold text-xl drop-shadow-lg text-center">
                         {service.title}
                       </h3>
 

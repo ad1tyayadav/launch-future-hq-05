@@ -8,9 +8,9 @@ gsap.registerPlugin(ScrollTrigger);
 // Service data structure
 import { services } from '@/data/servicesData';
 
-const TimeLine = () => {
+const ServicesCarouselPC = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
-   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
   const boxRef = useRef<HTMLDivElement>(null);
   const beamRef = useRef<HTMLDivElement>(null);
   const beamFillRef = useRef<HTMLDivElement>(null);
@@ -198,7 +198,7 @@ const TimeLine = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full overflow-hidden"
+      className="relative w-full right-10 overflow-hidden hidden lg:block"
       style={{ height: `${(phases.length + 1) * 20}vh` }}
     >
       {/* Service Selector */}
@@ -207,12 +207,15 @@ const TimeLine = () => {
           {services.map((s, index) => (
             <motion.button
               key={s.title}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className={`px-4 py-2 text-sm rounded transition-all duration-300 font-mono border ${index === selectedServiceIndex
-                ? 'bg-gradient-to-r from-cyan-500 to-purple-600 text-white shadow-lg shadow-cyan-500/30'
-                : 'bg-white/10 text-white hover:bg-white/20'
-                }`}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className={`
+        px-5 py-2.5 rounded-md text-sm font-medium border transition-all duration-300
+        ${index === selectedServiceIndex
+                  ? 'text-black border-white text-white shadow-sm'
+                  : 'bg-transparent text-white border-white/20 hover:border-white/40'
+                }
+      `}
               onClick={() => setSelectedServiceIndex(index)}
             >
               {s.title}
@@ -292,11 +295,15 @@ const TimeLine = () => {
           {/* Animated Content Box */}
           <motion.div
             ref={boxRef}
-            className="relative w-full max-w-md mt-8 md:max-w-2xl rounded-3xl backdrop-blur-lg shadow-2xl p-6 md:p-10 border border-cyan-500/30 transition-all duration-500 z-30 overflow-hidden group"
+            className="relative right-4 w-full max-w-md mt-8 md:max-w-2xl rounded-3xl backdrop-blur-lg shadow-2xl p-6 md:p-10 border border-cyan-500/30 transition-all duration-500 z-30 overflow-hidden group"
             whileHover={{ scale: 1.01 }}
           >
             {/* Shiny Beam */}
+            {/* Top Beam */}
             <div className="absolute top-0 left-[-50%] w-[200%] h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-[slidebeam_2s_linear_infinite]" />
+
+            {/* Right Beam (vertical) */}
+            <div className="absolute top-[-50%] right-0 h-[200%] w-[2px] bg-gradient-to-b from-transparent via-cyan-400 to-transparent animate-[slidebeam_2s_linear_infinite]" />
 
             <AnimatePresence mode="wait">
               <motion.div
@@ -350,4 +357,4 @@ const TimeLine = () => {
   );
 };
 
-export default TimeLine;
+export default ServicesCarouselPC;

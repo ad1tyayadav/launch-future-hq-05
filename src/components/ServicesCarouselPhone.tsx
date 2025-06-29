@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const ServicesCarousel = () => {
+const ServicesCarouselPhone = () => {
   const [currentService, setCurrentService] = useState(0);
   const [currentCard, setCurrentCard] = useState(0);
 
@@ -354,8 +354,8 @@ const ServicesCarousel = () => {
   const currentServiceData = services[currentService];
   const currentTimelineData = currentServiceData.timeline[currentCard];
 
-return (
-    <section id="services" className="py-20 relative overflow-hidden min-h-screen">
+  return (
+    <section id="services" className="block lg:hidden py-20 relative overflow-hidden min-h-screen">
       {/* Subtle Background */}
       <div className="absolute inset-0 bg-transparent" />
 
@@ -467,13 +467,12 @@ return (
                         {currentServiceData.timeline.map((_, index) => (
                           <div
                             key={index}
-                            className={`h-2 rounded-full transition-all duration-1000 ${
-                              index === currentCard
+                            className={`h-2 rounded-full transition-all duration-1000 ${index === currentCard
                                 ? 'w-16 bg-white/40'
                                 : index < currentCard
-                                ? 'w-8 bg-white/20'
-                                : 'w-8 bg-white/10'
-                            }`}
+                                  ? 'w-8 bg-white/20'
+                                  : 'w-8 bg-white/10'
+                              }`}
                           />
                         ))}
                       </div>
@@ -579,11 +578,10 @@ return (
               {services.map((service, index) => (
                 <motion.div
                   key={index}
-                  className={`relative cursor-pointer transition-all duration-700 flex-shrink-0 ${
-                    index === currentService
+                  className={`relative cursor-pointer transition-all duration-700 flex-shrink-0 ${index === currentService
                       ? 'opacity-100 scale-100 border-white/20'
                       : 'opacity-60 hover:opacity-90 scale-95'
-                  }`}
+                    }`}
                   onClick={() => {
                     setCurrentService(index);
                     setCurrentCard(0);
@@ -612,11 +610,10 @@ return (
                       {service.timeline.map((_, cardIndex) => (
                         <div
                           key={cardIndex}
-                          className={`h-1 flex-1 rounded-full ${
-                            index === currentService && cardIndex <= currentCard
+                          className={`h-1 flex-1 rounded-full ${index === currentService && cardIndex <= currentCard
                               ? 'bg-white/40'
                               : 'bg-white/10'
-                          }`}
+                            }`}
                         />
                       ))}
                     </div>
@@ -631,11 +628,10 @@ return (
             {services.map((_, index) => (
               <motion.div
                 key={index}
-                className={`w-2 h-2 rounded-full transition-all duration-500 cursor-pointer ${
-                  index === currentService
+                className={`w-2 h-2 rounded-full transition-all duration-500 cursor-pointer ${index === currentService
                     ? 'bg-white/50 scale-125'
                     : 'bg-white/20 hover:bg-white/30'
-                }`}
+                  }`}
                 onClick={() => {
                   setCurrentService(index);
                   setCurrentCard(0);
@@ -674,4 +670,4 @@ return (
   );
 };
 
-export default ServicesCarousel;
+export default ServicesCarouselPhone;

@@ -1,4 +1,3 @@
-
 export interface TimelinePhase {
   phase: string;
   duration: string;
@@ -45,14 +44,14 @@ export const services: Service[] = [
       },
       {
         phase: 'Integration & Optimization',
-        duration: '2-3 weeks',
+        duration: '7-9 weeks',
         description: 'Seamlessly integrate AI capabilities into your existing systems',
         details: 'We ensure smooth API integration, optimize performance for real-world usage, and implement comprehensive testing protocols. Our team handles data pipelines, model versioning, and continuous monitoring.',
         deliverables: ['Production Integration', 'Performance Optimization', 'Monitoring Dashboard', 'Documentation']
       },
       {
         phase: 'Deployment & Monitoring',
-        duration: '1-2 weeks',
+        duration: '10-12 weeks',
         description: 'Launch your AI-powered application with continuous improvement systems',
         details: 'Cloud deployment with auto-scaling, real-time monitoring, and continuous learning capabilities. We implement feedback loops for model improvement and provide ongoing support.',
         deliverables: ['Production Deployment', 'Monitoring Systems', 'Maintenance Plan', 'Training Materials']
@@ -92,6 +91,13 @@ export const services: Service[] = [
         description: 'Ensure smooth performance across all devices and browsers',
         details: 'We implement LOD systems, optimize draw calls, and ensure your 3D experience runs smoothly on mobile devices. Performance testing across different hardware configurations.',
         deliverables: ['Performance Benchmarks', 'Mobile Optimization', 'Browser Compatibility', 'Loading Optimization']
+      },
+      {
+        phase: 'Deployment & Support',
+        duration: '1-2 weeks',
+        description: 'Launch your 3D experience with ongoing support and updates',
+        details: 'We deploy your 3D application to production, set up monitoring for performance, and provide documentation for future updates. Our team ensures seamless launch and user adoption.',
+        deliverables: ['ProductionofaDeployment', 'Monitoring Setup', 'Documentation', 'Maintenance Plan']
       }
     ]
   },
@@ -99,7 +105,7 @@ export const services: Service[] = [
     title: 'BLOCKCHAIN SOLUTIONS',
     subtitle: 'Decentralized Applications for the Future',
     description: 'Build secure, transparent, and decentralized applications using cutting-edge blockchain technology and smart contracts.',
-    techWords: ['Solidity', 'Web3', 'Ethereum', 'Smart Contracts', 'DeFi', 'NFTs', 'IPFS', 'MetaMask', 'Polygon', 'Hardhat'],
+    techWords: ['Solidity', 'Web3', ' Ethereum', 'Smart Contracts', 'DeFi', 'NFTs', 'IPFS', 'MetaMask', 'Polygon', 'Hardhat'],
     timeline: [
       {
         phase: 'Blockchain Architecture',
@@ -130,11 +136,11 @@ export const services: Service[] = [
         deliverables: ['Security Audit Report', 'Testnet Deployment', 'Vulnerability Assessment', 'Bug Fixes']
       },
       {
-        phase: 'Mainnet Deployment',
+        phase: 'Mainnet Deployment & Monitoring',
         duration: '1-2 weeks',
-        description: 'Launch your decentralized application on the mainnet',
-        details: 'We handle mainnet deployment, monitor initial transactions, and provide ongoing support. Our team ensures smooth launch and helps with community onboarding.',
-        deliverables: ['Mainnet Deployment', 'Monitoring Setup', 'Documentation', 'Community Support']
+        description: 'Launch your decentralized application with continuous monitoring',
+        details: 'We handle mainnet deployment, set up monitoring for transactions and performance, and provide ongoing support. Our team ensures a smooth launch and supports community onboarding.',
+        deliverables: ['Mainnet Deployment', 'Monitoring Systems', 'Documentation', 'Support Plan']
       }
     ]
   },
@@ -171,6 +177,13 @@ export const services: Service[] = [
         description: 'Comprehensive testing across XR devices and platforms',
         details: 'We conduct extensive device testing, user acceptance testing, and performance optimization. Our team ensures comfort, reduces motion sickness, and optimizes frame rates.',
         deliverables: ['Device Testing Reports', 'Performance Optimization', 'User Comfort Analysis', 'Final Optimization']
+      },
+      {
+        phase: 'Deployment & Support',
+        duration: '1-2 weeks',
+        description: 'Launch your XR application with ongoing maintenance',
+        details: 'We deploy your AR/VR application, set up monitoring for performance and user engagement, and provide comprehensive documentation. Our team ensures a smooth launch and user adoption.',
+        deliverables: ['Production Deployment', 'Monitoring Setup', 'Documentation', 'Support Plan']
       }
     ]
   }
