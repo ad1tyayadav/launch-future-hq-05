@@ -38,6 +38,18 @@
   }
 }
 
+@layer utilities {
+  @keyframes slidebeam {
+    0% {
+      transform: translateX(-50%);
+    }
+
+    100% {
+      transform: translateX(50%);
+    }
+  }
+}
+
 @layer base {
   * {
     @apply border-border;

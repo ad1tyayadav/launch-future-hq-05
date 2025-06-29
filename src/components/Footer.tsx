@@ -1,5 +1,5 @@
 import React from 'react';
-import { Github, Twitter, Linkedin, Mail } from 'lucide-react';
+import { Instagram, Linkedin, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface FooterLink {
@@ -16,10 +16,9 @@ const Footer: React.FC = () => {
     ];
 
     const socialLinks: FooterLink[] = [
-        { label: 'GitHub', href: 'https://github.com/LostNSeeker/launch-future-hq-05' },
-        { label: 'Twitter', href: '' },
+        { label: 'Instagram', href: 'https://www.instagram.com/devlaunch.in?igsh=MWZtcjY0M3BkYnpyMQ==' },
         { label: 'LinkedIn', href: 'https://www.linkedin.com/company/devlaunch-sutraka' },
-        { label: 'Email', href: '' },
+        { label: 'Email', href: 'mailto:reachus@devlaunch.co.in' },
     ];
 
     return (
@@ -62,8 +61,7 @@ const Footer: React.FC = () => {
                                     className="text-gray-300 hover:text-cyan-400 transition-colors duration-300"
                                     aria-label={link.label}
                                 >
-                                    {link.label === 'GitHub' && <Github className="w-6 h-6" />}
-                                    {link.label === 'Twitter' && <Twitter className="w-6 h-6" />}
+                                    {link.label === 'Instagram' && <Instagram className="w-6 h-6" />}
                                     {link.label === 'LinkedIn' && <Linkedin className="w-6 h-6" />}
                                     {link.label === 'Email' && <Mail className="w-6 h-6" />}
                                 </a>

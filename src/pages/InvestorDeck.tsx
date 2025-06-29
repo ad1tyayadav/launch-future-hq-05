@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, Users, TrendingUp, Globe, Zap, Target, Award, DollarSign, Rocket, CheckCircle, Calendar, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { LineChart, Line, AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import ThreeBackground from '@/components/ThreeBackground';
 
 const InvestorDeck = () => {
   const stats = [
@@ -97,32 +98,7 @@ const InvestorDeck = () => {
   return (
     <div className="min-h-screen bg-dark-space relative overflow-hidden">
       {/* Background effects */}
-      <div className="absolute inset-0">
-        <div className="absolute top-1/4 left-0 w-96 h-96 bg-gradient-to-r from-cyber-blue/20 to-transparent rounded-full filter blur-3xl" />
-        <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-gradient-to-l from-cyber-purple/20 to-transparent rounded-full filter blur-3xl" />
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-cyber-pink/10 to-transparent rounded-full filter blur-3xl" />
-        
-        {/* Enhanced Starfield */}
-        {[...Array(300)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-white rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`
-            }}
-            animate={{
-              opacity: [0.2, 1, 0.2],
-              scale: [0.5, 1.5, 0.5]
-            }}
-            transition={{
-              duration: 2 + Math.random() * 4,
-              repeat: Infinity,
-              delay: Math.random() * 3
-            }}
-          />
-        ))}
-      </div>
+      <ThreeBackground />
 
       {/* Sticky Back Button */}
       <div className="fixed top-6 left-6 z-50">
@@ -133,7 +109,7 @@ const InvestorDeck = () => {
       </div>
 
       <div className="relative z-10 container mx-auto px-6 py-20 space-y-32">
-        
+
         {/* 1. Welcome Slide / Cover Page */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
@@ -148,7 +124,7 @@ const InvestorDeck = () => {
               className="object-contain w-20 h-20"
             />
           </div>
-          <h1 className="text-6xl md:text-8xl font-bold text-white mb-6 font-orbitron glow-text">
+          <h1 className="text-6xl md:text-8xl font-orbitron font-bold text-white mb-6 font-orbitron glow-text">
             DevLaunch
           </h1>
           <h2 className="text-2xl md:text-4xl font-semibold text-cyber-blue mb-8 font-orbitron">
@@ -199,7 +175,7 @@ const InvestorDeck = () => {
           <p className="text-2xl text-cyber-blue mb-16 font-sora max-w-4xl mx-auto">
             DevLaunch helps anyone build MVPs fast — no tech skills required
           </p>
-          
+
           <div className="flex flex-wrap justify-center gap-8 max-w-6xl mx-auto">
             {solutionSteps.map((step, index) => (
               <motion.div
@@ -256,7 +232,7 @@ const InvestorDeck = () => {
                 </motion.div>
               </div>
             </div>
-            
+
             <div className="glass-morphism p-6 rounded-2xl">
               <h3 className="text-2xl font-bold text-white mb-6 font-orbitron">Market Share Analysis</h3>
               <ResponsiveContainer width="100%" height={300}>
@@ -325,7 +301,7 @@ const InvestorDeck = () => {
           className="text-center"
         >
           <h2 className="text-4xl md:text-6xl font-bold text-white mb-12 font-orbitron">Traction & Growth</h2>
-          
+
           {/* Key Metrics */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-6xl mx-auto mb-16">
             {stats.map((stat, index) => {
@@ -341,7 +317,7 @@ const InvestorDeck = () => {
                   <div className={`w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r ${stat.color} flex items-center justify-center`}>
                     <IconComponent size={24} className="text-white" />
                   </div>
-                  <motion.h3 
+                  <motion.h3
                     className="text-2xl font-bold text-white font-orbitron mb-2"
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
@@ -363,19 +339,19 @@ const InvestorDeck = () => {
                 <AreaChart data={revenueData}>
                   <defs>
                     <linearGradient id="revenueGradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#00f5ff" stopOpacity={0.8}/>
-                      <stop offset="95%" stopColor="#00f5ff" stopOpacity={0}/>
+                      <stop offset="5%" stopColor="#00f5ff" stopOpacity={0.8} />
+                      <stop offset="95%" stopColor="#00f5ff" stopOpacity={0} />
                     </linearGradient>
                   </defs>
                   <CartesianGrid strokeDasharray="3 3" stroke="#ffffff20" />
                   <XAxis dataKey="month" stroke="#ffffff80" />
                   <YAxis stroke="#ffffff80" />
-                  <Tooltip 
-                    contentStyle={{ 
-                      backgroundColor: 'rgba(0, 0, 0, 0.8)', 
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: 'rgba(0, 0, 0, 0.8)',
                       border: '1px solid #00f5ff',
                       borderRadius: '8px'
-                    }} 
+                    }}
                   />
                   <Area type="monotone" dataKey="revenue" stroke="#00f5ff" fillOpacity={1} fill="url(#revenueGradient)" strokeWidth={3} />
                 </AreaChart>
@@ -389,12 +365,12 @@ const InvestorDeck = () => {
                   <CartesianGrid strokeDasharray="3 3" stroke="#ffffff20" />
                   <XAxis dataKey="month" stroke="#ffffff80" />
                   <YAxis stroke="#ffffff80" />
-                  <Tooltip 
-                    contentStyle={{ 
-                      backgroundColor: 'rgba(0, 0, 0, 0.8)', 
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: 'rgba(0, 0, 0, 0.8)',
                       border: '1px solid #8b5cf6',
                       borderRadius: '8px'
-                    }} 
+                    }}
                   />
                   <Bar dataKey="newUsers" fill="#8b5cf6" radius={[4, 4, 0, 0]} />
                 </BarChart>
@@ -410,12 +386,12 @@ const InvestorDeck = () => {
                 <CartesianGrid strokeDasharray="3 3" stroke="#ffffff20" />
                 <XAxis dataKey="cohort" stroke="#ffffff80" />
                 <YAxis stroke="#ffffff80" />
-                <Tooltip 
-                  contentStyle={{ 
-                    backgroundColor: 'rgba(0, 0, 0, 0.8)', 
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
                     border: '1px solid #ff0080',
                     borderRadius: '8px'
-                  }} 
+                  }}
                 />
                 <Legend />
                 <Line type="monotone" dataKey="month1" stroke="#00f5ff" strokeWidth={2} />
@@ -460,7 +436,7 @@ const InvestorDeck = () => {
           className="text-center"
         >
           <h2 className="text-4xl md:text-6xl font-bold text-white mb-12 font-orbitron">Roadmap & Projections</h2>
-          
+
           <div className="grid md:grid-cols-2 gap-12 max-w-7xl mx-auto mb-16">
             {/* Roadmap */}
             <div className="max-w-4xl mx-auto">
@@ -473,9 +449,8 @@ const InvestorDeck = () => {
                   transition={{ delay: index * 0.2 }}
                   className="flex items-center mb-8 glass-morphism p-6 rounded-xl"
                 >
-                  <div className={`w-12 h-12 rounded-full flex items-center justify-center mr-6 ${
-                    milestone.completed ? 'bg-green-500' : 'bg-gray-500'
-                  }`}>
+                  <div className={`w-12 h-12 rounded-full flex items-center justify-center mr-6 ${milestone.completed ? 'bg-green-500' : 'bg-gray-500'
+                    }`}>
                     {milestone.completed ? <CheckCircle size={24} className="text-white" /> : <Calendar size={24} className="text-white" />}
                   </div>
                   <div className="text-left">
@@ -494,45 +469,45 @@ const InvestorDeck = () => {
                   <CartesianGrid strokeDasharray="3 3" stroke="#ffffff20" />
                   <XAxis dataKey="quarter" stroke="#ffffff80" />
                   <YAxis stroke="#ffffff80" />
-                  <Tooltip 
-                    contentStyle={{ 
-                      backgroundColor: 'rgba(0, 0, 0, 0.8)', 
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: 'rgba(0, 0, 0, 0.8)',
                       border: '1px solid #00f5ff',
                       borderRadius: '8px'
-                    }} 
+                    }}
                   />
                   <Legend />
                   {/* Actual data - solid lines */}
-                  <Line 
-                    type="monotone" 
-                    dataKey="users" 
-                    stroke="#00f5ff" 
+                  <Line
+                    type="monotone"
+                    dataKey="users"
+                    stroke="#00f5ff"
                     strokeWidth={3}
                     data={actualData}
                     connectNulls={false}
                   />
-                  <Line 
-                    type="monotone" 
-                    dataKey="revenue" 
-                    stroke="#8b5cf6" 
+                  <Line
+                    type="monotone"
+                    dataKey="revenue"
+                    stroke="#8b5cf6"
                     strokeWidth={3}
                     data={actualData}
                     connectNulls={false}
                   />
                   {/* Projected data - dashed lines */}
-                  <Line 
-                    type="monotone" 
-                    dataKey="users" 
-                    stroke="#00f5ff" 
+                  <Line
+                    type="monotone"
+                    dataKey="users"
+                    stroke="#00f5ff"
                     strokeWidth={3}
                     strokeDasharray="5 5"
                     data={bridgeData}
                     connectNulls={true}
                   />
-                  <Line 
-                    type="monotone" 
-                    dataKey="revenue" 
-                    stroke="#8b5cf6" 
+                  <Line
+                    type="monotone"
+                    dataKey="revenue"
+                    stroke="#8b5cf6"
                     strokeWidth={3}
                     strokeDasharray="5 5"
                     data={bridgeData}
@@ -560,10 +535,10 @@ const InvestorDeck = () => {
               Let's build the future of startup creation together
             </p>
           </motion.div>
-          
+
           <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
             <Link to="/lets-talk">
-              <motion.button 
+              <motion.button
                 className="cyber-button text-lg px-12 py-6"
                 whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(0, 245, 255, 0.8)" }}
                 whileTap={{ scale: 0.95 }}
@@ -571,7 +546,7 @@ const InvestorDeck = () => {
                 <span>Schedule Meeting</span>
               </motion.button>
             </Link>
-            <motion.button 
+            <motion.button
               className="px-12 py-6 border-2 border-cyber-blue text-cyber-blue font-semibold rounded-lg hover:bg-cyber-blue hover:text-white transition-all duration-300 font-sora text-lg"
               whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(139, 92, 246, 0.5)" }}
               whileTap={{ scale: 0.95 }}
@@ -580,7 +555,7 @@ const InvestorDeck = () => {
             </motion.button>
           </div>
 
-          <motion.div 
+          <motion.div
             className="glass-morphism p-8 rounded-2xl max-w-6xl mx-auto"
             initial={{ y: 20, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}

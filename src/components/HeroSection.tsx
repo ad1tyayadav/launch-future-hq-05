@@ -149,7 +149,7 @@ const HeroSection: React.FC = () => {
       setCurrentWordIndex((prevIndex) => (prevIndex + 1) % words.length);
     }, 2000);
     return () => clearInterval(interval);
-  }, []);
+  }, [words.length]);
 
   // Scroll one screen down
   const handleScroll = () => {
@@ -217,7 +217,7 @@ const HeroSection: React.FC = () => {
               ease: "easeOut"
             }}
           >
-            <div
+            {/* <div
               className={`
                 ${element.type === 'node' ? 'w-12 h-12 sm:w-16 sm:h-16 border-2 border-cyber-blue rounded-full flex items-center justify-center' : ''}
                 ${element.type === 'panel' ? 'w-20 h-10 sm:w-24 sm:h-12 border border-cyber-purple rounded bg-cyber-purple/10' : ''}
@@ -232,7 +232,7 @@ const HeroSection: React.FC = () => {
               <span className="text-[10px] sm:text-xs font-mono text-white/80 px-2 truncate">
                 {element.content}
               </span>
-            </div>
+            </div> */}
           </motion.div>
         );
       })}
@@ -277,7 +277,7 @@ const HeroSection: React.FC = () => {
           {/* Animated DevLaunch Typography with CLI mask effect */}
           <div className="mb-6 sm:mb-8 w-full">
             <motion.h1
-              className="text-3xl xs:text-6xl sm:text-7xl md:text-4xl lg:text-5xl font-bold text-white flex justify-center items-center relative"
+              className="text-3xl xs:text-6xl sm:text-7xl md:text-4xl lg:text-8xl font-bold text-white flex justify-center items-center relative"
               style={{
                 fontFamily: "'Orbitron', 'Space Grotesk', 'Inter', sans-serif"
               }}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Menu, X, Video } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -36,8 +36,28 @@ const Header: React.FC = () => {
         open: { y: 0, opacity: 1, transition: { duration: 0.5, ease: 'easeOut' } },
     };
 
+  
+  const [showHeader, setShowHeader] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+
+      const scrollY = window.scrollY;
+      if (scrollY > 100) {
+        setShowHeader(true);
+      } else {
+        setShowHeader(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
     return (
-        <header className="fixed top-0 left-0 w-full z-50 backdrop-blur-lg">
+        <header className={`fixed top-0 left-0 w-full z-50 transition-transform duration-300 z-50 ${
+        showHeader ? "translate-y-0" : "-translate-y-full"
+      }  backdrop-blur-lg`}>
             <div className="container mx-auto px-6 py-4 flex items-center justify-between">
                 {/* Logo */}
                 <motion.a
@@ -71,7 +91,7 @@ const Header: React.FC = () => {
                         className="inline-block cursor-pointer z-50 relative"
                     >
                         <a
-                            href="#booking"
+                            href="https://calendly.com/akshat2k24/new-meeting"
                             className="inline-flex items-center h-10 text-sm font-semibold px-4 bg-gradient-to-r from-cyan-500 to-purple-500 hover:shadow-[0_0_25px_rgba(0,245,255,0.5)] transition-all duration-300 rounded-md text-white"
                         >
                             <Video className="w-4 h-4 mr-2" />
@@ -120,7 +140,7 @@ const Header: React.FC = () => {
                                 <Button
                                     className="cyber-button h-10 text-sm font-semibold bg-gradient-to-r from-cyan-500 to-purple-500 hover:shadow-[0_0_25px_rgba(0,245,255,0.5)] transition-all duration-300"
                                     onClick={() => {
-                                        window.location.href = '#contact';
+                                        window.location.href = 'https://calendly.com/akshat2k24/new-meeting';
                                         toggleMenu();
                                     }}
                                 >

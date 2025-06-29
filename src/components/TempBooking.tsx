@@ -12,7 +12,7 @@ const TempBooking: React.FC = () => {
                     <p className="text-gray-300 mb-6">
                         Schedule a call with our team to discuss your project. Our new booking system is coming soon!
                     </p>
-                    <Link to="/investor-deck">
+                    <Link to="https://calendly.com/akshat2k24/new-meeting">
                         <motion.button
                             className="bg-white/5 bg-gradient-to-r from-cyber-blue/10 to-cyber-purple/10 backdrop-blur-md border border-white/10 rounded-xl text-lg px-12 py-6 inline-flex items-center space-x-3 text-white font-semibold transition-all duration-300 hover:border-cyber-blue hover:shadow-[0_0_30px_rgba(0,245,255,0.5)] hover:bg-cyber-blue/10"
                             whileHover={{

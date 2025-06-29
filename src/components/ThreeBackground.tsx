@@ -4,7 +4,14 @@ import { Points, PointMaterial } from '@react-three/drei';
 import * as random from 'maath/random/dist/maath-random.esm';
 import * as THREE from 'three';
 
-function Stars(props: any) {
+type StarsProps = {
+  count?: number;
+  size?: number;
+  color?: string;
+};
+
+
+function Stars(props: StarsProps) {
   const ref = useRef<THREE.Points>(null);
   
   const [sphere] = useMemo(() => {
@@ -101,8 +108,8 @@ export default function ThreeBackground() {
         <ambientLight intensity={0.5} />
         <pointLight position={[10, 10, 10]} intensity={1} />
         <Stars />
-        <FloatingGeometry />
-        <FloatingTorus />
+        {/* <FloatingGeometry />
+        <FloatingTorus /> */}
       </Canvas>
     </div>
   );
